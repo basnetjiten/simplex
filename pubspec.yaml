@@ -1,7 +1,7 @@
 name: simplex
 description: "Wrapper for flutter widgets"
 version: 0.0.7
-homepage: https://github.com/basnetjiten/simple_form_field
+homepage: https://github.com/basnetjiten/simplex
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
