@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,942 +9,524 @@ part of 'form_status.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$FormStatus {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() invalid,
-    required TResult Function() submitting,
-    required TResult Function(String? error) error,
-    required TResult Function(ResponseData<dynamic>? data) successWithData,
-    required TResult Function(String? message) success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? invalid,
-    TResult? Function()? submitting,
-    TResult? Function(String? error)? error,
-    TResult? Function(ResponseData<dynamic>? data)? successWithData,
-    TResult? Function(String? message)? success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? invalid,
-    TResult Function()? submitting,
-    TResult Function(String? error)? error,
-    TResult Function(ResponseData<dynamic>? data)? successWithData,
-    TResult Function(String? message)? success,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Invalid value) invalid,
-    required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Error value) error,
-    required TResult Function(_SuccessWithData value) successWithData,
-    required TResult Function(_Success value) success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Invalid value)? invalid,
-    TResult? Function(_Submitting value)? submitting,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_SuccessWithData value)? successWithData,
-    TResult? Function(_Success value)? success,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Invalid value)? invalid,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Error value)? error,
-    TResult Function(_SuccessWithData value)? successWithData,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FormStatus);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FormStatus()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $FormStatusCopyWith<$Res> {
-  factory $FormStatusCopyWith(
-          FormStatus value, $Res Function(FormStatus) then) =
-      _$FormStatusCopyWithImpl<$Res, FormStatus>;
+class $FormStatusCopyWith<$Res>  {
+$FormStatusCopyWith(FormStatus _, $Res Function(FormStatus) __);
 }
 
-/// @nodoc
-class _$FormStatusCopyWithImpl<$Res, $Val extends FormStatus>
-    implements $FormStatusCopyWith<$Res> {
-  _$FormStatusCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+/// Adds pattern-matching-related methods to [FormStatus].
+extension FormStatusPatterns on FormStatus {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Invalid value)?  invalid,TResult Function( _Submitting value)?  submitting,TResult Function( _Error value)?  error,TResult Function( _SuccessWithData value)?  successWithData,TResult Function( _Success value)?  success,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that);case _Invalid() when invalid != null:
+return invalid(_that);case _Submitting() when submitting != null:
+return submitting(_that);case _Error() when error != null:
+return error(_that);case _SuccessWithData() when successWithData != null:
+return successWithData(_that);case _Success() when success != null:
+return success(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Invalid value)  invalid,required TResult Function( _Submitting value)  submitting,required TResult Function( _Error value)  error,required TResult Function( _SuccessWithData value)  successWithData,required TResult Function( _Success value)  success,}){
+final _that = this;
+switch (_that) {
+case _Initial():
+return initial(_that);case _Invalid():
+return invalid(_that);case _Submitting():
+return submitting(_that);case _Error():
+return error(_that);case _SuccessWithData():
+return successWithData(_that);case _Success():
+return success(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Invalid value)?  invalid,TResult? Function( _Submitting value)?  submitting,TResult? Function( _Error value)?  error,TResult? Function( _SuccessWithData value)?  successWithData,TResult? Function( _Success value)?  success,}){
+final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that);case _Invalid() when invalid != null:
+return invalid(_that);case _Submitting() when submitting != null:
+return submitting(_that);case _Error() when error != null:
+return error(_that);case _SuccessWithData() when successWithData != null:
+return successWithData(_that);case _Success() when success != null:
+return success(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? message)?  invalid,TResult Function()?  submitting,TResult Function( String? error)?  error,TResult Function( ResponseData<dynamic>? data)?  successWithData,TResult Function( String? message)?  success,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial();case _Invalid() when invalid != null:
+return invalid(_that.message);case _Submitting() when submitting != null:
+return submitting();case _Error() when error != null:
+return error(_that.error);case _SuccessWithData() when successWithData != null:
+return successWithData(_that.data);case _Success() when success != null:
+return success(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? message)  invalid,required TResult Function()  submitting,required TResult Function( String? error)  error,required TResult Function( ResponseData<dynamic>? data)  successWithData,required TResult Function( String? message)  success,}) {final _that = this;
+switch (_that) {
+case _Initial():
+return initial();case _Invalid():
+return invalid(_that.message);case _Submitting():
+return submitting();case _Error():
+return error(_that.error);case _SuccessWithData():
+return successWithData(_that.data);case _Success():
+return success(_that.message);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? message)?  invalid,TResult? Function()?  submitting,TResult? Function( String? error)?  error,TResult? Function( ResponseData<dynamic>? data)?  successWithData,TResult? Function( String? message)?  success,}) {final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial();case _Invalid() when invalid != null:
+return invalid(_that.message);case _Submitting() when submitting != null:
+return submitting();case _Error() when error != null:
+return error(_that.error);case _SuccessWithData() when successWithData != null:
+return successWithData(_that.data);case _Success() when success != null:
+return success(_that.message);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$FormStatusCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
-
-  @override
-  String toString() {
-    return 'FormStatus.initial()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() invalid,
-    required TResult Function() submitting,
-    required TResult Function(String? error) error,
-    required TResult Function(ResponseData<dynamic>? data) successWithData,
-    required TResult Function(String? message) success,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? invalid,
-    TResult? Function()? submitting,
-    TResult? Function(String? error)? error,
-    TResult? Function(ResponseData<dynamic>? data)? successWithData,
-    TResult? Function(String? message)? success,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? invalid,
-    TResult Function()? submitting,
-    TResult Function(String? error)? error,
-    TResult Function(ResponseData<dynamic>? data)? successWithData,
-    TResult Function(String? message)? success,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Invalid value) invalid,
-    required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Error value) error,
-    required TResult Function(_SuccessWithData value) successWithData,
-    required TResult Function(_Success value) success,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Invalid value)? invalid,
-    TResult? Function(_Submitting value)? submitting,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_SuccessWithData value)? successWithData,
-    TResult? Function(_Success value)? success,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Invalid value)? invalid,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Error value)? error,
-    TResult Function(_SuccessWithData value)? successWithData,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements FormStatus {
-  const factory _Initial() = _$InitialImpl;
-}
-
-/// @nodoc
-abstract class _$$InvalidImplCopyWith<$Res> {
-  factory _$$InvalidImplCopyWith(
-          _$InvalidImpl value, $Res Function(_$InvalidImpl) then) =
-      __$$InvalidImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$InvalidImplCopyWithImpl<$Res>
-    extends _$FormStatusCopyWithImpl<$Res, _$InvalidImpl>
-    implements _$$InvalidImplCopyWith<$Res> {
-  __$$InvalidImplCopyWithImpl(
-      _$InvalidImpl _value, $Res Function(_$InvalidImpl) _then)
-      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$InvalidImpl implements _Invalid {
-  const _$InvalidImpl();
 
-  @override
-  String toString() {
-    return 'FormStatus.invalid()';
-  }
+class _Initial implements FormStatus {
+  const _Initial();
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InvalidImpl);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() invalid,
-    required TResult Function() submitting,
-    required TResult Function(String? error) error,
-    required TResult Function(ResponseData<dynamic>? data) successWithData,
-    required TResult Function(String? message) success,
-  }) {
-    return invalid();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? invalid,
-    TResult? Function()? submitting,
-    TResult? Function(String? error)? error,
-    TResult? Function(ResponseData<dynamic>? data)? successWithData,
-    TResult? Function(String? message)? success,
-  }) {
-    return invalid?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? invalid,
-    TResult Function()? submitting,
-    TResult Function(String? error)? error,
-    TResult Function(ResponseData<dynamic>? data)? successWithData,
-    TResult Function(String? message)? success,
-    required TResult orElse(),
-  }) {
-    if (invalid != null) {
-      return invalid();
-    }
-    return orElse();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Invalid value) invalid,
-    required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Error value) error,
-    required TResult Function(_SuccessWithData value) successWithData,
-    required TResult Function(_Success value) success,
-  }) {
-    return invalid(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Invalid value)? invalid,
-    TResult? Function(_Submitting value)? submitting,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_SuccessWithData value)? successWithData,
-    TResult? Function(_Success value)? success,
-  }) {
-    return invalid?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Invalid value)? invalid,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Error value)? error,
-    TResult Function(_SuccessWithData value)? successWithData,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) {
-    if (invalid != null) {
-      return invalid(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
 }
 
-abstract class _Invalid implements FormStatus {
-  const factory _Invalid() = _$InvalidImpl;
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FormStatus.initial()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _Invalid implements FormStatus {
+  const _Invalid({this.message});
+  
+
+ final  String? message;
+
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InvalidCopyWith<_Invalid> get copyWith => __$InvalidCopyWithImpl<_Invalid>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Invalid&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'FormStatus.invalid(message: $message)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$SubmittingImplCopyWith<$Res> {
-  factory _$$SubmittingImplCopyWith(
-          _$SubmittingImpl value, $Res Function(_$SubmittingImpl) then) =
-      __$$SubmittingImplCopyWithImpl<$Res>;
+abstract mixin class _$InvalidCopyWith<$Res> implements $FormStatusCopyWith<$Res> {
+  factory _$InvalidCopyWith(_Invalid value, $Res Function(_Invalid) _then) = __$InvalidCopyWithImpl;
+@useResult
+$Res call({
+ String? message
+});
+
+
+
+
+}
+/// @nodoc
+class __$InvalidCopyWithImpl<$Res>
+    implements _$InvalidCopyWith<$Res> {
+  __$InvalidCopyWithImpl(this._self, this._then);
+
+  final _Invalid _self;
+  final $Res Function(_Invalid) _then;
+
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(_Invalid(
+message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
 }
 
-/// @nodoc
-class __$$SubmittingImplCopyWithImpl<$Res>
-    extends _$FormStatusCopyWithImpl<$Res, _$SubmittingImpl>
-    implements _$$SubmittingImplCopyWith<$Res> {
-  __$$SubmittingImplCopyWithImpl(
-      _$SubmittingImpl _value, $Res Function(_$SubmittingImpl) _then)
-      : super(_value, _then);
+
 }
 
 /// @nodoc
 
-class _$SubmittingImpl implements _Submitting {
-  const _$SubmittingImpl();
 
-  @override
-  String toString() {
-    return 'FormStatus.submitting()';
-  }
+class _Submitting implements FormStatus {
+  const _Submitting();
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SubmittingImpl);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() invalid,
-    required TResult Function() submitting,
-    required TResult Function(String? error) error,
-    required TResult Function(ResponseData<dynamic>? data) successWithData,
-    required TResult Function(String? message) success,
-  }) {
-    return submitting();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? invalid,
-    TResult? Function()? submitting,
-    TResult? Function(String? error)? error,
-    TResult? Function(ResponseData<dynamic>? data)? successWithData,
-    TResult? Function(String? message)? success,
-  }) {
-    return submitting?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? invalid,
-    TResult Function()? submitting,
-    TResult Function(String? error)? error,
-    TResult Function(ResponseData<dynamic>? data)? successWithData,
-    TResult Function(String? message)? success,
-    required TResult orElse(),
-  }) {
-    if (submitting != null) {
-      return submitting();
-    }
-    return orElse();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Invalid value) invalid,
-    required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Error value) error,
-    required TResult Function(_SuccessWithData value) successWithData,
-    required TResult Function(_Success value) success,
-  }) {
-    return submitting(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Invalid value)? invalid,
-    TResult? Function(_Submitting value)? submitting,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_SuccessWithData value)? successWithData,
-    TResult? Function(_Success value)? success,
-  }) {
-    return submitting?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Invalid value)? invalid,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Error value)? error,
-    TResult Function(_SuccessWithData value)? successWithData,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) {
-    if (submitting != null) {
-      return submitting(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Submitting);
 }
 
-abstract class _Submitting implements FormStatus {
-  const factory _Submitting() = _$SubmittingImpl;
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FormStatus.submitting()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _Error implements FormStatus {
+  const _Error({this.error});
+  
+
+ final  String? error;
+
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.error, error) || other.error == error));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,error);
+
+@override
+String toString() {
+  return 'FormStatus.error(error: $error)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String? error});
+abstract mixin class _$ErrorCopyWith<$Res> implements $FormStatusCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+@useResult
+$Res call({
+ String? error
+});
+
+
+
+
+}
+/// @nodoc
+class __$ErrorCopyWithImpl<$Res>
+    implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
+
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? error = freezed,}) {
+  return _then(_Error(
+error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
 }
 
-/// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$FormStatusCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = freezed,
-  }) {
-    return _then(_$ErrorImpl(
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl({this.error});
 
-  @override
-  final String? error;
+class _SuccessWithData implements FormStatus {
+  const _SuccessWithData({this.data});
+  
 
-  @override
-  String toString() {
-    return 'FormStatus.error(error: $error)';
-  }
+ final  ResponseData<dynamic>? data;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SuccessWithDataCopyWith<_SuccessWithData> get copyWith => __$SuccessWithDataCopyWithImpl<_SuccessWithData>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() invalid,
-    required TResult Function() submitting,
-    required TResult Function(String? error) error,
-    required TResult Function(ResponseData<dynamic>? data) successWithData,
-    required TResult Function(String? message) success,
-  }) {
-    return error(this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? invalid,
-    TResult? Function()? submitting,
-    TResult? Function(String? error)? error,
-    TResult? Function(ResponseData<dynamic>? data)? successWithData,
-    TResult? Function(String? message)? success,
-  }) {
-    return error?.call(this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? invalid,
-    TResult Function()? submitting,
-    TResult Function(String? error)? error,
-    TResult Function(ResponseData<dynamic>? data)? successWithData,
-    TResult Function(String? message)? success,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this.error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Invalid value) invalid,
-    required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Error value) error,
-    required TResult Function(_SuccessWithData value) successWithData,
-    required TResult Function(_Success value) success,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Invalid value)? invalid,
-    TResult? Function(_Submitting value)? submitting,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_SuccessWithData value)? successWithData,
-    TResult? Function(_Success value)? success,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Invalid value)? invalid,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Error value)? error,
-    TResult Function(_SuccessWithData value)? successWithData,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessWithData&&(identical(other.data, data) || other.data == data));
 }
 
-abstract class _Error implements FormStatus {
-  const factory _Error({final String? error}) = _$ErrorImpl;
 
-  String? get error;
-  @JsonKey(ignore: true)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+int get hashCode => Object.hash(runtimeType,data);
+
+@override
+String toString() {
+  return 'FormStatus.successWithData(data: $data)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$SuccessWithDataImplCopyWith<$Res> {
-  factory _$$SuccessWithDataImplCopyWith(_$SuccessWithDataImpl value,
-          $Res Function(_$SuccessWithDataImpl) then) =
-      __$$SuccessWithDataImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({ResponseData<dynamic>? data});
+abstract mixin class _$SuccessWithDataCopyWith<$Res> implements $FormStatusCopyWith<$Res> {
+  factory _$SuccessWithDataCopyWith(_SuccessWithData value, $Res Function(_SuccessWithData) _then) = __$SuccessWithDataCopyWithImpl;
+@useResult
+$Res call({
+ ResponseData<dynamic>? data
+});
+
+
+
+
+}
+/// @nodoc
+class __$SuccessWithDataCopyWithImpl<$Res>
+    implements _$SuccessWithDataCopyWith<$Res> {
+  __$SuccessWithDataCopyWithImpl(this._self, this._then);
+
+  final _SuccessWithData _self;
+  final $Res Function(_SuccessWithData) _then;
+
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? data = freezed,}) {
+  return _then(_SuccessWithData(
+data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as ResponseData<dynamic>?,
+  ));
 }
 
-/// @nodoc
-class __$$SuccessWithDataImplCopyWithImpl<$Res>
-    extends _$FormStatusCopyWithImpl<$Res, _$SuccessWithDataImpl>
-    implements _$$SuccessWithDataImplCopyWith<$Res> {
-  __$$SuccessWithDataImplCopyWithImpl(
-      _$SuccessWithDataImpl _value, $Res Function(_$SuccessWithDataImpl) _then)
-      : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? data = freezed,
-  }) {
-    return _then(_$SuccessWithDataImpl(
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as ResponseData<dynamic>?,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$SuccessWithDataImpl implements _SuccessWithData {
-  const _$SuccessWithDataImpl({this.data});
 
-  @override
-  final ResponseData<dynamic>? data;
+class _Success implements FormStatus {
+  const _Success({this.message});
+  
 
-  @override
-  String toString() {
-    return 'FormStatus.successWithData(data: $data)';
-  }
+ final  String? message;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SuccessWithDataImpl &&
-            (identical(other.data, data) || other.data == data));
-  }
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, data);
 
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SuccessWithDataImplCopyWith<_$SuccessWithDataImpl> get copyWith =>
-      __$$SuccessWithDataImplCopyWithImpl<_$SuccessWithDataImpl>(
-          this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() invalid,
-    required TResult Function() submitting,
-    required TResult Function(String? error) error,
-    required TResult Function(ResponseData<dynamic>? data) successWithData,
-    required TResult Function(String? message) success,
-  }) {
-    return successWithData(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? invalid,
-    TResult? Function()? submitting,
-    TResult? Function(String? error)? error,
-    TResult? Function(ResponseData<dynamic>? data)? successWithData,
-    TResult? Function(String? message)? success,
-  }) {
-    return successWithData?.call(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? invalid,
-    TResult Function()? submitting,
-    TResult Function(String? error)? error,
-    TResult Function(ResponseData<dynamic>? data)? successWithData,
-    TResult Function(String? message)? success,
-    required TResult orElse(),
-  }) {
-    if (successWithData != null) {
-      return successWithData(data);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Invalid value) invalid,
-    required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Error value) error,
-    required TResult Function(_SuccessWithData value) successWithData,
-    required TResult Function(_Success value) success,
-  }) {
-    return successWithData(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Invalid value)? invalid,
-    TResult? Function(_Submitting value)? submitting,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_SuccessWithData value)? successWithData,
-    TResult? Function(_Success value)? success,
-  }) {
-    return successWithData?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Invalid value)? invalid,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Error value)? error,
-    TResult Function(_SuccessWithData value)? successWithData,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) {
-    if (successWithData != null) {
-      return successWithData(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.message, message) || other.message == message));
 }
 
-abstract class _SuccessWithData implements FormStatus {
-  const factory _SuccessWithData({final ResponseData<dynamic>? data}) =
-      _$SuccessWithDataImpl;
 
-  ResponseData<dynamic>? get data;
-  @JsonKey(ignore: true)
-  _$$SuccessWithDataImplCopyWith<_$SuccessWithDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'FormStatus.success(message: $message)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
-      __$$SuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String? message});
-}
+abstract mixin class _$SuccessCopyWith<$Res> implements $FormStatusCopyWith<$Res> {
+  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
+@useResult
+$Res call({
+ String? message
+});
 
+
+
+
+}
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$FormStatusCopyWithImpl<$Res, _$SuccessImpl>
-    implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
-      : super(_value, _then);
+class __$SuccessCopyWithImpl<$Res>
+    implements _$SuccessCopyWith<$Res> {
+  __$SuccessCopyWithImpl(this._self, this._then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = freezed,
-  }) {
-    return _then(_$SuccessImpl(
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
+  final _Success _self;
+  final $Res Function(_Success) _then;
+
+/// Create a copy of FormStatus
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(_Success(
+message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
 }
 
-/// @nodoc
 
-class _$SuccessImpl implements _Success {
-  const _$SuccessImpl({this.message});
-
-  @override
-  final String? message;
-
-  @override
-  String toString() {
-    return 'FormStatus.success(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() invalid,
-    required TResult Function() submitting,
-    required TResult Function(String? error) error,
-    required TResult Function(ResponseData<dynamic>? data) successWithData,
-    required TResult Function(String? message) success,
-  }) {
-    return success(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? invalid,
-    TResult? Function()? submitting,
-    TResult? Function(String? error)? error,
-    TResult? Function(ResponseData<dynamic>? data)? successWithData,
-    TResult? Function(String? message)? success,
-  }) {
-    return success?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? invalid,
-    TResult Function()? submitting,
-    TResult Function(String? error)? error,
-    TResult Function(ResponseData<dynamic>? data)? successWithData,
-    TResult Function(String? message)? success,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Invalid value) invalid,
-    required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Error value) error,
-    required TResult Function(_SuccessWithData value) successWithData,
-    required TResult Function(_Success value) success,
-  }) {
-    return success(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Invalid value)? invalid,
-    TResult? Function(_Submitting value)? submitting,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_SuccessWithData value)? successWithData,
-    TResult? Function(_Success value)? success,
-  }) {
-    return success?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Invalid value)? invalid,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Error value)? error,
-    TResult Function(_SuccessWithData value)? successWithData,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(this);
-    }
-    return orElse();
-  }
 }
 
-abstract class _Success implements FormStatus {
-  const factory _Success({final String? message}) = _$SuccessImpl;
-
-  String? get message;
-  @JsonKey(ignore: true)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

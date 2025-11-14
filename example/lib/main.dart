@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_form_field/custom_form_field.dart';
+import 'package:simplex/simplex_form_field.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,14 +41,13 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               const Flexible(
-                child: CustomFormField(
+                child: SimplexFormField(
                   borderRadius: 20,
                   label: Text('Email'),
                 ),
               ),
-              const Flexible(child: CustomFormField()),
-              CustomFormField(
-
+              const Flexible(child: SimplexFormField()),
+              SimplexFormField(
                 fillColor: Colors.green,
                 maxLines: 1,
                 labelStyle: const TextStyle(height: 5),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomFormField extends StatelessWidget {
-  const CustomFormField({
+class SimplexFormField extends StatelessWidget {
+  const SimplexFormField({
     super.key,
     this.prefixIcon,
     this.hintText,

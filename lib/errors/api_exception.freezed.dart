@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,304 +9,342 @@ part of 'api_exception.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$ApiException {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String message) serverException,
-    required TResult Function() network,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? serverException,
-    TResult? Function()? network,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? serverException,
-    TResult Function()? network,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ServerException value) serverException,
-    required TResult Function(_Network value) network,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ServerException value)? serverException,
-    TResult? Function(_Network value)? network,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ServerException value)? serverException,
-    TResult Function(_Network value)? network,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiException);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ApiException()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ApiExceptionCopyWith<$Res> {
-  factory $ApiExceptionCopyWith(
-          ApiException value, $Res Function(ApiException) then) =
-      _$ApiExceptionCopyWithImpl<$Res, ApiException>;
+class $ApiExceptionCopyWith<$Res>  {
+$ApiExceptionCopyWith(ApiException _, $Res Function(ApiException) __);
 }
 
-/// @nodoc
-class _$ApiExceptionCopyWithImpl<$Res, $Val extends ApiException>
-    implements $ApiExceptionCopyWith<$Res> {
-  _$ApiExceptionCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+/// Adds pattern-matching-related methods to [ApiException].
+extension ApiExceptionPatterns on ApiException {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ServerException value)?  serverException,TResult Function( _Network value)?  network,TResult Function( _UnAuthorizedException value)?  unAuthorizedException,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ServerException() when serverException != null:
+return serverException(_that);case _Network() when network != null:
+return network(_that);case _UnAuthorizedException() when unAuthorizedException != null:
+return unAuthorizedException(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ServerException value)  serverException,required TResult Function( _Network value)  network,required TResult Function( _UnAuthorizedException value)  unAuthorizedException,}){
+final _that = this;
+switch (_that) {
+case _ServerException():
+return serverException(_that);case _Network():
+return network(_that);case _UnAuthorizedException():
+return unAuthorizedException(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ServerException value)?  serverException,TResult? Function( _Network value)?  network,TResult? Function( _UnAuthorizedException value)?  unAuthorizedException,}){
+final _that = this;
+switch (_that) {
+case _ServerException() when serverException != null:
+return serverException(_that);case _Network() when network != null:
+return network(_that);case _UnAuthorizedException() when unAuthorizedException != null:
+return unAuthorizedException(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverException,TResult Function()?  network,TResult Function( String message)?  unAuthorizedException,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ServerException() when serverException != null:
+return serverException(_that.message);case _Network() when network != null:
+return network();case _UnAuthorizedException() when unAuthorizedException != null:
+return unAuthorizedException(_that.message);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverException,required TResult Function()  network,required TResult Function( String message)  unAuthorizedException,}) {final _that = this;
+switch (_that) {
+case _ServerException():
+return serverException(_that.message);case _Network():
+return network();case _UnAuthorizedException():
+return unAuthorizedException(_that.message);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverException,TResult? Function()?  network,TResult? Function( String message)?  unAuthorizedException,}) {final _that = this;
+switch (_that) {
+case _ServerException() when serverException != null:
+return serverException(_that.message);case _Network() when network != null:
+return network();case _UnAuthorizedException() when unAuthorizedException != null:
+return unAuthorizedException(_that.message);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-abstract class _$$ServerExceptionImplCopyWith<$Res> {
-  factory _$$ServerExceptionImplCopyWith(_$ServerExceptionImpl value,
-          $Res Function(_$ServerExceptionImpl) then) =
-      __$$ServerExceptionImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$ServerExceptionImplCopyWithImpl<$Res>
-    extends _$ApiExceptionCopyWithImpl<$Res, _$ServerExceptionImpl>
-    implements _$$ServerExceptionImplCopyWith<$Res> {
-  __$$ServerExceptionImplCopyWithImpl(
-      _$ServerExceptionImpl _value, $Res Function(_$ServerExceptionImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$ServerExceptionImpl(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ServerExceptionImpl implements _ServerException {
-  const _$ServerExceptionImpl({required this.message});
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'ApiException.serverException(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ServerExceptionImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ServerExceptionImplCopyWith<_$ServerExceptionImpl> get copyWith =>
-      __$$ServerExceptionImplCopyWithImpl<_$ServerExceptionImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String message) serverException,
-    required TResult Function() network,
-  }) {
-    return serverException(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? serverException,
-    TResult? Function()? network,
-  }) {
-    return serverException?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? serverException,
-    TResult Function()? network,
-    required TResult orElse(),
-  }) {
-    if (serverException != null) {
-      return serverException(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ServerException value) serverException,
-    required TResult Function(_Network value) network,
-  }) {
-    return serverException(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ServerException value)? serverException,
-    TResult? Function(_Network value)? network,
-  }) {
-    return serverException?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ServerException value)? serverException,
-    TResult Function(_Network value)? network,
-    required TResult orElse(),
-  }) {
-    if (serverException != null) {
-      return serverException(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ServerException implements ApiException {
-  const factory _ServerException({required final String message}) =
-      _$ServerExceptionImpl;
-
-  String get message;
-  @JsonKey(ignore: true)
-  _$$ServerExceptionImplCopyWith<_$ServerExceptionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$NetworkImplCopyWith<$Res> {
-  factory _$$NetworkImplCopyWith(
-          _$NetworkImpl value, $Res Function(_$NetworkImpl) then) =
-      __$$NetworkImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$NetworkImplCopyWithImpl<$Res>
-    extends _$ApiExceptionCopyWithImpl<$Res, _$NetworkImpl>
-    implements _$$NetworkImplCopyWith<$Res> {
-  __$$NetworkImplCopyWithImpl(
-      _$NetworkImpl _value, $Res Function(_$NetworkImpl) _then)
-      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$NetworkImpl implements _Network {
-  const _$NetworkImpl();
 
-  @override
-  String toString() {
-    return 'ApiException.network()';
-  }
+class _ServerException implements ApiException {
+  const _ServerException({required this.message});
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$NetworkImpl);
-  }
+ final  String message;
 
-  @override
-  int get hashCode => runtimeType.hashCode;
+/// Create a copy of ApiException
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ServerExceptionCopyWith<_ServerException> get copyWith => __$ServerExceptionCopyWithImpl<_ServerException>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String message) serverException,
-    required TResult Function() network,
-  }) {
-    return network();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String message)? serverException,
-    TResult? Function()? network,
-  }) {
-    return network?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String message)? serverException,
-    TResult Function()? network,
-    required TResult orElse(),
-  }) {
-    if (network != null) {
-      return network();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ServerException value) serverException,
-    required TResult Function(_Network value) network,
-  }) {
-    return network(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ServerException value)? serverException,
-    TResult? Function(_Network value)? network,
-  }) {
-    return network?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ServerException value)? serverException,
-    TResult Function(_Network value)? network,
-    required TResult orElse(),
-  }) {
-    if (network != null) {
-      return network(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerException&&(identical(other.message, message) || other.message == message));
 }
 
-abstract class _Network implements ApiException {
-  const factory _Network() = _$NetworkImpl;
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'ApiException.serverException(message: $message)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ServerExceptionCopyWith<$Res> implements $ApiExceptionCopyWith<$Res> {
+  factory _$ServerExceptionCopyWith(_ServerException value, $Res Function(_ServerException) _then) = __$ServerExceptionCopyWithImpl;
+@useResult
+$Res call({
+ String message
+});
+
+
+
+
+}
+/// @nodoc
+class __$ServerExceptionCopyWithImpl<$Res>
+    implements _$ServerExceptionCopyWith<$Res> {
+  __$ServerExceptionCopyWithImpl(this._self, this._then);
+
+  final _ServerException _self;
+  final $Res Function(_ServerException) _then;
+
+/// Create a copy of ApiException
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+  return _then(_ServerException(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _Network implements ApiException {
+  const _Network();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Network);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ApiException.network()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _UnAuthorizedException implements ApiException {
+  const _UnAuthorizedException({required this.message});
+  
+
+ final  String message;
+
+/// Create a copy of ApiException
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UnAuthorizedExceptionCopyWith<_UnAuthorizedException> get copyWith => __$UnAuthorizedExceptionCopyWithImpl<_UnAuthorizedException>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthorizedException&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'ApiException.unAuthorizedException(message: $message)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UnAuthorizedExceptionCopyWith<$Res> implements $ApiExceptionCopyWith<$Res> {
+  factory _$UnAuthorizedExceptionCopyWith(_UnAuthorizedException value, $Res Function(_UnAuthorizedException) _then) = __$UnAuthorizedExceptionCopyWithImpl;
+@useResult
+$Res call({
+ String message
+});
+
+
+
+
+}
+/// @nodoc
+class __$UnAuthorizedExceptionCopyWithImpl<$Res>
+    implements _$UnAuthorizedExceptionCopyWith<$Res> {
+  __$UnAuthorizedExceptionCopyWithImpl(this._self, this._then);
+
+  final _UnAuthorizedException _self;
+  final $Res Function(_UnAuthorizedException) _then;
+
+/// Create a copy of ApiException
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+  return _then(_UnAuthorizedException(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+// dart format on

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:simple_form_field/extensions/string_extension.dart';
+import 'package:simplex/extensions/string_extension.dart';
 
 part 'field.freezed.dart';
 part 'field.g.dart';
@@ -10,7 +10,7 @@ part 'field.g.dart';
   fromJson: true,
   copyWith: false,
 )
-class Field<T> with _$Field<T> {
+abstract class Field<T> with _$Field<T> {
   const Field._();
 
   const factory Field({
@@ -30,7 +30,7 @@ class Field<T> with _$Field<T> {
     bool? obscureText,
     bool? isValid,
   }) {
-    bool hasValidFormValue = isValid ?? errorMessage.isNull;
+    bool hasValidFormValue = isValid ?? errorMessage.isNullOrEmpty;
     return Field<T>(
       value: value ?? this.value,
       errorMessage: errorMessage,

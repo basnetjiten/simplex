@@ -1,7 +1,7 @@
-name: simple_form_field
-description: "Wrapper around TextFormField, Bloc and CachedNetworkImage and SVG images"
+name: simplex
+description: "Wrapper for flutter widgets"
 version: 0.0.7
-homepage: https://github.com/basnetjiten/simple_form_field
+homepage: https://github.com/basnetjiten/simplex
 
 environment:
   sdk: ">=3.8.0 <=4.0.0"
@@ -24,22 +24,48 @@ dependencies:
   flutter_bloc: ^8.1.6
   bloc_concurrency: 0.2.5
 
+  #Utils
+  logger: ^2.5.0
   fpdart: ^1.1.1
+  intl: ^0.20.2
 
+
+  #UI/UX
   flutter_svg: 2.2.0
   cached_network_image: 3.4.1
   shimmer: 3.0.0
+
+  #networks
+  ferry: ^0.16.1+2
+  pretty_dio_logger: ^1.4.0
+  dio: ^5.9.0
+  gql_dio_link: ^1.0.1+1
+
+  # Session and Storage
+  hive_local_storage: ^2.0.0
+  shared_preferences: ^2.5.3
+  flutter_secure_storage: ^9.2.4
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+<<<<<<< HEAD
+  flutter_lints: 5.0.0
+
+  #generators
+  build_runner: ^2.7.1
+  json_serializable: ^6.11.0
+  freezed: ^3.2.0
+  ferry_generator: ^0.14.0-dev.1
+=======
   flutter_lints: 6.0.0
   #generators
   build_runner: 2.4.12
 
   json_serializable: 6.8.0
   freezed: 2.5.2
+>>>>>>> master
 
 
 flutter:

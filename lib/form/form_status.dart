@@ -8,7 +8,7 @@ part 'form_status.freezed.dart';
 class FormStatus with _$FormStatus {
   const factory FormStatus.initial() = _Initial;
 
-  const factory FormStatus.invalid() = _Invalid;
+  const factory FormStatus.invalid({String? message}) = _Invalid;
 
   const factory FormStatus.submitting() = _Submitting;
 
@@ -19,5 +19,3 @@ class FormStatus with _$FormStatus {
 
   const factory FormStatus.success({String? message}) = _Success;
 }
-
-
