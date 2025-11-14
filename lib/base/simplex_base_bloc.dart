@@ -11,8 +11,8 @@ import 'package:simplex/errors/app_error.dart';
 
 /// BaseBloc provides a reusable way to handle API calls
 /// and map errors or success results to Bloc states.
-abstract class SimpleBlocBase<Event, State> extends BlocBase<State> {
-  SimpleBlocBase(super.state);
+abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
+  SimplexBlocBase(super.state);
 
   /// Handles an API call that returns Either<AppError, R>
   ///
@@ -43,7 +43,7 @@ abstract class SimpleBlocBase<Event, State> extends BlocBase<State> {
         _emitError(emitter, error, onInvalid);
       }
     } catch (error) {
-      log('SimpleBlocBase Error: $error');
+      log('SimplexBlocBase Error: $error');
     }
   }
 
