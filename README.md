@@ -13,4 +13,4 @@ Add the package to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  simple_form_field: ^1.0.0 # Replace with the latest version
+  simplex: ^1.0.0 # Replace with the latest version
