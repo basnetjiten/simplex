@@ -13,16 +13,16 @@ class BlocStatus<T> with _$BlocStatus<T> {
   const factory BlocStatus.invalid({String? message}) = _Invalid;
 
   /// Generic loading / processing state
-  const factory BlocStatus.loading() = _Loading;
+  const factory BlocStatus.loading() = _Loading<T>;
 
   /// Error with optional message
-  const factory BlocStatus.error({String? error}) = _Error;
+  const factory BlocStatus.error({String? error}) = _Error<T>;
 
   /// Success with attached generic data
   const factory BlocStatus.successWithData(T data) = _SuccessWithData<T>;
 
   /// Simple success (message optional)
-  const factory BlocStatus.success({String? message}) = _Success;
+  const factory BlocStatus.success({String? message}) = _Success<T>;
 
   bool get isLoading => this is _Loading<T>;
 
