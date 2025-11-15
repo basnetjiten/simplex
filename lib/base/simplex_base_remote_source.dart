@@ -4,8 +4,8 @@ import 'package:simplex/errors/api_exception.dart';
 import 'package:simplex/extensions/api_exception_extension.dart';
 import 'package:simplex/logging/logger.dart';
 
-class BaseRemoteSource {
-  BaseRemoteSource(this._client, this.localStorage);
+class SimplexBaseRemoteSource {
+  SimplexBaseRemoteSource(this._client, this.localStorage);
 
   final Client _client;
   final LocalStorage localStorage;

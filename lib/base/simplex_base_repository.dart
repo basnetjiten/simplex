@@ -6,17 +6,17 @@ import 'package:simplex/errors/app_error.dart';
 import 'package:simplex/typedefs/typedefs.dart';
 
 /// {@template base_repository}
-/// A [BaseRepository] class for handling network status and exceptions.
+/// A [SimplexBaseRepository] class for handling network status and exceptions.
 ///
 /// Methods should return EitherResponse.
 /// {@endtemplate}
-class BaseRepository {
+class SimplexBaseRepository {
   /// BaseRepository is not meant to be used with other than server
   /// (BaseRemoteSource).
   ///
   /// If you need to make http request or use third party plugin that can throw
-  /// exception other that NetworkError don't use [BaseRepository].
-  BaseRepository();
+  /// exception other that NetworkError don't use [SimplexBaseRepository].
+  SimplexBaseRepository();
 
   /// [T] is Return type for [EitherResponse]
   ///
