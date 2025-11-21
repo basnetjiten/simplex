@@ -396,10 +396,10 @@ packages:
     dependency: transitive
     description:
       name: hive_local_storage
-      sha256: "06d2740ee7567acccd5bfee905fd6e84987cdeaba20f8695f9a0e54d0ba86682"
+      sha256: "7b505ffd5e149fae47321cb3b479966c656d4e633d1a797f84a978a505ee5ad5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   http:
     dependency: transitive
     description:
