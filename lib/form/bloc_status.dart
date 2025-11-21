@@ -22,31 +22,10 @@ class BlocStatus with _$BlocStatus {
   const factory BlocStatus.error({String? error}) = _Error;
 
   /// Success with attached generic data — wrapped in ApiData<T>
-  const factory BlocStatus.successWithData(
-    ApiData<Object> data, {
+  const factory BlocStatus.successWithData({
+    required ApiData<dynamic> data,
     String? message,
   }) = _SuccessWithData;
-
-  //Gives the data sent with successWithData
-  //If no value is provided it is null
-  T? getDataOrNull<T>() {
-    return maybeWhen(
-      successWithData: (apiData, _) {
-        if (apiData.data is T) {
-          return apiData.data as T;
-        }
-        return null;
-      },
-      orElse: () => null,
-    );
-  }
-
-  T getSuccessWithData<T>() {
-    return maybeWhen(
-      successWithData: (apiData, _) => apiData.data as T,
-      orElse: () => throw StateError('No data available'),
-    );
-  }
 
   bool get isLoading => this is _Loading;
 
@@ -60,6 +39,10 @@ class ApiData<T> {
   final String? message;
 
   const ApiData({required this.data, this.message});
+
+  R getData<R>() => data as R;
+
+  R? getDataOrNull<R>() => data is R ? data as R : null;
 
   @override
   String toString() => 'ApiData($data)';
