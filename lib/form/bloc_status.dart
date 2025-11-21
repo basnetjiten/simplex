@@ -23,7 +23,7 @@ class BlocStatus with _$BlocStatus {
 
   /// Success with attached generic data — wrapped in ApiData<T>
   const factory BlocStatus.successWithData({
-    required ApiData<dynamic> data,
+    required ApiData<dynamic> apiData,
     String? message,
   }) = _SuccessWithData;
 
@@ -40,9 +40,33 @@ class ApiData<T> {
 
   const ApiData({required this.data, this.message});
 
-  R getData<R>() => data as R;
+  /// Extracts data as type [R]
+  ///
+  /// Must explicitly provide the type parameter:
+  /// ```dart
+  /// final model = apiData.as<ExpiryModel>();
+  /// ```
+  ///
+  /// Throws [ArgumentError] if type is not explicitly provided.
+  R as<R extends Object>() {
+    // ✅ Prevent dynamic/Object in debug mode
+    assert(
+      R != dynamic && R != Object,
+      'Type parameter must be explicitly provided. '
+      'Use: apiData.as<YourType>() instead of apiData.as()',
+    );
 
-  R? getDataOrNull<R>() => data is R ? data as R : null;
+    // ✅ Additional runtime check for production
+    if (R == dynamic || R == Object) {
+      throw ArgumentError(
+        'Type parameter must be explicitly provided. '
+        'Usage: apiData.as<YourType>()\n'
+        'Example: apiData.as<ExpiryModel>()',
+      );
+    }
+
+    return data as R;
+  }
 
   @override
   String toString() => 'ApiData($data)';

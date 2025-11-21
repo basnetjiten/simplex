@@ -134,7 +134,7 @@ return successWithData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? message)?  invalid,TResult Function()?  loading,TResult Function( String? message)?  success,TResult Function( String? error)?  error,TResult Function( ApiData<Object> data,  String? message)?  successWithData,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? message)?  invalid,TResult Function()?  loading,TResult Function( String? message)?  success,TResult Function( String? error)?  error,TResult Function( ApiData<dynamic> apiData,  String? message)?  successWithData,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Invalid() when invalid != null:
@@ -142,7 +142,7 @@ return invalid(_that.message);case _Loading() when loading != null:
 return loading();case _Success() when success != null:
 return success(_that.message);case _Error() when error != null:
 return error(_that.error);case _SuccessWithData() when successWithData != null:
-return successWithData(_that.data,_that.message);case _:
+return successWithData(_that.apiData,_that.message);case _:
   return orElse();
 
 }
@@ -160,7 +160,7 @@ return successWithData(_that.data,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? message)  invalid,required TResult Function()  loading,required TResult Function( String? message)  success,required TResult Function( String? error)  error,required TResult Function( ApiData<Object> data,  String? message)  successWithData,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? message)  invalid,required TResult Function()  loading,required TResult Function( String? message)  success,required TResult Function( String? error)  error,required TResult Function( ApiData<dynamic> apiData,  String? message)  successWithData,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Invalid():
@@ -168,7 +168,7 @@ return invalid(_that.message);case _Loading():
 return loading();case _Success():
 return success(_that.message);case _Error():
 return error(_that.error);case _SuccessWithData():
-return successWithData(_that.data,_that.message);case _:
+return successWithData(_that.apiData,_that.message);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -185,7 +185,7 @@ return successWithData(_that.data,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? message)?  invalid,TResult? Function()?  loading,TResult? Function( String? message)?  success,TResult? Function( String? error)?  error,TResult? Function( ApiData<Object> data,  String? message)?  successWithData,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? message)?  invalid,TResult? Function()?  loading,TResult? Function( String? message)?  success,TResult? Function( String? error)?  error,TResult? Function( ApiData<dynamic> apiData,  String? message)?  successWithData,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Invalid() when invalid != null:
@@ -193,7 +193,7 @@ return invalid(_that.message);case _Loading() when loading != null:
 return loading();case _Success() when success != null:
 return success(_that.message);case _Error() when error != null:
 return error(_that.error);case _SuccessWithData() when successWithData != null:
-return successWithData(_that.data,_that.message);case _:
+return successWithData(_that.apiData,_that.message);case _:
   return null;
 
 }
@@ -467,10 +467,10 @@ as String?,
 
 
 class _SuccessWithData extends BlocStatus {
-  const _SuccessWithData(this.data, {this.message}): super._();
+  const _SuccessWithData({required this.apiData, this.message}): super._();
   
 
- final  ApiData<Object> data;
+ final  ApiData<dynamic> apiData;
  final  String? message;
 
 /// Create a copy of BlocStatus
@@ -483,16 +483,16 @@ _$SuccessWithDataCopyWith<_SuccessWithData> get copyWith => __$SuccessWithDataCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessWithData&&(identical(other.data, data) || other.data == data)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessWithData&&(identical(other.apiData, apiData) || other.apiData == apiData)&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,data,message);
+int get hashCode => Object.hash(runtimeType,apiData,message);
 
 @override
 String toString() {
-  return 'BlocStatus.successWithData(data: $data, message: $message)';
+  return 'BlocStatus.successWithData(apiData: $apiData, message: $message)';
 }
 
 
@@ -503,7 +503,7 @@ abstract mixin class _$SuccessWithDataCopyWith<$Res> implements $BlocStatusCopyW
   factory _$SuccessWithDataCopyWith(_SuccessWithData value, $Res Function(_SuccessWithData) _then) = __$SuccessWithDataCopyWithImpl;
 @useResult
 $Res call({
- ApiData<Object> data, String? message
+ ApiData<dynamic> apiData, String? message
 });
 
 
@@ -520,10 +520,10 @@ class __$SuccessWithDataCopyWithImpl<$Res>
 
 /// Create a copy of BlocStatus
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? data = null,Object? message = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? apiData = null,Object? message = freezed,}) {
   return _then(_SuccessWithData(
-null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as ApiData<Object>,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+apiData: null == apiData ? _self.apiData : apiData // ignore: cast_nullable_to_non_nullable
+as ApiData<dynamic>,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
