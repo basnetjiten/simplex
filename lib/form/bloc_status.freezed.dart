@@ -12,7 +12,7 @@ part of 'bloc_status.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$BlocStatus {
+mixin _$BlocStatus<T extends Object?> {
 
 
 
@@ -20,7 +20,7 @@ mixin _$BlocStatus {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BlocStatus);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BlocStatus<T>);
 }
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BlocStatus()';
+  return 'BlocStatus<$T>()';
 }
 
 
 }
 
 /// @nodoc
-class $BlocStatusCopyWith<$Res>  {
-$BlocStatusCopyWith(BlocStatus _, $Res Function(BlocStatus) __);
+class $BlocStatusCopyWith<T extends Object?,$Res>  {
+$BlocStatusCopyWith(BlocStatus<T> _, $Res Function(BlocStatus<T>) __);
 }
 
 
 /// Adds pattern-matching-related methods to [BlocStatus].
-extension BlocStatusPatterns on BlocStatus {
+extension BlocStatusPatterns<T extends Object?> on BlocStatus<T> {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -55,7 +55,7 @@ extension BlocStatusPatterns on BlocStatus {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Invalid value)?  invalid,TResult Function( _Loading value)?  loading,TResult Function( _Error value)?  error,TResult Function( _SuccessWithData value)?  successWithData,TResult Function( _Success value)?  success,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial<T> value)?  initial,TResult Function( _Invalid<T> value)?  invalid,TResult Function( _Loading<T> value)?  loading,TResult Function( _Error<T> value)?  error,TResult Function( _SuccessWithData<T> value)?  successWithData,TResult Function( _Success<T> value)?  success,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -82,7 +82,7 @@ return success(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Invalid value)  invalid,required TResult Function( _Loading value)  loading,required TResult Function( _Error value)  error,required TResult Function( _SuccessWithData value)  successWithData,required TResult Function( _Success value)  success,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial<T> value)  initial,required TResult Function( _Invalid<T> value)  invalid,required TResult Function( _Loading<T> value)  loading,required TResult Function( _Error<T> value)  error,required TResult Function( _SuccessWithData<T> value)  successWithData,required TResult Function( _Success<T> value)  success,}){
 final _that = this;
 switch (_that) {
 case _Initial():
@@ -108,7 +108,7 @@ return success(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Invalid value)?  invalid,TResult? Function( _Loading value)?  loading,TResult? Function( _Error value)?  error,TResult? Function( _SuccessWithData value)?  successWithData,TResult? Function( _Success value)?  success,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial<T> value)?  initial,TResult? Function( _Invalid<T> value)?  invalid,TResult? Function( _Loading<T> value)?  loading,TResult? Function( _Error<T> value)?  error,TResult? Function( _SuccessWithData<T> value)?  successWithData,TResult? Function( _Success<T> value)?  success,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -134,7 +134,7 @@ return success(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? message)?  invalid,TResult Function()?  loading,TResult Function( String? error)?  error,TResult Function( ApiData<Object> data,  String? message)?  successWithData,TResult Function( String? message)?  success,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String? message)?  invalid,TResult Function()?  loading,TResult Function( String? error)?  error,TResult Function( T data,  String? message)?  successWithData,TResult Function( String? message)?  success,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Invalid() when invalid != null:
@@ -160,7 +160,7 @@ return success(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? message)  invalid,required TResult Function()  loading,required TResult Function( String? error)  error,required TResult Function( ApiData<Object> data,  String? message)  successWithData,required TResult Function( String? message)  success,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String? message)  invalid,required TResult Function()  loading,required TResult Function( String? error)  error,required TResult Function( T data,  String? message)  successWithData,required TResult Function( String? message)  success,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Invalid():
@@ -185,7 +185,7 @@ return success(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? message)?  invalid,TResult? Function()?  loading,TResult? Function( String? error)?  error,TResult? Function( ApiData<Object> data,  String? message)?  successWithData,TResult? Function( String? message)?  success,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String? message)?  invalid,TResult? Function()?  loading,TResult? Function( String? error)?  error,TResult? Function( T data,  String? message)?  successWithData,TResult? Function( String? message)?  success,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Invalid() when invalid != null:
@@ -204,7 +204,7 @@ return success(_that.message);case _:
 /// @nodoc
 
 
-class _Initial extends BlocStatus {
+class _Initial<T extends Object?> extends BlocStatus<T> {
   const _Initial(): super._();
   
 
@@ -215,7 +215,7 @@ class _Initial extends BlocStatus {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial<T>);
 }
 
 
@@ -224,7 +224,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BlocStatus.initial()';
+  return 'BlocStatus<$T>.initial()';
 }
 
 
@@ -236,7 +236,7 @@ String toString() {
 /// @nodoc
 
 
-class _Invalid extends BlocStatus {
+class _Invalid<T extends Object?> extends BlocStatus<T> {
   const _Invalid({this.message}): super._();
   
 
@@ -246,13 +246,13 @@ class _Invalid extends BlocStatus {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$InvalidCopyWith<_Invalid> get copyWith => __$InvalidCopyWithImpl<_Invalid>(this, _$identity);
+_$InvalidCopyWith<T, _Invalid<T>> get copyWith => __$InvalidCopyWithImpl<T, _Invalid<T>>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Invalid&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Invalid<T>&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -261,15 +261,15 @@ int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'BlocStatus.invalid(message: $message)';
+  return 'BlocStatus<$T>.invalid(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$InvalidCopyWith<$Res> implements $BlocStatusCopyWith<$Res> {
-  factory _$InvalidCopyWith(_Invalid value, $Res Function(_Invalid) _then) = __$InvalidCopyWithImpl;
+abstract mixin class _$InvalidCopyWith<T extends Object?,$Res> implements $BlocStatusCopyWith<T, $Res> {
+  factory _$InvalidCopyWith(_Invalid<T> value, $Res Function(_Invalid<T>) _then) = __$InvalidCopyWithImpl;
 @useResult
 $Res call({
  String? message
@@ -280,17 +280,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$InvalidCopyWithImpl<$Res>
-    implements _$InvalidCopyWith<$Res> {
+class __$InvalidCopyWithImpl<T extends Object?,$Res>
+    implements _$InvalidCopyWith<T, $Res> {
   __$InvalidCopyWithImpl(this._self, this._then);
 
-  final _Invalid _self;
-  final $Res Function(_Invalid) _then;
+  final _Invalid<T> _self;
+  final $Res Function(_Invalid<T>) _then;
 
 /// Create a copy of BlocStatus
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
-  return _then(_Invalid(
+  return _then(_Invalid<T>(
 message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -302,7 +302,7 @@ as String?,
 /// @nodoc
 
 
-class _Loading extends BlocStatus {
+class _Loading<T extends Object?> extends BlocStatus<T> {
   const _Loading(): super._();
   
 
@@ -313,7 +313,7 @@ class _Loading extends BlocStatus {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading<T>);
 }
 
 
@@ -322,7 +322,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'BlocStatus.loading()';
+  return 'BlocStatus<$T>.loading()';
 }
 
 
@@ -334,7 +334,7 @@ String toString() {
 /// @nodoc
 
 
-class _Error extends BlocStatus {
+class _Error<T extends Object?> extends BlocStatus<T> {
   const _Error({this.error}): super._();
   
 
@@ -344,13 +344,13 @@ class _Error extends BlocStatus {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+_$ErrorCopyWith<T, _Error<T>> get copyWith => __$ErrorCopyWithImpl<T, _Error<T>>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error<T>&&(identical(other.error, error) || other.error == error));
 }
 
 
@@ -359,15 +359,15 @@ int get hashCode => Object.hash(runtimeType,error);
 
 @override
 String toString() {
-  return 'BlocStatus.error(error: $error)';
+  return 'BlocStatus<$T>.error(error: $error)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $BlocStatusCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+abstract mixin class _$ErrorCopyWith<T extends Object?,$Res> implements $BlocStatusCopyWith<T, $Res> {
+  factory _$ErrorCopyWith(_Error<T> value, $Res Function(_Error<T>) _then) = __$ErrorCopyWithImpl;
 @useResult
 $Res call({
  String? error
@@ -378,17 +378,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
+class __$ErrorCopyWithImpl<T extends Object?,$Res>
+    implements _$ErrorCopyWith<T, $Res> {
   __$ErrorCopyWithImpl(this._self, this._then);
 
-  final _Error _self;
-  final $Res Function(_Error) _then;
+  final _Error<T> _self;
+  final $Res Function(_Error<T>) _then;
 
 /// Create a copy of BlocStatus
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? error = freezed,}) {
-  return _then(_Error(
+  return _then(_Error<T>(
 error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -400,44 +400,44 @@ as String?,
 /// @nodoc
 
 
-class _SuccessWithData extends BlocStatus {
+class _SuccessWithData<T extends Object?> extends BlocStatus<T> {
   const _SuccessWithData(this.data, {this.message}): super._();
   
 
- final  ApiData<Object> data;
+ final  T data;
  final  String? message;
 
 /// Create a copy of BlocStatus
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SuccessWithDataCopyWith<_SuccessWithData> get copyWith => __$SuccessWithDataCopyWithImpl<_SuccessWithData>(this, _$identity);
+_$SuccessWithDataCopyWith<T, _SuccessWithData<T>> get copyWith => __$SuccessWithDataCopyWithImpl<T, _SuccessWithData<T>>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessWithData&&(identical(other.data, data) || other.data == data)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessWithData<T>&&const DeepCollectionEquality().equals(other.data, data)&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,data,message);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data),message);
 
 @override
 String toString() {
-  return 'BlocStatus.successWithData(data: $data, message: $message)';
+  return 'BlocStatus<$T>.successWithData(data: $data, message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SuccessWithDataCopyWith<$Res> implements $BlocStatusCopyWith<$Res> {
-  factory _$SuccessWithDataCopyWith(_SuccessWithData value, $Res Function(_SuccessWithData) _then) = __$SuccessWithDataCopyWithImpl;
+abstract mixin class _$SuccessWithDataCopyWith<T extends Object?,$Res> implements $BlocStatusCopyWith<T, $Res> {
+  factory _$SuccessWithDataCopyWith(_SuccessWithData<T> value, $Res Function(_SuccessWithData<T>) _then) = __$SuccessWithDataCopyWithImpl;
 @useResult
 $Res call({
- ApiData<Object> data, String? message
+ T data, String? message
 });
 
 
@@ -445,19 +445,19 @@ $Res call({
 
 }
 /// @nodoc
-class __$SuccessWithDataCopyWithImpl<$Res>
-    implements _$SuccessWithDataCopyWith<$Res> {
+class __$SuccessWithDataCopyWithImpl<T extends Object?,$Res>
+    implements _$SuccessWithDataCopyWith<T, $Res> {
   __$SuccessWithDataCopyWithImpl(this._self, this._then);
 
-  final _SuccessWithData _self;
-  final $Res Function(_SuccessWithData) _then;
+  final _SuccessWithData<T> _self;
+  final $Res Function(_SuccessWithData<T>) _then;
 
 /// Create a copy of BlocStatus
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? data = null,Object? message = freezed,}) {
-  return _then(_SuccessWithData(
-null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as ApiData<Object>,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+@pragma('vm:prefer-inline') $Res call({Object? data = freezed,Object? message = freezed,}) {
+  return _then(_SuccessWithData<T>(
+freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as T,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -468,7 +468,7 @@ as String?,
 /// @nodoc
 
 
-class _Success extends BlocStatus {
+class _Success<T extends Object?> extends BlocStatus<T> {
   const _Success({this.message}): super._();
   
 
@@ -478,13 +478,13 @@ class _Success extends BlocStatus {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
+_$SuccessCopyWith<T, _Success<T>> get copyWith => __$SuccessCopyWithImpl<T, _Success<T>>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success<T>&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -493,15 +493,15 @@ int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'BlocStatus.success(message: $message)';
+  return 'BlocStatus<$T>.success(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SuccessCopyWith<$Res> implements $BlocStatusCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
+abstract mixin class _$SuccessCopyWith<T extends Object?,$Res> implements $BlocStatusCopyWith<T, $Res> {
+  factory _$SuccessCopyWith(_Success<T> value, $Res Function(_Success<T>) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
  String? message
@@ -512,17 +512,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
+class __$SuccessCopyWithImpl<T extends Object?,$Res>
+    implements _$SuccessCopyWith<T, $Res> {
   __$SuccessCopyWithImpl(this._self, this._then);
 
-  final _Success _self;
-  final $Res Function(_Success) _then;
+  final _Success<T> _self;
+  final $Res Function(_Success<T>) _then;
 
 /// Create a copy of BlocStatus
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
-  return _then(_Success(
+  return _then(_Success<T>(
 message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

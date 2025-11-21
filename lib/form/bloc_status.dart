@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'bloc_status.freezed.dart';
 
 @freezed
-class BlocStatus with _$BlocStatus {
+class BlocStatus<T extends Object?> with _$BlocStatus<T> {
   const BlocStatus._();
 
   /// Initial idle state
@@ -19,10 +19,8 @@ class BlocStatus with _$BlocStatus {
   const factory BlocStatus.error({String? error}) = _Error;
 
   /// Success with attached generic data — wrapped in ApiData<T>
-  const factory BlocStatus.successWithData(
-    ApiData<Object> data, {
-    String? message,
-  }) = _SuccessWithData;
+  const factory BlocStatus.successWithData(T data, {String? message}) =
+      _SuccessWithData<T>;
 
   /// Simple success (message optional)
   const factory BlocStatus.success({String? message}) = _Success;
@@ -32,14 +30,4 @@ class BlocStatus with _$BlocStatus {
   bool get isError => this is _Error;
 
   bool get isSuccess => this is _Success || this is _SuccessWithData;
-}
-
-class ApiData<T> {
-  final T data;
-  final String? message;
-
-  const ApiData({required this.data, this.message});
-
-  @override
-  String toString() => 'ApiData($data)';
 }
