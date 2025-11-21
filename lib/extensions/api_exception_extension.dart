@@ -21,7 +21,7 @@ extension ApiExceptionXGraphQl<TData, TVars>
 
       if (graphqlResponse != null) {
         if (graphqlResponse['statusCode'].toString() == '401' || forceLogout) {
-          return ApiException.serverException(
+          return ApiException.unAuthorizedException(
             message:
                 graphqlResponse['message'] ?? 'Session Expired, Please login',
           );

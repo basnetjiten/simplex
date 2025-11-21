@@ -28,6 +28,9 @@ class SimplexBaseRemoteSource {
       );
 
       if (response.hasErrors) {
+        SimplexAppLogger.logError(
+          error: ':::API ERROR::: ${response.linkException.toString()}',
+        );
         throw response.toApiException();
       }
 
