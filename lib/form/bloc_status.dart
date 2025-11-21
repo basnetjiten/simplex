@@ -34,11 +34,23 @@ class BlocStatus with _$BlocStatus {
   bool get isSuccess => this is _Success || this is _SuccessWithData;
 }
 
+/// Type-safe wrapper for API response data
+///
+/// Prevents direct access to data, forcing type-safe extraction through:
+/// - [as<T>()]: Extract with explicit type (throws if wrong type)
+///
+/// Example:
+/// ```dart
+/// final apiData = ApiData.fromData(data: expiryModel, message: 'Success');
+/// final model = apiData.as<ExpiryModel>();
+/// // apiData._data //
+/// ```
+
 class ApiData<T> {
   final T _data;
   final String? message;
 
-  const ApiData({required T data, this.message}) : _data = data;
+  const ApiData.fromData({required T data, this.message}) : _data = data;
 
   /// Extracts data as type [R]
   ///
