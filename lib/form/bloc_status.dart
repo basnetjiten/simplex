@@ -35,10 +35,10 @@ class BlocStatus with _$BlocStatus {
 }
 
 class ApiData<T> {
-  final T data;
+  final T _data;
   final String? message;
 
-  const ApiData({required this.data, this.message});
+  const ApiData({required T data, this.message}) : _data = data;
 
   /// Extracts data as type [R]
   ///
@@ -65,9 +65,9 @@ class ApiData<T> {
       );
     }
 
-    return data as R;
+    return _data as R;
   }
 
   @override
-  String toString() => 'ApiData($data)';
+  String toString() => 'ApiData($_data)';
 }
