@@ -20,7 +20,7 @@ extension ApiExceptionXGraphQl<TData, TVars>
           graphqlErrors?.first.extensions?['response'];
 
       if (graphqlResponse != null) {
-        if (graphqlResponse['statusCode'].toString() == '401' || forceLogout) {
+        if (forceLogout) {
           return ApiException.unAuthorizedException(
             message: graphqlResponse['message'],
           );
