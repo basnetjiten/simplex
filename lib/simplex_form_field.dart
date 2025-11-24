@@ -41,6 +41,7 @@ class SimplexFormField extends StatelessWidget {
     this.errorMaxLines,
     this.errorFontSize,
     this.sentenceCapitalization = false,
+    this.autoCorrect = false,
     this.wordCapitalization = false,
     this.characterCapitalization = false,
     this.inputDecoration,
@@ -110,9 +111,11 @@ class SimplexFormField extends StatelessWidget {
   final String? labelText;
   final TextAlignVertical? alignVertical;
   final BoxConstraints? prefixIconConstraints;
+  final bool autoCorrect;
 
   @override
   Widget build(BuildContext context) => TextFormField(
+    autocorrect: autoCorrect,
     textAlignVertical: alignVertical,
     textCapitalization: getTextCapitalization(
       sentenceCapitalization: sentenceCapitalization,
