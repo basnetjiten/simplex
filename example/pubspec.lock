@@ -340,26 +340,26 @@ packages:
     dependency: transitive
     description:
       name: gql_dio_link
-      sha256: "0a38185eb2eeabcc8d81c8322b8b6da9057af36553c7acb46e54fe035866ccef"
+      sha256: "158c101663247c02d17c6ee3475361845047509fb1ec15e956608bdf27dfee50"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1+1"
+    version: "2.0.0"
   gql_exec:
     dependency: transitive
     description:
       name: gql_exec
-      sha256: "957db95ba37028001f76c1904e18b848f57cfef878e572ce77c6d898fafecf8f"
+      sha256: "394944626fae900f1d34343ecf2d62e44eb984826189c8979d305f0ae5846e38"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0+1"
+    version: "1.1.1-alpha+1699813812660"
   gql_link:
     dependency: transitive
     description:
       name: gql_link
-      sha256: "4aa288a1e67c899b0d746a2209e949fd0dc87e56d9b759a5cdc46a7069722cf3"
+      sha256: "0730276ce3a6a0ced073194ff923a8d99b3c78e442cbf096eb54fd0c3fa9f974"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0+1"
+    version: "1.1.0"
   gradient_borders:
     dependency: transitive
     description:
@@ -396,10 +396,10 @@ packages:
     dependency: transitive
     description:
       name: hive_local_storage
-      sha256: "7b505ffd5e149fae47321cb3b479966c656d4e633d1a797f84a978a505ee5ad5"
+      sha256: "793441fbc19d2152ffb740f11490f35c84ca924695b672c50fbed67a828b2de6"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.9"
   http:
     dependency: transitive
     description:
@@ -508,10 +508,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: e3641ec5d63ebf0d9b41bd43201a66e3fc79a65db5f61fc181f04cd27aab950c
+      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
       url: "https://pub.dev"
     source: hosted
-    version: "1.16.0"
+    version: "1.17.0"
   mime:
     dependency: transitive
     description:
@@ -856,10 +856,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "522f00f556e73044315fa4585ec3270f1808a4b186c936e612cab0b565ff1e00"
+      sha256: ab2726c1a94d3176a45960b6234466ec367179b87dd74f1611adb1f3b5fb9d55
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.6"
+    version: "0.7.7"
   typed_data:
     dependency: transitive
     description:
