@@ -9,11 +9,9 @@ class AppError with _$AppError {
   const factory AppError.validationError({required String message}) =
       _ValidationError;
 
-  const factory AppError.unAuthorized({String? message}) = _UnAuthorized;
+  const factory AppError.unAuthorized() = _UnAuthorized;
 
-  const factory AppError.forbidden({String? message}) = _Forbidden;
-
-  const factory AppError.unAuthenticated() = _UnAuthenticated;
+  const factory AppError.forbidden() = _Forbidden;
 
   const factory AppError.noInternet() = _NoInternet;
 
@@ -28,12 +26,11 @@ extension AppErrorExtension on AppError {
     return when(
       serverError: (message) => onFailure(message),
       validationError: (message) => onFailure(message),
-      unAuthorized: (message) => onFailure(message ?? "Unauthorized access."),
-      unAuthenticated: () => onFailure("Unauthenticated access."),
+      unAuthorized: () => onFailure("Unauthorized access."),
+      forbidden: () => onFailure("Forbidden access."),
       noInternet: () => onFailure("No internet connection."),
       timeOut: (message) => onFailure(message),
       unSupportedPlatform: (message) => onFailure(message),
-      forbidden: (String? message) => onFailure(message ?? 'Forbidden access.'),
     );
   }
 }
