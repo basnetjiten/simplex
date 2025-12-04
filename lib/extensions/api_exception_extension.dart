@@ -20,23 +20,18 @@ extension ApiExceptionXGraphQl<TData, TVars>
           graphqlErrors?.first.extensions?['response'];
 
       if (graphqlResponse != null) {
+        final String message = _extractMessage(graphqlResponse);
+
+        final int? statusCode = graphqlResponse['statusCode'] as int?;
         if (forceLogout) {
-          return ApiException.unAuthorizedException(
-            message: graphqlResponse['message'],
-          );
+          return ApiException.unAuthorizedException(message: message);
+        }
+        if (statusCode == 401) {
+          return ApiException.unAuthorizedException(message: message);
         }
 
-        if (graphqlResponse['message'] is List &&
-            (graphqlResponse['message']).isNotEmpty) {
-          final String input = graphqlResponse['message'][0].toString();
-
-          final int index = input.lastIndexOf('.');
-
-          final String errorMessage = (index != -1)
-              ? input.substring(index + 1)
-              : input;
-
-          return ApiException.serverException(message: errorMessage);
+        if (statusCode == 403) {
+          return ApiException.forbiddenException(message: message);
         }
 
         // we are interested for first error only
@@ -52,5 +47,14 @@ extension ApiExceptionXGraphQl<TData, TVars>
 
       return ApiException.serverException(message: 'Server Error');
     }
+  }
+
+  String _extractMessage(Map<String, dynamic> response) {
+    final message = response['message'];
+
+    if (message is String) return message;
+    if (message is List && message.isNotEmpty) return message.first.toString();
+
+    return graphqlErrors?.first.message ?? 'An error occurred';
   }
 }
