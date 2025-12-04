@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fpdart/fpdart.dart';
+import 'package:simplex/core/auth/simplex_auth_handler.dart';
 import 'package:simplex/errors/api_exception.dart';
 import 'package:simplex/errors/app_error.dart';
 import 'package:simplex/typedefs/typedefs.dart';
@@ -38,7 +39,14 @@ class SimplexBaseRepository {
         serverException: (String message) =>
             AppError.serverError(message: message),
         network: () => const AppError.noInternet(),
-        unAuthorizedException: (String message) => AppError.unAuthorized(),
+        unAuthorizedException: (String? message) {
+          SimplexAuthHandler.notifyUnauthorized(message ?? 'An-Authorized');
+          return AppError.unAuthorized();
+        },
+        forbiddenException: (String? message) {
+          SimplexAuthHandler.notifyForbidden(message ?? 'Forbidden');
+          return AppError.unAuthorized();
+        },
       );
       return left(appError);
     } on Exception {
