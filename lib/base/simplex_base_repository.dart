@@ -38,7 +38,10 @@ class SimplexBaseRepository {
         serverException: (String message) =>
             AppError.serverError(message: message),
         network: () => const AppError.noInternet(),
-        unAuthorizedException: (String message) => AppError.unAuthorized(),
+        unAuthorizedException: (String? message) =>
+            AppError.unAuthorized(message: message),
+        forbiddenException: (String? message) =>
+            AppError.forbidden(message: message),
       );
       return left(appError);
     } on Exception {

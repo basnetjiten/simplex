@@ -55,13 +55,14 @@ extension AppErrorPatterns on AppError {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ServerError value)?  serverError,TResult Function( _ValidationError value)?  validationError,TResult Function( _UnAuthorized value)?  unAuthorized,TResult Function( _UnAuthenticated value)?  unAuthenticated,TResult Function( _NoInternet value)?  noInternet,TResult Function( _TimeOut value)?  timeOut,TResult Function( _UnSupportedPlatform value)?  unSupportedPlatform,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ServerError value)?  serverError,TResult Function( _ValidationError value)?  validationError,TResult Function( _UnAuthorized value)?  unAuthorized,TResult Function( _Forbidden value)?  forbidden,TResult Function( _UnAuthenticated value)?  unAuthenticated,TResult Function( _NoInternet value)?  noInternet,TResult Function( _TimeOut value)?  timeOut,TResult Function( _UnSupportedPlatform value)?  unSupportedPlatform,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that);case _ValidationError() when validationError != null:
 return validationError(_that);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized(_that);case _UnAuthenticated() when unAuthenticated != null:
+return unAuthorized(_that);case _Forbidden() when forbidden != null:
+return forbidden(_that);case _UnAuthenticated() when unAuthenticated != null:
 return unAuthenticated(_that);case _NoInternet() when noInternet != null:
 return noInternet(_that);case _TimeOut() when timeOut != null:
 return timeOut(_that);case _UnSupportedPlatform() when unSupportedPlatform != null:
@@ -83,13 +84,14 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ServerError value)  serverError,required TResult Function( _ValidationError value)  validationError,required TResult Function( _UnAuthorized value)  unAuthorized,required TResult Function( _UnAuthenticated value)  unAuthenticated,required TResult Function( _NoInternet value)  noInternet,required TResult Function( _TimeOut value)  timeOut,required TResult Function( _UnSupportedPlatform value)  unSupportedPlatform,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ServerError value)  serverError,required TResult Function( _ValidationError value)  validationError,required TResult Function( _UnAuthorized value)  unAuthorized,required TResult Function( _Forbidden value)  forbidden,required TResult Function( _UnAuthenticated value)  unAuthenticated,required TResult Function( _NoInternet value)  noInternet,required TResult Function( _TimeOut value)  timeOut,required TResult Function( _UnSupportedPlatform value)  unSupportedPlatform,}){
 final _that = this;
 switch (_that) {
 case _ServerError():
 return serverError(_that);case _ValidationError():
 return validationError(_that);case _UnAuthorized():
-return unAuthorized(_that);case _UnAuthenticated():
+return unAuthorized(_that);case _Forbidden():
+return forbidden(_that);case _UnAuthenticated():
 return unAuthenticated(_that);case _NoInternet():
 return noInternet(_that);case _TimeOut():
 return timeOut(_that);case _UnSupportedPlatform():
@@ -110,13 +112,14 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ServerError value)?  serverError,TResult? Function( _ValidationError value)?  validationError,TResult? Function( _UnAuthorized value)?  unAuthorized,TResult? Function( _UnAuthenticated value)?  unAuthenticated,TResult? Function( _NoInternet value)?  noInternet,TResult? Function( _TimeOut value)?  timeOut,TResult? Function( _UnSupportedPlatform value)?  unSupportedPlatform,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ServerError value)?  serverError,TResult? Function( _ValidationError value)?  validationError,TResult? Function( _UnAuthorized value)?  unAuthorized,TResult? Function( _Forbidden value)?  forbidden,TResult? Function( _UnAuthenticated value)?  unAuthenticated,TResult? Function( _NoInternet value)?  noInternet,TResult? Function( _TimeOut value)?  timeOut,TResult? Function( _UnSupportedPlatform value)?  unSupportedPlatform,}){
 final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that);case _ValidationError() when validationError != null:
 return validationError(_that);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized(_that);case _UnAuthenticated() when unAuthenticated != null:
+return unAuthorized(_that);case _Forbidden() when forbidden != null:
+return forbidden(_that);case _UnAuthenticated() when unAuthenticated != null:
 return unAuthenticated(_that);case _NoInternet() when noInternet != null:
 return noInternet(_that);case _TimeOut() when timeOut != null:
 return timeOut(_that);case _UnSupportedPlatform() when unSupportedPlatform != null:
@@ -137,12 +140,13 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function()?  unAuthorized,TResult Function()?  unAuthenticated,TResult Function()?  noInternet,TResult Function( String message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function( String? message)?  unAuthorized,TResult Function( String? message)?  forbidden,TResult Function()?  unAuthenticated,TResult Function()?  noInternet,TResult Function( String message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
 return validationError(_that.message);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized();case _UnAuthenticated() when unAuthenticated != null:
+return unAuthorized(_that.message);case _Forbidden() when forbidden != null:
+return forbidden(_that.message);case _UnAuthenticated() when unAuthenticated != null:
 return unAuthenticated();case _NoInternet() when noInternet != null:
 return noInternet();case _TimeOut() when timeOut != null:
 return timeOut(_that.message);case _UnSupportedPlatform() when unSupportedPlatform != null:
@@ -164,12 +168,13 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function()  unAuthorized,required TResult Function()  unAuthenticated,required TResult Function()  noInternet,required TResult Function( String message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function( String? message)  unAuthorized,required TResult Function( String? message)  forbidden,required TResult Function()  unAuthenticated,required TResult Function()  noInternet,required TResult Function( String message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError():
 return serverError(_that.message);case _ValidationError():
 return validationError(_that.message);case _UnAuthorized():
-return unAuthorized();case _UnAuthenticated():
+return unAuthorized(_that.message);case _Forbidden():
+return forbidden(_that.message);case _UnAuthenticated():
 return unAuthenticated();case _NoInternet():
 return noInternet();case _TimeOut():
 return timeOut(_that.message);case _UnSupportedPlatform():
@@ -190,12 +195,13 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function()?  unAuthorized,TResult? Function()?  unAuthenticated,TResult? Function()?  noInternet,TResult? Function( String message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function( String? message)?  unAuthorized,TResult? Function( String? message)?  forbidden,TResult? Function()?  unAuthenticated,TResult? Function()?  noInternet,TResult? Function( String message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
 return validationError(_that.message);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized();case _UnAuthenticated() when unAuthenticated != null:
+return unAuthorized(_that.message);case _Forbidden() when forbidden != null:
+return forbidden(_that.message);case _UnAuthenticated() when unAuthenticated != null:
 return unAuthenticated();case _NoInternet() when noInternet != null:
 return noInternet();case _TimeOut() when timeOut != null:
 return timeOut(_that.message);case _UnSupportedPlatform() when unSupportedPlatform != null:
@@ -343,33 +349,133 @@ as String,
 
 
 class _UnAuthorized implements AppError {
-  const _UnAuthorized();
+  const _UnAuthorized({this.message});
   
 
+ final  String? message;
 
-
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UnAuthorizedCopyWith<_UnAuthorized> get copyWith => __$UnAuthorizedCopyWithImpl<_UnAuthorized>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthorized);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthorized&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'AppError.unAuthorized()';
+  return 'AppError.unAuthorized(message: $message)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$UnAuthorizedCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+  factory _$UnAuthorizedCopyWith(_UnAuthorized value, $Res Function(_UnAuthorized) _then) = __$UnAuthorizedCopyWithImpl;
+@useResult
+$Res call({
+ String? message
+});
 
 
+
+
+}
+/// @nodoc
+class __$UnAuthorizedCopyWithImpl<$Res>
+    implements _$UnAuthorizedCopyWith<$Res> {
+  __$UnAuthorizedCopyWithImpl(this._self, this._then);
+
+  final _UnAuthorized _self;
+  final $Res Function(_UnAuthorized) _then;
+
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(_UnAuthorized(
+message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _Forbidden implements AppError {
+  const _Forbidden({this.message});
+  
+
+ final  String? message;
+
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ForbiddenCopyWith<_Forbidden> get copyWith => __$ForbiddenCopyWithImpl<_Forbidden>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Forbidden&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'AppError.forbidden(message: $message)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ForbiddenCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+  factory _$ForbiddenCopyWith(_Forbidden value, $Res Function(_Forbidden) _then) = __$ForbiddenCopyWithImpl;
+@useResult
+$Res call({
+ String? message
+});
+
+
+
+
+}
+/// @nodoc
+class __$ForbiddenCopyWithImpl<$Res>
+    implements _$ForbiddenCopyWith<$Res> {
+  __$ForbiddenCopyWithImpl(this._self, this._then);
+
+  final _Forbidden _self;
+  final $Res Function(_Forbidden) _then;
+
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(_Forbidden(
+message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
