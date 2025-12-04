@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:fpdart/fpdart.dart';
-import 'package:simplex/core/auth/auth_error_notifier.dart';
 import 'package:simplex/errors/api_exception.dart';
 import 'package:simplex/errors/app_error.dart';
 import 'package:simplex/typedefs/typedefs.dart';
@@ -17,9 +16,7 @@ class SimplexBaseRepository {
   ///
   /// If you need to make http request or use third party plugin that can throw
   /// exception other that NetworkError don't use [SimplexBaseRepository].
-  SimplexBaseRepository(this.authErrorNotifier);
-
-  final AuthErrorNotifier authErrorNotifier;
+  SimplexBaseRepository();
 
   /// [T] is Return type for [EitherResponse]
   ///
@@ -41,15 +38,7 @@ class SimplexBaseRepository {
         serverException: (String message) =>
             AppError.serverError(message: message),
         network: () => const AppError.noInternet(),
-        unAuthorizedException: (String? message) {
-          authErrorNotifier.notifyUnauthorized(message);
-          return AppError.unAuthorized();
-        },
-
-        forbiddenException: (String? message) {
-          authErrorNotifier.notifyForbidden(message);
-          return AppError.forbidden();
-        },
+        unAuthorizedException: (String message) => AppError.unAuthorized(),
       );
       return left(appError);
     } on Exception {

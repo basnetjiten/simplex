@@ -55,14 +55,13 @@ extension ApiExceptionPatterns on ApiException {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ServerException value)?  serverException,TResult Function( _Network value)?  network,TResult Function( _UnAuthorizedException value)?  unAuthorizedException,TResult Function( _ForbiddenException value)?  forbiddenException,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ServerException value)?  serverException,TResult Function( _Network value)?  network,TResult Function( _UnAuthorizedException value)?  unAuthorizedException,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _ServerException() when serverException != null:
 return serverException(_that);case _Network() when network != null:
 return network(_that);case _UnAuthorizedException() when unAuthorizedException != null:
-return unAuthorizedException(_that);case _ForbiddenException() when forbiddenException != null:
-return forbiddenException(_that);case _:
+return unAuthorizedException(_that);case _:
   return orElse();
 
 }
@@ -80,14 +79,13 @@ return forbiddenException(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ServerException value)  serverException,required TResult Function( _Network value)  network,required TResult Function( _UnAuthorizedException value)  unAuthorizedException,required TResult Function( _ForbiddenException value)  forbiddenException,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ServerException value)  serverException,required TResult Function( _Network value)  network,required TResult Function( _UnAuthorizedException value)  unAuthorizedException,}){
 final _that = this;
 switch (_that) {
 case _ServerException():
 return serverException(_that);case _Network():
 return network(_that);case _UnAuthorizedException():
-return unAuthorizedException(_that);case _ForbiddenException():
-return forbiddenException(_that);case _:
+return unAuthorizedException(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -104,14 +102,13 @@ return forbiddenException(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ServerException value)?  serverException,TResult? Function( _Network value)?  network,TResult? Function( _UnAuthorizedException value)?  unAuthorizedException,TResult? Function( _ForbiddenException value)?  forbiddenException,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ServerException value)?  serverException,TResult? Function( _Network value)?  network,TResult? Function( _UnAuthorizedException value)?  unAuthorizedException,}){
 final _that = this;
 switch (_that) {
 case _ServerException() when serverException != null:
 return serverException(_that);case _Network() when network != null:
 return network(_that);case _UnAuthorizedException() when unAuthorizedException != null:
-return unAuthorizedException(_that);case _ForbiddenException() when forbiddenException != null:
-return forbiddenException(_that);case _:
+return unAuthorizedException(_that);case _:
   return null;
 
 }
@@ -128,13 +125,12 @@ return forbiddenException(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverException,TResult Function()?  network,TResult Function( String? message)?  unAuthorizedException,TResult Function( String? message)?  forbiddenException,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverException,TResult Function()?  network,TResult Function( String message)?  unAuthorizedException,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerException() when serverException != null:
 return serverException(_that.message);case _Network() when network != null:
 return network();case _UnAuthorizedException() when unAuthorizedException != null:
-return unAuthorizedException(_that.message);case _ForbiddenException() when forbiddenException != null:
-return forbiddenException(_that.message);case _:
+return unAuthorizedException(_that.message);case _:
   return orElse();
 
 }
@@ -152,13 +148,12 @@ return forbiddenException(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverException,required TResult Function()  network,required TResult Function( String? message)  unAuthorizedException,required TResult Function( String? message)  forbiddenException,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverException,required TResult Function()  network,required TResult Function( String message)  unAuthorizedException,}) {final _that = this;
 switch (_that) {
 case _ServerException():
 return serverException(_that.message);case _Network():
 return network();case _UnAuthorizedException():
-return unAuthorizedException(_that.message);case _ForbiddenException():
-return forbiddenException(_that.message);case _:
+return unAuthorizedException(_that.message);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +170,12 @@ return forbiddenException(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverException,TResult? Function()?  network,TResult? Function( String? message)?  unAuthorizedException,TResult? Function( String? message)?  forbiddenException,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverException,TResult? Function()?  network,TResult? Function( String message)?  unAuthorizedException,}) {final _that = this;
 switch (_that) {
 case _ServerException() when serverException != null:
 return serverException(_that.message);case _Network() when network != null:
 return network();case _UnAuthorizedException() when unAuthorizedException != null:
-return unAuthorizedException(_that.message);case _ForbiddenException() when forbiddenException != null:
-return forbiddenException(_that.message);case _:
+return unAuthorizedException(_that.message);case _:
   return null;
 
 }
@@ -291,10 +285,10 @@ String toString() {
 
 
 class _UnAuthorizedException implements ApiException {
-  const _UnAuthorizedException({this.message});
+  const _UnAuthorizedException({required this.message});
   
 
- final  String? message;
+ final  String message;
 
 /// Create a copy of ApiException
 /// with the given fields replaced by the non-null parameter values.
@@ -326,7 +320,7 @@ abstract mixin class _$UnAuthorizedExceptionCopyWith<$Res> implements $ApiExcept
   factory _$UnAuthorizedExceptionCopyWith(_UnAuthorizedException value, $Res Function(_UnAuthorizedException) _then) = __$UnAuthorizedExceptionCopyWithImpl;
 @useResult
 $Res call({
- String? message
+ String message
 });
 
 
@@ -343,76 +337,10 @@ class __$UnAuthorizedExceptionCopyWithImpl<$Res>
 
 /// Create a copy of ApiException
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_UnAuthorizedException(
-message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _ForbiddenException implements ApiException {
-  const _ForbiddenException({this.message});
-  
-
- final  String? message;
-
-/// Create a copy of ApiException
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ForbiddenExceptionCopyWith<_ForbiddenException> get copyWith => __$ForbiddenExceptionCopyWithImpl<_ForbiddenException>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ForbiddenException&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,message);
-
-@override
-String toString() {
-  return 'ApiException.forbiddenException(message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ForbiddenExceptionCopyWith<$Res> implements $ApiExceptionCopyWith<$Res> {
-  factory _$ForbiddenExceptionCopyWith(_ForbiddenException value, $Res Function(_ForbiddenException) _then) = __$ForbiddenExceptionCopyWithImpl;
-@useResult
-$Res call({
- String? message
-});
-
-
-
-
-}
-/// @nodoc
-class __$ForbiddenExceptionCopyWithImpl<$Res>
-    implements _$ForbiddenExceptionCopyWith<$Res> {
-  __$ForbiddenExceptionCopyWithImpl(this._self, this._then);
-
-  final _ForbiddenException _self;
-  final $Res Function(_ForbiddenException) _then;
-
-/// Create a copy of ApiException
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
-  return _then(_ForbiddenException(
-message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

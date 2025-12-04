@@ -20,18 +20,9 @@ extension ApiExceptionXGraphQl<TData, TVars>
           graphqlErrors?.first.extensions?['response'];
 
       if (graphqlResponse != null) {
-        final int? statusCode = graphqlResponse['statusCode'] as int?;
-
         if (forceLogout) {
           return ApiException.unAuthorizedException(
-            message:
-                graphqlResponse['message']?.toString() ?? 'Session expired',
-          );
-        }
-
-        if (statusCode == 403) {
-          return ApiException.forbiddenException(
-            message: graphqlResponse['message']?.toString() ?? 'Access denied',
+            message: graphqlResponse['message'],
           );
         }
 

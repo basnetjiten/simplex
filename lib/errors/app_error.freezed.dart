@@ -55,14 +55,14 @@ extension AppErrorPatterns on AppError {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ServerError value)?  serverError,TResult Function( _ValidationError value)?  validationError,TResult Function( _UnAuthorized value)?  unAuthorized,TResult Function( _Forbidden value)?  forbidden,TResult Function( _NoInternet value)?  noInternet,TResult Function( _TimeOut value)?  timeOut,TResult Function( _UnSupportedPlatform value)?  unSupportedPlatform,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _ServerError value)?  serverError,TResult Function( _ValidationError value)?  validationError,TResult Function( _UnAuthorized value)?  unAuthorized,TResult Function( _UnAuthenticated value)?  unAuthenticated,TResult Function( _NoInternet value)?  noInternet,TResult Function( _TimeOut value)?  timeOut,TResult Function( _UnSupportedPlatform value)?  unSupportedPlatform,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that);case _ValidationError() when validationError != null:
 return validationError(_that);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized(_that);case _Forbidden() when forbidden != null:
-return forbidden(_that);case _NoInternet() when noInternet != null:
+return unAuthorized(_that);case _UnAuthenticated() when unAuthenticated != null:
+return unAuthenticated(_that);case _NoInternet() when noInternet != null:
 return noInternet(_that);case _TimeOut() when timeOut != null:
 return timeOut(_that);case _UnSupportedPlatform() when unSupportedPlatform != null:
 return unSupportedPlatform(_that);case _:
@@ -83,14 +83,14 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ServerError value)  serverError,required TResult Function( _ValidationError value)  validationError,required TResult Function( _UnAuthorized value)  unAuthorized,required TResult Function( _Forbidden value)  forbidden,required TResult Function( _NoInternet value)  noInternet,required TResult Function( _TimeOut value)  timeOut,required TResult Function( _UnSupportedPlatform value)  unSupportedPlatform,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _ServerError value)  serverError,required TResult Function( _ValidationError value)  validationError,required TResult Function( _UnAuthorized value)  unAuthorized,required TResult Function( _UnAuthenticated value)  unAuthenticated,required TResult Function( _NoInternet value)  noInternet,required TResult Function( _TimeOut value)  timeOut,required TResult Function( _UnSupportedPlatform value)  unSupportedPlatform,}){
 final _that = this;
 switch (_that) {
 case _ServerError():
 return serverError(_that);case _ValidationError():
 return validationError(_that);case _UnAuthorized():
-return unAuthorized(_that);case _Forbidden():
-return forbidden(_that);case _NoInternet():
+return unAuthorized(_that);case _UnAuthenticated():
+return unAuthenticated(_that);case _NoInternet():
 return noInternet(_that);case _TimeOut():
 return timeOut(_that);case _UnSupportedPlatform():
 return unSupportedPlatform(_that);case _:
@@ -110,14 +110,14 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ServerError value)?  serverError,TResult? Function( _ValidationError value)?  validationError,TResult? Function( _UnAuthorized value)?  unAuthorized,TResult? Function( _Forbidden value)?  forbidden,TResult? Function( _NoInternet value)?  noInternet,TResult? Function( _TimeOut value)?  timeOut,TResult? Function( _UnSupportedPlatform value)?  unSupportedPlatform,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _ServerError value)?  serverError,TResult? Function( _ValidationError value)?  validationError,TResult? Function( _UnAuthorized value)?  unAuthorized,TResult? Function( _UnAuthenticated value)?  unAuthenticated,TResult? Function( _NoInternet value)?  noInternet,TResult? Function( _TimeOut value)?  timeOut,TResult? Function( _UnSupportedPlatform value)?  unSupportedPlatform,}){
 final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that);case _ValidationError() when validationError != null:
 return validationError(_that);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized(_that);case _Forbidden() when forbidden != null:
-return forbidden(_that);case _NoInternet() when noInternet != null:
+return unAuthorized(_that);case _UnAuthenticated() when unAuthenticated != null:
+return unAuthenticated(_that);case _NoInternet() when noInternet != null:
 return noInternet(_that);case _TimeOut() when timeOut != null:
 return timeOut(_that);case _UnSupportedPlatform() when unSupportedPlatform != null:
 return unSupportedPlatform(_that);case _:
@@ -137,13 +137,13 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function()?  unAuthorized,TResult Function()?  forbidden,TResult Function()?  noInternet,TResult Function( String message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function()?  unAuthorized,TResult Function()?  unAuthenticated,TResult Function()?  noInternet,TResult Function( String message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
 return validationError(_that.message);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized();case _Forbidden() when forbidden != null:
-return forbidden();case _NoInternet() when noInternet != null:
+return unAuthorized();case _UnAuthenticated() when unAuthenticated != null:
+return unAuthenticated();case _NoInternet() when noInternet != null:
 return noInternet();case _TimeOut() when timeOut != null:
 return timeOut(_that.message);case _UnSupportedPlatform() when unSupportedPlatform != null:
 return unSupportedPlatform(_that.message);case _:
@@ -164,13 +164,13 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function()  unAuthorized,required TResult Function()  forbidden,required TResult Function()  noInternet,required TResult Function( String message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function()  unAuthorized,required TResult Function()  unAuthenticated,required TResult Function()  noInternet,required TResult Function( String message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError():
 return serverError(_that.message);case _ValidationError():
 return validationError(_that.message);case _UnAuthorized():
-return unAuthorized();case _Forbidden():
-return forbidden();case _NoInternet():
+return unAuthorized();case _UnAuthenticated():
+return unAuthenticated();case _NoInternet():
 return noInternet();case _TimeOut():
 return timeOut(_that.message);case _UnSupportedPlatform():
 return unSupportedPlatform(_that.message);case _:
@@ -190,13 +190,13 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function()?  unAuthorized,TResult? Function()?  forbidden,TResult? Function()?  noInternet,TResult? Function( String message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function()?  unAuthorized,TResult? Function()?  unAuthenticated,TResult? Function()?  noInternet,TResult? Function( String message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
 return validationError(_that.message);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized();case _Forbidden() when forbidden != null:
-return forbidden();case _NoInternet() when noInternet != null:
+return unAuthorized();case _UnAuthenticated() when unAuthenticated != null:
+return unAuthenticated();case _NoInternet() when noInternet != null:
 return noInternet();case _TimeOut() when timeOut != null:
 return timeOut(_that.message);case _UnSupportedPlatform() when unSupportedPlatform != null:
 return unSupportedPlatform(_that.message);case _:
@@ -374,8 +374,8 @@ String toString() {
 /// @nodoc
 
 
-class _Forbidden implements AppError {
-  const _Forbidden();
+class _UnAuthenticated implements AppError {
+  const _UnAuthenticated();
   
 
 
@@ -385,7 +385,7 @@ class _Forbidden implements AppError {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Forbidden);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthenticated);
 }
 
 
@@ -394,7 +394,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AppError.forbidden()';
+  return 'AppError.unAuthenticated()';
 }
 
 
