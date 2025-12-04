@@ -17,7 +17,7 @@ class SimplexBaseRepository {
   ///
   /// If you need to make http request or use third party plugin that can throw
   /// exception other that NetworkError don't use [SimplexBaseRepository].
-  SimplexBaseRepository({required this.authErrorNotifier});
+  SimplexBaseRepository(this.authErrorNotifier);
 
   final AuthErrorNotifier authErrorNotifier;
 
