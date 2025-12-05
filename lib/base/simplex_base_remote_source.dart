@@ -1,14 +1,15 @@
 import 'package:ferry/ferry.dart';
-import 'package:hive_local_storage/hive_local_storage.dart';
+import 'package:simplex/base/simplex_auth_error_interceptor.dart';
 import 'package:simplex/errors/api_exception.dart';
 import 'package:simplex/extensions/api_exception_extension.dart';
 import 'package:simplex/logging/logger.dart';
 
 class SimplexBaseRemoteSource {
-  SimplexBaseRemoteSource(this._client, this.localStorage);
+  SimplexBaseRemoteSource(this._client, this._authErrorInterceptor);
 
   final Client _client;
-  final LocalStorage localStorage;
+
+  final SimplexAuthErrorInterceptor _authErrorInterceptor;
 
   /// Executes a GraphQL API call using the provided [operationRequest].
   ///
@@ -39,6 +40,15 @@ class SimplexBaseRemoteSource {
       }
 
       throw ApiException.serverException(message: 'Server Error');
+    } on ApiException catch (e) {
+      e.maybeWhen(
+        orElse: () {},
+        unAuthorizedException: (String? message) =>
+            _authErrorInterceptor.onUnauthorized(message ?? 'Un-Authorized'),
+        forbiddenException: (String? message) =>
+            _authErrorInterceptor.onForbidden(message ?? 'Forbidden'),
+      );
+      rethrow;
     } catch (e, stackTrace) {
       SimplexAppLogger.logAppError(e, stackTrace);
       rethrow;
