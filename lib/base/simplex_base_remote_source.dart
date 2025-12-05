@@ -1,5 +1,5 @@
 import 'package:ferry/ferry.dart';
-import 'package:simplex/base/simplex_auth_error_interceptor.dart';
+import 'package:simplex/core/auth_error_interceptor.dart';
 import 'package:simplex/errors/api_exception.dart';
 import 'package:simplex/extensions/api_exception_extension.dart';
 import 'package:simplex/logging/logger.dart';
@@ -9,7 +9,7 @@ class SimplexBaseRemoteSource {
 
   final Client _client;
 
-  final SimplexAuthErrorInterceptor _authErrorInterceptor;
+  final AuthErrorInterceptor _authErrorInterceptor;
 
   /// Executes a GraphQL API call using the provided [operationRequest].
   ///
