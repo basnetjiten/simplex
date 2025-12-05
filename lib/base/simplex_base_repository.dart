@@ -38,15 +38,11 @@ class SimplexBaseRepository {
         serverException: (String message) =>
             AppError.serverError(message: message),
         network: () => const AppError.noInternet(),
-        unAuthorizedException: (String? message) {
-          // SimplexAuthHandler.notifyUnauthorized(message ?? 'An-Authorized');
-          return AppError.unAuthorized();
-        },
-        forbiddenException: (String? message) {
-          // SimplexAuthHandler.notifyForbidden(message ?? 'Forbidden');
-          return AppError.unAuthorized();
-        },
+        unAuthorizedException: (String? message) => AppError.unAuthorized(),
+        forbiddenException: (String? message) => AppError.unAuthorized(),
+        sessionExpiredException: (String? message) => AppError.unAuthorized(),
       );
+
       return left(appError);
     } on Exception {
       return left(AppError.serverError(message: 'Server Error'));
