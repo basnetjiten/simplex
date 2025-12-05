@@ -10,6 +10,12 @@ class AuthEvent {
 }
 
 class SimplexAuthEventBus {
+  SimplexAuthEventBus._internal();
+
+  static final SimplexAuthEventBus _instance = SimplexAuthEventBus._internal();
+
+  factory SimplexAuthEventBus.instance() => _instance;
+
   final _controller = StreamController<AuthEvent>.broadcast();
 
   Stream<AuthEvent> get stream => _controller.stream;
