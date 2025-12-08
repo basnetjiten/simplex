@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'package:rxdart/rxdart.dart';
 
 enum AuthErrorType { unauthorized, forbidden }
 
@@ -10,17 +10,18 @@ class AuthEvent {
 }
 
 class SimplexAuthEventBus {
-  SimplexAuthEventBus._internal();
+  SimplexAuthEventBus._();
 
-  static final SimplexAuthEventBus _instance = SimplexAuthEventBus._internal();
+  static final SimplexAuthEventBus instance = SimplexAuthEventBus._();
 
-  factory SimplexAuthEventBus.instance() => _instance;
+  final _subject = PublishSubject<AuthEvent>();
 
-  final _controller = StreamController<AuthEvent>.broadcast();
+  /// Main stream
+  Stream<AuthEvent> get stream => _subject.stream;
 
-  Stream<AuthEvent> get stream => _controller.stream;
+  Stream<AuthEvent> get events => _subject.stream;
 
-  void emit(AuthEvent event) => _controller.add(event);
+  void emit(AuthEvent event) => _subject.add(event);
 
-  void dispose() => _controller.close();
+  void dispose() => _subject.close();
 }

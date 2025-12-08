@@ -24,13 +24,10 @@ extension ApiExceptionXGraphQl<TData, TVars>
 
         final int? statusCode = graphqlResponse['statusCode'] as int?;
         if (forceLogout) {
+          return ApiException.sessionExpiredException(message: message);
+        } else if (statusCode == 401) {
           return ApiException.unAuthorizedException(message: message);
-        }
-        if (statusCode == 401) {
-          return ApiException.unAuthorizedException(message: message);
-        }
-
-        if (statusCode == 403) {
+        } else if (statusCode == 403) {
           return ApiException.forbiddenException(message: message);
         }
 

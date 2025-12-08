@@ -5,11 +5,12 @@ import 'package:simplex/extensions/api_exception_extension.dart';
 import 'package:simplex/logging/logger.dart';
 
 class SimplexBaseRemoteSource {
-  SimplexBaseRemoteSource(this._client, this._authErrorInterceptor);
+  SimplexBaseRemoteSource(this._client);
 
   final Client _client;
 
-  final AuthErrorInterceptor _authErrorInterceptor;
+  final AuthErrorInterceptor _authErrorInterceptor =
+      AuthErrorInterceptor.instance;
 
   /// Executes a GraphQL API call using the provided [operationRequest].
   ///
@@ -44,6 +45,8 @@ class SimplexBaseRemoteSource {
       e.maybeWhen(
         orElse: () {},
         unAuthorizedException: (String? message) =>
+            _authErrorInterceptor.onUnauthorized(message ?? 'Un-Authorized'),
+        sessionExpiredException: (String? message) =>
             _authErrorInterceptor.onUnauthorized(message ?? 'Un-Authorized'),
         forbiddenException: (String? message) =>
             _authErrorInterceptor.onForbidden(message ?? 'Forbidden'),

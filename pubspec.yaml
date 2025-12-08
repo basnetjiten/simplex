@@ -29,6 +29,9 @@ dependencies:
   fpdart: ^1.1.1
   intl: ^0.20.2
 
+  #functional
+  rxdart: ^0.28.0
+
 
   #UI/UX
   flutter_svg: 2.2.0
