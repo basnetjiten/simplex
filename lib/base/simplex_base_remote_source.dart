@@ -44,10 +44,10 @@ class SimplexBaseRemoteSource {
     } on ApiException catch (e) {
       e.maybeWhen(
         orElse: () {},
-        unAuthorizedException: (String? message) =>
-            _authErrorInterceptor.onUnauthorized(message ?? 'Un-Authorized'),
-        sessionExpiredException: (String? message) =>
-            _authErrorInterceptor.onUnauthorized(message ?? 'Un-Authorized'),
+        unAuthorizedException: (String? message) => _authErrorInterceptor
+            .onUnAuthenticated(message ?? 'Un-Authenticated'),
+        sessionExpiredException: (String? message) => _authErrorInterceptor
+            .onSessionExpired(message ?? 'Session Expired'),
         forbiddenException: (String? message) =>
             _authErrorInterceptor.onForbidden(message ?? 'Forbidden'),
       );

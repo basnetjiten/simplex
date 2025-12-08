@@ -1,6 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 
-enum AuthErrorType { unauthorized, forbidden }
+enum AuthErrorType { unAuthenticated, sessionExpired, forbidden }
 
 class AuthEvent {
   final AuthErrorType type;

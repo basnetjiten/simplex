@@ -1,5 +1,5 @@
 abstract class SimplexAuthErrorInterceptor {
-  void onUnauthorized(String message);
-
+  void onUnAuthenticated(String message);
+  void onSessionExpired(String message);
   void onForbidden(String message);
 }
