@@ -16,9 +16,6 @@ class SimplexAuthEventBus {
 
   final _subject = PublishSubject<AuthEvent>();
 
-  /// Main stream
-  Stream<AuthEvent> get stream => _subject.stream;
-
   Stream<AuthEvent> get events => _subject.stream;
 
   void emit(AuthEvent event) => _subject.add(event);
