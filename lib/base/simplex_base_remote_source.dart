@@ -4,6 +4,62 @@ import 'package:simplex/errors/api_exception.dart';
 import 'package:simplex/extensions/api_exception_extension.dart';
 import 'package:simplex/logging/logger.dart';
 
+/// A base class for handling GraphQL API calls with standardized error handling and authentication.
+///
+/// This class provides a foundation for making GraphQL requests and handling their responses
+/// consistently across the application. It integrates with the Ferry client and includes
+/// built-in error handling, logging, and authentication error interception.
+///
+/// ## Key Features
+/// - Standardized API request execution with [executeApiCall]
+/// - Automatic error handling and conversion to [ApiException]
+/// - Authentication error interception and handling
+/// - Request and error logging
+///
+/// ## Basic Usage
+///
+/// ### 1. Extend the base class
+/// ```dart
+/// class UserRemoteSource extends SimplexBaseRemoteSource {
+///   UserRemoteSource(Client client) : super(client);
+///
+///   Future<User> getUser(String userId) async {
+///     final request = GetUserQuery(
+///       variables: GetUserArguments(id: userId),
+///     ).request;
+///
+///     final response = await executeApiCall(request);
+///     return response.user;
+///   }
+/// }
+/// ```
+///
+/// ### 2. Handle API responses
+/// ```dart
+/// try {
+///   final user = await userRemoteSource.getUser('123');
+///   // Handle success
+/// } on ApiException catch (e) {
+///   // Handle specific API errors
+///   if (e is UnauthorizedException) {
+///     // Handle unauthorized access
+///   }
+///   // Other error handling...
+/// }
+/// ```
+///
+/// ## Error Handling
+/// - Converts GraphQL errors to [ApiException] with appropriate types
+/// - Automatically handles authentication errors through [AuthErrorInterceptor]
+/// - Provides detailed error logging
+///
+/// ## Logging
+/// - Logs request details including operation name
+/// - Captures and logs all errors with stack traces
+///
+/// See also:
+/// - [ApiException] for error types and handling
+/// - [AuthErrorInterceptor] for authentication error handling
 class SimplexBaseRemoteSource {
   SimplexBaseRemoteSource(this._client);
 
@@ -26,12 +82,12 @@ class SimplexBaseRemoteSource {
           .first;
 
       SimplexAppLogger.logInfo(
-        info: ':::API Request::: ${operationRequest.operation.operationName}',
+        info: '🚀 API Request: ${operationRequest.operation.operationName}',
       );
 
       if (response.hasErrors) {
         SimplexAppLogger.logError(
-          error: ':::API ERROR::: ${response.linkException.toString()}',
+          error: '❌ API Error: ${response.linkException.toString()}',
         );
         throw response.toApiException();
       }

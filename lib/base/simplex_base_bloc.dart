@@ -4,13 +4,49 @@
 */
 
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:simplex/errors/app_error.dart';
+import 'package:simplex/extensions/app_error_extension.dart';
 
-/// BaseBloc provides a reusable way to handle API calls
-/// and map errors or success results to Bloc states.
+/// A custom base BLoC class that simplifies API call handling and state management.
+///
+/// This abstract class provides a standardized way to handle API calls and
+/// state transitions in BLoCs, with built-in error handling and state emission.
+///
+/// ## Key Features
+/// - Simplified API call handling with [Either] type
+/// - Automatic error handling and state management
+/// - Support for both synchronous and asynchronous state updates
+/// - Built-in error mapping using [AppError]
+///
+/// ## Basic Usage
+///
+/// ###Create a BLoC that extends SimplexBlocBase
+/// ```dart
+/// class UserBloc extends SimplexBlocBase<UserEvent, UserState> {
+///   final UserRepository _repository;
+///
+///   UserBloc(this._repository) : super(const UserState.initial()) {
+///     on<LoadUserEvent>(_onLoadUser);
+///   }
+///
+///   Future<void> _onLoadUser()  {
+///     await handleAPICall<User>(
+///       call: _repository.getUser(event.userId),
+///       onSuccess: (user) => state.copyWith(
+///         status: UserStatus.loaded,
+///         user: user,
+///       ),
+///       onFailure: (error) => state.copyWith(
+///         status: UserStatus.failure,
+///         error: error,
+///       ),
+///     );
+///   }
+/// }
+/// ```
+///
 abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
   SimplexBlocBase(super.state);
 

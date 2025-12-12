@@ -13,8 +13,10 @@ class ApiException with _$ApiException implements Exception {
 
   const factory ApiException.unAuthorizedException({String? message}) =
       _UnAuthorizedException;
+
   const factory ApiException.sessionExpiredException({String? message}) =
       _SessionExpiredException;
+
   const factory ApiException.forbiddenException({String? message}) =
       _ForbiddenException;
 }
