@@ -5,10 +5,10 @@ import 'package:ferry/ferry.dart';
 import 'package:simplex/errors/api_exception.dart';
 import 'package:simplex/logging/logger.dart';
 
-extension ApiExceptionXGraphQl<TData, TVars>
+extension GraphqlApiExceptionXGraphQl<TData, TVars>
     on OperationResponse<TData, TVars> {
   /// Convert GraphQl errors in OperationResponse to ApiException
-  ApiException toApiException({bool forceLogout = false}) {
+  ApiException toGraphqlApiException({bool forceLogout = false}) {
     try {
       if (linkException?.originalException is DioException &&
           (linkException?.originalException as DioException).error

@@ -6,6 +6,4 @@ mixin FormMixin {
   bool get isNotValid => !isValid;
 
   List<Field<dynamic>> get fields;
-
-//Map<String, dynamic> get values;
 }

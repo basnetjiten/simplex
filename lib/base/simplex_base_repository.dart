@@ -21,7 +21,7 @@ import 'package:simplex/typedefs/typedefs.dart';
 ///
 /// ### Extending the Base Repository
 /// ```dart
-/// class UserRepository extends SimplexBaseRepository {
+/// class UserRepository extends SimplexGraphqlRepository {
 ///   Future<EitherResponse<User>> getUser(String id) async {
 ///     return processApiCall<ApiUser, User>(
 ///       call: _apiClient.getUser(id),
@@ -64,13 +64,13 @@ import 'package:simplex/typedefs/typedefs.dart';
 /// - [ApiException] for API error types
 /// - [AppError] for application error types
 /// - [EitherResponse] for the response type definition
-class SimplexBaseRepository {
+class SimplexGraphqlRepository {
   /// BaseRepository is not meant to be used with other than server
   /// (BaseRemoteSource).
   ///
   /// If you need to make http request or use third party plugin that can throw
-  /// exception other that NetworkError don't use [SimplexBaseRepository].
-  SimplexBaseRepository();
+  /// exception other that NetworkError don't use [SimplexGraphqlRepository].
+  SimplexGraphqlRepository();
 
   /// [T] is Return type for [EitherResponse]
   ///
@@ -80,7 +80,7 @@ class SimplexBaseRepository {
   ///
   /// This should not be used other that making request to server. Otherwise
   /// you would not be able to handle exceptions properly.
-  EitherResponse<T> processApiCall<R, T>({
+  EitherResponse<T> processGraphqlApiCall<R, T>({
     required Future<R> call,
     required FutureOr<T> Function(R data) onSuccess,
   }) async {
@@ -88,18 +88,37 @@ class SimplexBaseRepository {
       final R data = await call;
       return right(await onSuccess(data));
     } on ApiException catch (e) {
-      final AppError appError = e.when(
-        serverException: (String message) =>
-            AppError.serverError(message: message),
-        network: () => const AppError.noInternet(),
-        unAuthorizedException: (String? message) => AppError.unAuthorized(),
-        forbiddenException: (String? message) => AppError.unAuthorized(),
-        sessionExpiredException: (String? message) => AppError.unAuthorized(),
-      );
+      AppError appError = _handleAPIException(e);
 
       return left(appError);
     } on Exception {
       return left(AppError.serverError(message: 'Server Error'));
     }
+  }
+
+  EitherResponse<T> processRestApiCall<R, T>({
+    required Future<R> call,
+    required T Function(R data) onSuccess,
+  }) async {
+    try {
+      final data = await call;
+      return right(onSuccess(data));
+    } on ApiException catch (e) {
+      AppError appError = _handleAPIException(e);
+      return left(appError);
+    }
+  }
+
+  AppError _handleAPIException(ApiException e) {
+    final AppError appError = e.when(
+      serverException: (String message) =>
+          AppError.serverError(message: message),
+      network: () => const AppError.noInternet(),
+      unAuthorizedException: (String? message) => AppError.unAuthorized(),
+      forbiddenException: (String? message) => AppError.unAuthorized(),
+      sessionExpiredException: (String? message) => AppError.unAuthorized(),
+      timeOut: (message) => AppError.timeOut(message: message),
+    );
+    return appError;
   }
 }

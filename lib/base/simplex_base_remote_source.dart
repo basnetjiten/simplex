@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:ferry/ferry.dart';
 import 'package:simplex/core/auth_error_interceptor.dart';
 import 'package:simplex/errors/api_exception.dart';
-import 'package:simplex/extensions/api_exception_extension.dart';
+import 'package:simplex/extensions/graphql_exception_extension.dart';
+import 'package:simplex/extensions/rest_api_exception_extension.dart';
 import 'package:simplex/logging/logger.dart';
 
 /// A base class for handling GraphQL API calls with standardized error handling and authentication.
@@ -20,7 +22,7 @@ import 'package:simplex/logging/logger.dart';
 ///
 /// ### 1. Extend the base class
 /// ```dart
-/// class UserRemoteSource extends SimplexBaseRemoteSource {
+/// class UserRemoteSource extends SimplexGraphqlRemoteSource {
 ///   UserRemoteSource(Client client) : super(client);
 ///
 ///   Future<User> getUser(String userId) async {
@@ -61,9 +63,11 @@ import 'package:simplex/logging/logger.dart';
 /// - [ApiException] for error types and handling
 /// - [AuthErrorInterceptor] for authentication error handling
 class SimplexBaseRemoteSource {
-  SimplexBaseRemoteSource(this._client);
+  SimplexBaseRemoteSource(this._graphqlClient, this._dioClient);
 
-  final Client _client;
+  final Client _graphqlClient;
+
+  final Dio _dioClient;
 
   final AuthErrorInterceptor _authErrorInterceptor =
       AuthErrorInterceptor.instance;
@@ -73,11 +77,11 @@ class SimplexBaseRemoteSource {
   /// Sends the request to the remote server and handles the response.
   /// - Logs request details and duration for debugging purposes.
   /// - Throws an [ApiException] if the response contains errors or data is null.
-  Future<TData> executeApiCall<TData, TVars>(
+  Future<TData> executeGraphqlApiCall<TData, TVars>(
     OperationRequest<TData, TVars> operationRequest,
   ) async {
     try {
-      final OperationResponse<TData, TVars> response = await _client
+      final OperationResponse<TData, TVars> response = await _graphqlClient
           .request(operationRequest)
           .first;
 
@@ -89,7 +93,7 @@ class SimplexBaseRemoteSource {
         SimplexAppLogger.logError(
           error: '❌ API Error: ${response.linkException.toString()}',
         );
-        throw response.toApiException();
+        throw response.toGraphqlApiException();
       }
 
       if (response.data != null) {
@@ -111,6 +115,28 @@ class SimplexBaseRemoteSource {
     } catch (e, stackTrace) {
       SimplexAppLogger.logAppError(e, stackTrace);
       rethrow;
+    }
+  }
+
+  Future<T> executeRestApiCall<T>({
+    required Future<Response> Function(Dio dio) request,
+    required T Function(dynamic data) onResponse,
+  }) async {
+    try {
+      final response = await request(_dioClient);
+      if (response.statusCode! == 200) {
+        return onResponse(response.data ?? {});
+      } else {
+        throw ApiException.serverException(
+          message: response.data['message'] ?? 'UnExpected Error Occurred!',
+        );
+      }
+    } on DioException catch (e) {
+      throw e.toRestApiException;
+    } catch (e) {
+      throw const ApiException.serverException(
+        message: 'UnExpected Error Occurred!',
+      );
     }
   }
 }
