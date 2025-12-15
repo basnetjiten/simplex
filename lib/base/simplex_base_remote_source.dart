@@ -22,7 +22,7 @@ import 'package:simplex/logging/logger.dart';
 ///
 /// ### 1. Extend the base class
 /// ```dart
-/// class UserRemoteSource extends SimplexGraphqlRemoteSource {
+/// class UserRemoteSource extends SimplexBaseRemoteSource {
 ///   UserRemoteSource(Client client) : super(client);
 ///
 ///   Future<User> getUser(String userId) async {

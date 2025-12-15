@@ -21,7 +21,7 @@ import 'package:simplex/typedefs/typedefs.dart';
 ///
 /// ### Extending the Base Repository
 /// ```dart
-/// class UserRepository extends SimplexGraphqlRepository {
+/// class UserRepository extends SimplexBaseRepository {
 ///   Future<EitherResponse<User>> getUser(String id) async {
 ///     return processApiCall<ApiUser, User>(
 ///       call: _apiClient.getUser(id),
@@ -64,13 +64,13 @@ import 'package:simplex/typedefs/typedefs.dart';
 /// - [ApiException] for API error types
 /// - [AppError] for application error types
 /// - [EitherResponse] for the response type definition
-class SimplexGraphqlRepository {
+class SimplexBaseRepository {
   /// BaseRepository is not meant to be used with other than server
   /// (BaseRemoteSource).
   ///
   /// If you need to make http request or use third party plugin that can throw
-  /// exception other that NetworkError don't use [SimplexGraphqlRepository].
-  SimplexGraphqlRepository();
+  /// exception other that NetworkError don't use [SimplexBaseRepository].
+  SimplexBaseRepository();
 
   /// [T] is Return type for [EitherResponse]
   ///
