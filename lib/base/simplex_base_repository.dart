@@ -80,7 +80,7 @@ class SimplexBaseRepository {
   ///
   /// This should not be used other that making request to server. Otherwise
   /// you would not be able to handle exceptions properly.
-  EitherResponse<T> processGraphqlApiCall<R, T>({
+  EitherResponse<T> processApiCall<R, T>({
     required Future<R> call,
     required FutureOr<T> Function(R data) onSuccess,
   }) async {
@@ -96,21 +96,8 @@ class SimplexBaseRepository {
     }
   }
 
-  EitherResponse<T> processRestApiCall<R, T>({
-    required Future<R> call,
-    required T Function(R data) onSuccess,
-  }) async {
-    try {
-      final data = await call;
-      return right(onSuccess(data));
-    } on ApiException catch (e) {
-      AppError appError = _handleAPIException(e);
-      return left(appError);
-    }
-  }
-
   AppError _handleAPIException(ApiException e) {
-    final AppError appError = e.when(
+    return e.when(
       serverException: (String message) =>
           AppError.serverError(message: message),
       network: () => const AppError.noInternet(),
@@ -119,6 +106,5 @@ class SimplexBaseRepository {
       sessionExpiredException: (String? message) => AppError.unAuthorized(),
       timeOut: (message) => AppError.timeOut(message: message),
     );
-    return appError;
   }
 }
