@@ -1,9 +1,9 @@
 /*
 * @Author: Jiten Basnet on 10/09/2024
-* @Company: GTEN SOFTWARE PVT. LTD.
 */
 
 import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:simplex/errors/app_error.dart';
@@ -47,7 +47,8 @@ import 'package:simplex/extensions/app_error_extension.dart';
 /// }
 /// ```
 ///
-abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
+abstract class SimplexBlocBase<Event, State> extends Bloc<Event, State>
+    with SimplexBaseMixin<State> {
   SimplexBlocBase(super.state);
 
   /// Handles an API call that returns Either<AppError, R>
@@ -58,43 +59,80 @@ abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
   /// - [onFailure] maps error messages to a state
   /// - [onInvalid] optional, for handling invalid state separately
   Future<void> handleAPICall<R>({
-    Emitter<State>? emitter,
+    required Emitter<State> emitter,
     required Future<Either<AppError, R>> call,
-    required Function(R data) onSuccess,
+    required State Function(R data) onSuccess,
     required State Function(String error) onFailure,
     State Function(String error)? onInvalid,
+  }) async {
+    await performAPICall<R>(
+      call: call,
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+      onInvalid: onInvalid,
+      emitState: emitter.call,
+    );
+  }
+}
+
+abstract class SimplexCubitBase<State> extends Cubit<State>
+    with SimplexBaseMixin<State> {
+  SimplexCubitBase(super.initialState);
+
+  /// Handles an API call that returns Either<AppError, R>
+  /// - [call] is the API function returning Either<AppError, R>
+  /// - [onSuccess] maps the success result to a new state
+  /// - [onFailure] maps error messages to a state
+  /// - [onInvalid] optional, for handling invalid state separately
+  Future<void> handleAPICall<R>({
+    required Future<Either<AppError, R>> call,
+    required State Function(R data) onSuccess,
+    required State Function(String error) onFailure,
+    State Function(String error)? onInvalid,
+  }) async {
+    await performAPICall<R>(
+      call: call,
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+      onInvalid: onInvalid,
+      emitState: emit,
+    );
+  }
+}
+
+mixin SimplexBaseMixin<S> on BlocBase<S> {
+  /// Internal method to handle API calls and state emission
+  Future<void> performAPICall<R>({
+    required Future<Either<AppError, R>> call,
+    required S Function(R data) onSuccess,
+    required S Function(String error) onFailure,
+    required void Function(S) emitState,
+    S Function(String error)? onInvalid,
   }) async {
     if (isClosed) return;
 
     try {
       final response = await call;
 
-      // Handle success or failure using Either.fold
       response.fold(
-        (error) => _emitError(emitter, error, onFailure),
-        (data) => _emitState(emitter, onSuccess(data)),
+        (error) => _emitError(error, onFailure, emitState),
+        (data) => emitState(onSuccess(data)),
       );
     } on AppError catch (error) {
       if (!isClosed && onInvalid != null) {
-        _emitError(emitter, error, onInvalid);
+        _emitError(error, onInvalid, emitState);
       }
     } catch (error) {
-      log('SimplexBlocBase Error: $error');
+      log('SimplexBaseMixin Error: $error');
     }
   }
 
-  /// Emits the state based on success
-  void _emitState(Emitter<State>? emitter, State state) {
-    emitter != null ? emitter(state) : emit(state);
-  }
-
-  /// Emits the state based on error
   void _emitError(
-    Emitter<State>? emitter,
     AppError error,
-    State Function(String) onInvalidOrFailure,
+    S Function(String) onInvalidOrFailure,
+    void Function(S) emitState,
   ) {
-    final state = error.mapErrorMessage<State>(onInvalidOrFailure);
-    _emitState(emitter, state);
+    final state = error.mapErrorMessage<S>(onInvalidOrFailure);
+    emitState(state);
   }
 }
