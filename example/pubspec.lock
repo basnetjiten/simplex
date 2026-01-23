@@ -396,10 +396,10 @@ packages:
     dependency: transitive
     description:
       name: hive_local_storage
-      sha256: "793441fbc19d2152ffb740f11490f35c84ca924695b672c50fbed67a828b2de6"
+      sha256: f4eca0f41dbc04ca52450fa66f3ec20267e3cc53734fffc59d3f5aa11242943f
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.9"
+    version: "2.0.11"
   http:
     dependency: transitive
     description:
@@ -676,10 +676,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences
-      sha256: "6e8bf70b7fef813df4e9a36f658ac46d107db4b4cfe1048b477d4e453a8159f5"
+      sha256: "2939ae520c9024cb197fc20dee269cd8cdbf564c8b5746374ec6cacdc5169e64"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.3"
+    version: "2.5.4"
   shared_preferences_android:
     dependency: transitive
     description:
