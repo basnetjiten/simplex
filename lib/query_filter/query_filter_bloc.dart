@@ -5,16 +5,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:simplex/base/simplex_base_bloc.dart';
 
-part 'query_filter_event.dart';
 part 'query_filter_bloc.freezed.dart';
+part 'query_filter_event.dart';
 part 'query_filter_state.dart';
 
 class QueryFilterBloc extends SimplexBloc<QueryFilterEvent, QueryFilterState> {
   final Duration debounceDuration;
 
-  QueryFilterBloc({
-    this.debounceDuration = const Duration(milliseconds: 500),
-  }) : super(const QueryFilterState.query()) {
+  QueryFilterBloc({this.debounceDuration = const Duration(milliseconds: 500)})
+    : super(const QueryFilterState.query()) {
     on<QueryFilterEvent>(
       _onToggleSearchView,
       transformer:
@@ -29,11 +28,13 @@ class QueryFilterBloc extends SimplexBloc<QueryFilterEvent, QueryFilterState> {
     QueryFilterEvent event,
     Emitter<QueryFilterState> emit,
   ) {
-    emit(state.copyWith(
-      query: event.query,
-      isSearch: event.isSearch,
-      filters: event.filters,
-    ));
+    emit(
+      state.copyWith(
+        query: event.query,
+        isSearch: event.isSearch,
+        filters: event.filters,
+      ),
+    );
   }
 
   void onSearchOrFilterChange(
@@ -41,10 +42,12 @@ class QueryFilterBloc extends SimplexBloc<QueryFilterEvent, QueryFilterState> {
     List<dynamic>? filters,
     bool isSearchOnly = true,
   }) {
-    add(QueryFilterEvent.searchQuery(
-      query: keyword,
-      isSearch: isSearchOnly,
-      filters: filters,
-    ));
+    add(
+      QueryFilterEvent.searchQuery(
+        query: keyword,
+        isSearch: isSearchOnly,
+        filters: filters,
+      ),
+    );
   }
 }

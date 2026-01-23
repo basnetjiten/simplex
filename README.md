@@ -101,14 +101,7 @@ Simplex relies on `freezed` and `json_serializable`. Run the generator:
 dart run build_runner build -d
 ```
 
----
 
-## 📝 Standards for New Developers
--   **Naming**: Follow the `snake_case` for filenames and `PascalCase` for classes.
--   **DI**: For page-level logic, always use **Factory** (@injectable) instead of Singletons to ensure state is reset on navigation.
--   **Composition**: Prefer composition over deep inheritance. If a feature isn't a "Base" feature, put it in a separate folder under `lib/`.
-
----
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
