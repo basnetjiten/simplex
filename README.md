@@ -2,59 +2,100 @@
 
 **Simplex** is a lightweight, standardized Flutter framework designed to accelerate development by providing robust base classes for BLoC/Cubit, advanced form management, and reusable utility modules.
 
-It aims to reduce boilerplate code while maintaining a clean, scalable architecture following software engineering best practices.
-
 ---
 
 ## 🚀 Core Features
 
--   **Standardized BLoC Architecture**: Inherit from `SimplexBloc` or `SimplexCubit` to handle API calls with built-in error mapping and state management.
+-   **Standardized BLoC Architecture**: Inherit from `SimplexBloc` or `SimplexCubit` to handle API calls with built-in error mapping.
+-   **Data Layer Abstraction**: Base classes for `RemoteSource` (GraphQL/REST) and `Repository` with automatic error conversion.
 -   **Advanced Form Handling**: Powerful `TextFormField` wrappers and BLoC-integrated form status management.
--   **Query & Filter Utility**: A ready-to-use module for handling debounced search and complex filtering logic.
--   **Enhanced UI Components**: Standardized wrappers for SVG images, Cached Network Images, and Shimmers.
--   **functional Programming Integration**: Powered by `fpdart` and `rxdart` for robust data flow.
+-   **Query & Filter Utility**: Ready-to-use module for handling debounced search and complex filtering logic.
+-   **Authentication Event Bus**: Centralized stream for handling auth states like session expiry or unauthorized access.
+-   **Caching & Logging**: Simple mixins for Cubit state caching and a standardized logging system.
 
 ---
 
-## 🏗 Architecture & Best Practices
+## 🏗 Architecture Layers
 
-The library is organized into conceptual modules:
+### 1. Data Layer (`RemoteSource` & `Repository`)
+Simplex provides a clean separation between raw API calls and domain logic.
 
--   `lib/base/`: Contains the fundamental building blocks (`SimplexBloc`, `SimplexCubit`, `RemoteSource`).
--   `lib/form/`: Classes for form validation, field management, and BLoC status signals.
--   `lib/query_filter/`: Logic for handling search input with debounce and filter selection.
--   `lib/errors/`: Standardized error types and mapping extensions.
-
-### Standards to Follow:
-1.  **Immutability**: Always use `freezed` for Events and States.
-2.  **API Handling**: Use `handleAPICall` to automaticallly map `Either<AppError, R>` to your UI state.
-3.  **UI Isolation**: Keep your UI clean by using the provided `simplex` widgets which handle loading/error states consistently.
-
----
-
-## 📖 Usage Guide
-
-### 1. Base BLoC & API Calls
-Simplify your data fetching logic by extending `SimplexBloc`.
+#### **Remote Source**
+Use `SimplexBaseRemoteSource` to execute GraphQL (via Ferry) or REST (via Dio) calls. It handles logging and automatically intercepts authentication errors.
 
 ```dart
-class UserBloc extends SimplexBloc<UserEvent, UserState> {
-  final UserRepository repository;
+class UserRemoteSource extends SimplexBaseRemoteSource {
+  UserRemoteSource(super.graphqlClient, super.dioClient);
 
-  UserBloc(this.repository) : super(const UserState.initial());
+  Future<UserData> getUser(String id) {
+    return executeGraphqlApiCall(GetUserQuery(variables: vars).request);
+  }
+}
+```
 
-  Future<void> _onLoadUser(LoadUserEvent event, Emitter<UserState> emit) async {
-    await handleAPICall<User>(
-      emitter: emit,
-      call: repository.getUser(event.userId),
-      onSuccess: (user) => state.copyWith(status: Status.loaded, user: user),
-      onFailure: (error) => state.copyWith(status: Status.failure, error: error),
+#### **Repository**
+Use `SimplexBaseRepository` to wrap remote calls into an `EitherResponse`. It converts `ApiException` (data layer) into `AppError` (domain layer) automatically.
+
+```dart
+class UserRepository extends SimplexBaseRepository {
+  Future<EitherResponse<User>> getUser(String id) {
+    return processApiCall<ApiUser, User>(
+      call: remoteSource.getUser(id),
+      onSuccess: (data) => User.fromApi(data),
     );
   }
 }
 ```
 
-### 2. Query & Filter (Search)
+### 2. State Management (`SimplexBloc` & `SimplexCubit`)
+The base BLoC classes provide `handleAPICall`, which bridges the Repository's `Either` response directly to your UI state updates.
+
+```dart
+class MyBloc extends SimplexBloc<MyEvent, MyState> {
+  Future<void> _onLoad(event, emit) async {
+    await handleAPICall<Data>(
+      emitter: emit,
+      call: repository.getData(),
+      onSuccess: (data) => state.copyWith(data: data),
+      onFailure: (error) => state.copyWith(error: error),
+    );
+  }
+}
+```
+
+### 3. Core Utilities
+
+#### **Authentication Event Bus**
+`SimplexAuthEventBus` is a singleton that broadcasts authentication errors (`unAuthenticated`, `sessionExpired`, `forbidden`) application-wide. This is automatically triggered by the `RemoteSource`.
+
+```dart
+SimplexAuthEventBus.instance.events.listen((event) {
+  if (event.type == AuthErrorType.sessionExpired) {
+    // Navigate to Login
+  }
+});
+```
+
+#### **Cubit Cache Mixin**
+Easily persist Cubit data in memory using the `CubitCacheMixin`. Perfect for maintaining state during navigation without complex persistence.
+
+```dart
+class MyCubit extends SimplexCubit<MyState> with CubitCacheMixin {
+  void saveData(data) {
+    storeToCache(data);
+    emit(state.copyWith(data: data));
+  }
+}
+```
+
+#### **Logging**
+Use `SimplexAppLogger` for standardized console output, including info, warnings, and formatted app errors with stack traces.
+
+---
+
+## 📖 Feature Modules
+
+### Query & Filter (Search)
 Handle debounced search and filtering effortlessly.
 
 ```dart
@@ -68,16 +109,7 @@ BlocProvider(
 
 // In your UI
 onChanged: (value) {
-  context.read<QueryFilterBloc>().onSearchOrFilterChange(value);
-}
-```
-
-### 3. Forms & Validation
-Utilize the built-in form state mixins to manage complex form logic without the mess.
-
-```dart
-class MyFormBloc extends Bloc<MyFormEvent, MyFormState> with FormMixin {
-  // Leverage SimplexFormState to track field changes and validation
+  context.read<QueryFilterBloc>().onSearchOrFilterChange(value, isSearchOnly: true);
 }
 ```
 
@@ -101,7 +133,7 @@ Simplex relies on `freezed` and `json_serializable`. Run the generator:
 dart run build_runner build -d
 ```
 
-
+---
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
