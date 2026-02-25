@@ -57,12 +57,14 @@ import 'package:simplex/logging/logger.dart';
 /// - [ApiException] for error types and handling
 /// - [AuthErrorInterceptor] for authentication error handling
 ///
-@Deprecated('Use SimplexGraphqlRemoteSource or SimplexRestRemoteSource instead.')
+
 class SimplexBaseRemoteSource {
   /// Default positional constructor (Deprecated).
   ///
   /// Use [SimplexGraphqlRemoteSource] or [SimplexRestRemoteSource] for a cleaner syntax.
-
+  @Deprecated(
+    'Use SimplexGraphqlRemoteSource or SimplexRestRemoteSource instead.',
+  )
   SimplexBaseRemoteSource(this.graphqlClient, this.dioClient);
 
   /// Named constructor for flexible/mixed usage.
@@ -90,7 +92,7 @@ class SimplexBaseRemoteSource {
     try {
       final OperationResponse<TData, TVars> response = await graphqlClient!
           .request(operationRequest)
-          .firstWhere((OperationResponse<TData, TVars> r) => !r.loading);
+          .first;
 
       SimplexAppLogger.logInfo(
         info: '🚀 API Request: ${operationRequest.operation.operationName}',
@@ -152,9 +154,10 @@ class SimplexBaseRemoteSource {
   }
 }
 
-/// A specialized version of [SimplexBaseRemoteSource] for GraphQL only.
+/// A specialized version of SimplexBaseRemoteSource for GraphQL only.
 abstract class SimplexGraphqlRemoteSource extends SimplexBaseRemoteSource {
-  SimplexGraphqlRemoteSource(Client graphqlClient) : super.make(graphqlClient: graphqlClient);
+  SimplexGraphqlRemoteSource(Client graphqlClient)
+    : super.make(graphqlClient: graphqlClient);
 }
 
 /// A specialized version of [SimplexBaseRemoteSource] for REST only.
