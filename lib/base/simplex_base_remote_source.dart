@@ -56,13 +56,13 @@ import 'package:simplex/logging/logger.dart';
 /// See also:
 /// - [ApiException] for error types and handling
 /// - [AuthErrorInterceptor] for authentication error handling
+///
+@Deprecated('Use SimplexGraphqlRemoteSource or SimplexRestRemoteSource instead.')
 class SimplexBaseRemoteSource {
   /// Default positional constructor (Deprecated).
   ///
   /// Use [SimplexGraphqlRemoteSource] or [SimplexRestRemoteSource] for a cleaner syntax.
-  @Deprecated(
-    'Use SimplexGraphqlRemoteSource or SimplexRestRemoteSource instead.',
-  )
+
   SimplexBaseRemoteSource(this.graphqlClient, this.dioClient);
 
   /// Named constructor for flexible/mixed usage.
