@@ -17,36 +17,44 @@ import 'package:simplex/logging/logger.dart';
 /// - Automatic error handling and conversion to [ApiException]
 /// - Authentication error interception and handling
 /// - Request and error logging
-///
+
 /// ## Basic Usage
 ///
-/// ### 1. Extend the base class
+/// ### 1. GraphQL Remote Source
 /// ```dart
 /// class UserRemoteSource extends SimplexBaseRemoteSource {
-///   UserRemoteSource(Client client) : super(client);
+///   UserRemoteSource(Client client) : super.graphql(client);
 ///
 ///   Future<User> getUser(String userId) async {
 ///     final request = GetUserQuery(
 ///       variables: GetUserArguments(id: userId),
 ///     ).request;
 ///
-///     final response = await executeApiCall(request);
-///     return response.user;
+///     final response = await executeGraphqlApiCall(request);
+///     return response;
 ///   }
 /// }
 /// ```
 ///
-/// ### 2. Handle API responses
+/// ### 2. REST Remote Source
 /// ```dart
-/// try {
-///   final user = await userRemoteSource.getUser('123');
-///   // Handle success
-/// } on ApiException catch (e) {
-///   // Handle specific API errors
-///   if (e is UnauthorizedException) {
-///     // Handle unauthorized access
+/// class UserRemoteSource extends SimplexBaseRemoteSource {
+///   UserRemoteSource(Dio dio) : super.rest(dio);
+///
+///   Future<User> getUser(String userId) async {
+///     return executeRestApiCall(
+///       request: (dio) => dio.get('/users/$userId'),
+///       onResponse: (data) => User.fromJson(data),
+///     );
 ///   }
-///   // Other error handling...
+/// }
+/// ```
+///
+/// ### 3. Mixed Usage (Deprecated style)
+/// ```dart
+/// class LegacyRemoteSource extends SimplexBaseRemoteSource {
+///   LegacyRemoteSource(Client client, Dio dio) : super(client, dio);
+///   ...
 /// }
 /// ```
 ///
@@ -63,11 +71,27 @@ import 'package:simplex/logging/logger.dart';
 /// - [ApiException] for error types and handling
 /// - [AuthErrorInterceptor] for authentication error handling
 class SimplexBaseRemoteSource {
+  /// Default constructor (Deprecated).
+  ///
+  /// Use [SimplexBaseRemoteSource.graphql] or [SimplexBaseRemoteSource.rest] instead.
+  @Deprecated(
+    'Use SimplexBaseRemoteSource.graphql(client) or SimplexBaseRemoteSource.rest(dioClient) instead. '
+  )
   SimplexBaseRemoteSource(this._graphqlClient, this._dioClient);
 
-  final Client _graphqlClient;
+  /// Constructor for GraphQL-based remote sources.
+  SimplexBaseRemoteSource.graphql(Client graphqlClient)
+    : _graphqlClient = graphqlClient,
+      _dioClient = null;
 
-  final Dio _dioClient;
+  /// Constructor for REST-based remote sources.
+  SimplexBaseRemoteSource.rest(Dio dioClient)
+    : _dioClient = dioClient,
+      _graphqlClient = null;
+
+  final Client? _graphqlClient;
+
+  final Dio? _dioClient;
 
   final AuthErrorInterceptor _authErrorInterceptor =
       AuthErrorInterceptor.instance;
@@ -80,10 +104,14 @@ class SimplexBaseRemoteSource {
   Future<TData> executeGraphqlApiCall<TData, TVars>(
     OperationRequest<TData, TVars> operationRequest,
   ) async {
+    assert(
+      _graphqlClient != null,
+      'GraphQL Client is null. Ensure you initialized SimplexBaseRemoteSource with a GraphQL client.',
+    );
     try {
-      final OperationResponse<TData, TVars> response = await _graphqlClient
+      final OperationResponse<TData, TVars> response = await _graphqlClient!
           .request(operationRequest)
-          .first;
+          .firstWhere((OperationResponse<TData, TVars> r) => !r.loading);
 
       SimplexAppLogger.logInfo(
         info: '🚀 API Request: ${operationRequest.operation.operationName}',
@@ -122,8 +150,12 @@ class SimplexBaseRemoteSource {
     required Future<Response> Function(Dio dio) request,
     required T Function(dynamic data) onResponse,
   }) async {
+    assert(
+      _dioClient != null,
+      'Dio Client is null. Ensure you initialized SimplexBaseRemoteSource with a Dio client.',
+    );
     try {
-      final response = await request(_dioClient);
+      final response = await request(_dioClient!);
       if (response.statusCode! == 200) {
         return onResponse(response.data ?? {});
       } else {
