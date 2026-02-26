@@ -92,7 +92,7 @@ class SimplexBaseRemoteSource {
     try {
       final OperationResponse<TData, TVars> response = await graphqlClient!
           .request(operationRequest)
-          .firstWhere((OperationResponse<TData, TVars> r) => !r.loading);
+          .first;
 
       SimplexAppLogger.logInfo(
         info: '🚀 API Request: ${operationRequest.operation.operationName}',
