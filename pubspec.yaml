@@ -45,9 +45,9 @@ dependencies:
   gql_dio_link: ^2.0.0
 
   # Session and Storage
-  hive_local_storage: ^2.0.11
+  hive_local_storage: ^2.0.12
   shared_preferences: ^2.5.4
-  flutter_secure_storage: ^9.2.4
+  flutter_secure_storage: ^10.0.0
 
 
 dev_dependencies:
