@@ -37,9 +37,9 @@ class QueryFilterBloc extends SimplexBloc<QueryFilterEvent, QueryFilterState> {
     );
   }
 
-  void onSearchOrFilterChange(
+  void onSearchOrFilterChange<T>(
     String? keyword, {
-    List<dynamic>? filters,
+    List<T>? filters,
     bool isSearchOnly = true,
   }) {
     add(
