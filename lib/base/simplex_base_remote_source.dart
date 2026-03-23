@@ -6,7 +6,9 @@ import 'package:simplex/extensions/graphql_exception_extension.dart';
 import 'package:simplex/extensions/rest_api_exception_extension.dart';
 import 'package:simplex/logging/logger.dart';
 
-/// A base class for handling GraphQL API calls with standardized error handling and authentication.
+/// A base class for handling API calls with standardized error handling and authentication.
+///
+/// For specialized versions, use [SimplexGraphqlRemoteSource] or [SimplexRestRemoteSource].
 ///
 /// This class provides a foundation for making GraphQL requests and handling their responses
 /// consistently across the application. It integrates with the Ferry client and includes
@@ -17,38 +19,31 @@ import 'package:simplex/logging/logger.dart';
 /// - Automatic error handling and conversion to [ApiException]
 /// - Authentication error interception and handling
 /// - Request and error logging
-///
+
 /// ## Basic Usage
 ///
-/// ### 1. Extend the base class
+/// ### 1. GraphQL Remote Source (Recommended)
 /// ```dart
-/// class UserRemoteSource extends SimplexBaseRemoteSource {
-///   UserRemoteSource(Client client) : super(client);
+/// class UserRemoteSource extends SimplexGraphqlRemoteSource {
+///   UserRemoteSource(super.client);
 ///
 ///   Future<User> getUser(String userId) async {
-///     final request = GetUserQuery(
-///       variables: GetUserArguments(id: userId),
-///     ).request;
-///
-///     final response = await executeApiCall(request);
-///     return response.user;
+///     ...
 ///   }
 /// }
 /// ```
 ///
-/// ### 2. Handle API responses
+/// ### 2. REST Remote Source (Recommended)
 /// ```dart
-/// try {
-///   final user = await userRemoteSource.getUser('123');
-///   // Handle success
-/// } on ApiException catch (e) {
-///   // Handle specific API errors
-///   if (e is UnauthorizedException) {
-///     // Handle unauthorized access
+/// class UserRemoteSource extends SimplexRestRemoteSource {
+///   UserRemoteSource(super.dio);
+///
+///   Future<User> getUser(String userId) async {
+///     ...
 ///   }
-///   // Other error handling...
 /// }
 /// ```
+
 ///
 /// ## Error Handling
 /// - Converts GraphQL errors to [ApiException] with appropriate types
@@ -56,32 +51,46 @@ import 'package:simplex/logging/logger.dart';
 /// - Provides detailed error logging
 ///
 /// ## Logging
-/// - Logs request details including operation name
 /// - Captures and logs all errors with stack traces
 ///
 /// See also:
 /// - [ApiException] for error types and handling
 /// - [AuthErrorInterceptor] for authentication error handling
+///
+
 class SimplexBaseRemoteSource {
-  SimplexBaseRemoteSource(this._graphqlClient, this._dioClient);
+  /// Default positional constructor (Deprecated).
+  ///
+  /// Use [SimplexGraphqlRemoteSource] or [SimplexRestRemoteSource] for a cleaner syntax.
+  @Deprecated(
+    'Use SimplexGraphqlRemoteSource or SimplexRestRemoteSource instead.',
+  )
+  SimplexBaseRemoteSource(this.graphqlClient, this.dioClient);
 
-  final Client _graphqlClient;
+  /// Named constructor for flexible/mixed usage.
+  SimplexBaseRemoteSource.make({this.graphqlClient, this.dioClient});
 
-  final Dio _dioClient;
+  /// The GraphQL client.
+  final Client? graphqlClient;
+
+  /// The Dio client.
+  final Dio? dioClient;
 
   final AuthErrorInterceptor _authErrorInterceptor =
       AuthErrorInterceptor.instance;
 
   /// Executes a GraphQL API call using the provided [operationRequest].
   ///
-  /// Sends the request to the remote server and handles the response.
-  /// - Logs request details and duration for debugging purposes.
   /// - Throws an [ApiException] if the response contains errors or data is null.
   Future<TData> executeGraphqlApiCall<TData, TVars>(
     OperationRequest<TData, TVars> operationRequest,
   ) async {
+    assert(
+      graphqlClient != null,
+      'GraphQL Client is null. Ensure you initialized SimplexBaseRemoteSource with a GraphQL client.',
+    );
     try {
-      final OperationResponse<TData, TVars> response = await _graphqlClient
+      final OperationResponse<TData, TVars> response = await graphqlClient!
           .request(operationRequest)
           .first;
 
@@ -122,8 +131,12 @@ class SimplexBaseRemoteSource {
     required Future<Response> Function(Dio dio) request,
     required T Function(dynamic data) onResponse,
   }) async {
+    assert(
+      dioClient != null,
+      'Dio Client is null. Ensure you initialized SimplexBaseRemoteSource with a Dio client.',
+    );
     try {
-      final response = await request(_dioClient);
+      final response = await request(dioClient!);
       if (response.statusCode! == 200) {
         return onResponse(response.data ?? {});
       } else {
@@ -139,4 +152,15 @@ class SimplexBaseRemoteSource {
       );
     }
   }
+}
+
+/// A specialized version of SimplexBaseRemoteSource for GraphQL only.
+abstract class SimplexGraphqlRemoteSource extends SimplexBaseRemoteSource {
+  SimplexGraphqlRemoteSource(Client graphqlClient)
+    : super.make(graphqlClient: graphqlClient);
+}
+
+/// A specialized version of [SimplexBaseRemoteSource] for REST only.
+abstract class SimplexRestRemoteSource extends SimplexBaseRemoteSource {
+  SimplexRestRemoteSource(Dio dioClient) : super.make(dioClient: dioClient);
 }

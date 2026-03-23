@@ -17,16 +17,16 @@ dependencies:
 
   #data models
   json_annotation: ^4.9.0
-  equatable: ^2.0.7
+  equatable: ^2.0.8
 
   #state management
-  bloc: ^9.0.0
+  bloc: ^9.2.0
   flutter_bloc: ^9.1.1
   bloc_concurrency: ^0.3.0
 
   #Utils
-  logger: ^2.5.0
-  fpdart: ^1.1.1
+  logger: ^2.6.2
+  fpdart: ^1.2.0
   intl: ^0.20.2
 
   #functional
@@ -34,7 +34,7 @@ dependencies:
 
 
   #UI/UX
-  flutter_svg: 2.2.0
+  flutter_svg: ^2.2.3
   cached_network_image: 3.4.1
   shimmer: 3.0.0
 
