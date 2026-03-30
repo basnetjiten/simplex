@@ -85,6 +85,9 @@ class SimplexBaseRemoteSource {
   Future<TData> executeGraphqlApiCall<TData, TVars>(
     OperationRequest<TData, TVars> operationRequest,
   ) async {
+    SimplexAppLogger.logInfo(
+      info: '🚀 API Request: ${operationRequest.operation.operationName}',
+    );
     assert(
       graphqlClient != null,
       'GraphQL Client is null. Ensure you initialized SimplexBaseRemoteSource with a GraphQL client.',
@@ -93,10 +96,6 @@ class SimplexBaseRemoteSource {
       final OperationResponse<TData, TVars> response = await graphqlClient!
           .request(operationRequest)
           .first;
-
-      SimplexAppLogger.logInfo(
-        info: '🚀 API Request: ${operationRequest.operation.operationName}',
-      );
 
       if (response.hasErrors) {
         SimplexAppLogger.logError(
