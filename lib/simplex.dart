@@ -7,3 +7,5 @@ export 'package:simplex/simplex_base.dart';
 export 'package:simplex/simplex_cache_network_image.dart';
 export 'package:simplex/simplex_forms.dart';
 export 'package:simplex/simplex_svg_image.dart';
+export 'package:simplex/pagination/models/paging_model.dart';
+export 'package:simplex/pagination/paging_cubit.dart';

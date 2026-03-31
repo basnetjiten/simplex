@@ -34,7 +34,7 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>> {
         error: null,
         hasNextPage: nextKey != null,
         pages: [...?state.pages, result],
-        keys: [...?state.keys, if (nextKey != null) nextKey],
+        keys: [...?state.keys, ?nextKey],
         cancelToken: null,
       ));
     } catch (e) {
@@ -60,7 +60,7 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>> {
         error: null,
         hasNextPage: nextKey != null,
         pages: [result],
-        keys: [initialKey, if (nextKey != null) nextKey],
+        keys: [initialKey, ?nextKey],
       ));
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e));
