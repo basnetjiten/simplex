@@ -8,3 +8,4 @@ export 'src/form/bloc_status.dart';
 export 'src/form/field.dart';
 export 'src/form/form_mixin.dart';
 export 'src/simplex_form_field.dart';
+export 'src/outlined_input_border.dart';
