@@ -74,6 +74,26 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
       emitState: emitter.call,
     );
   }
+
+  /// Handles a paginated API call and returns the items and next page key.
+  ///
+  /// - [page] is the current page number.
+  /// - [call] is the API call returning Either<AppError, R>.
+  /// - [getItems] extracts the list of items from the response.
+  /// - [getHasNext] determines if there is a next page from the response.
+  Future<(List<T>, int?)> handlePagingCall<T, R>({
+    required int page,
+    required Future<Either<AppError, R>> call,
+    required List<T> Function(R data) getItems,
+    required bool Function(R data) getHasNext,
+  }) async {
+    return performPagingCall<T, R>(
+      page: page,
+      call: call,
+      getItems: getItems,
+      getHasNext: getHasNext,
+    );
+  }
 }
 
 
@@ -98,6 +118,26 @@ abstract class SimplexCubit<State> extends Cubit<State>
       onFailure: onFailure,
       onInvalid: onInvalid,
       emitState: emit,
+    );
+  }
+
+  /// Handles a paginated API call and returns the items and next page key.
+  ///
+  /// - [page] is the current page number.
+  /// - [call] is the API call returning Either<AppError, R>.
+  /// - [getItems] extracts the list of items from the response.
+  /// - [getHasNext] determines if there is a next page from the response.
+  Future<(List<T>, int?)> handlePagingCall<T, R>({
+    required int page,
+    required Future<Either<AppError, R>> call,
+    required List<T> Function(R data) getItems,
+    required bool Function(R data) getHasNext,
+  }) async {
+    return performPagingCall<T, R>(
+      page: page,
+      call: call,
+      getItems: getItems,
+      getHasNext: getHasNext,
     );
   }
 }
@@ -137,6 +177,24 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
   ) {
     final state = error.mapErrorMessage<S>(onInvalidOrFailure);
     emitState(state);
+  }
+
+  /// Internal method to handle paginated API calls.
+  Future<(List<T>, int?)> performPagingCall<T, R>({
+    required int page,
+    required Future<Either<AppError, R>> call,
+    required List<T> Function(R data) getItems,
+    required bool Function(R data) getHasNext,
+  }) async {
+    final response = await call;
+
+    return response.fold(
+      (error) => throw error.mapErrorMessage((String error) => error),
+      (data) {
+        final bool hasNext = getHasNext(data);
+        return (getItems(data), hasNext ? page + 1 : null);
+      },
+    );
   }
 }
 
