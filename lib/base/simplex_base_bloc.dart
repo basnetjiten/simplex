@@ -8,6 +8,7 @@ import 'package:bloc/bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:simplex/errors/app_error.dart';
 import 'package:simplex/extensions/app_error_extension.dart';
+import '../pagination/models/paginated_response_model.dart';
 
 /// A custom base BLoC class that simplifies API call handling and state management.
 ///
@@ -81,7 +82,7 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
   /// - [call] is the API call returning Either<AppError, R>.
   /// - [getItems] extracts the list of items from the response.
   /// - [getHasNext] determines if there is a next page from the response.
-  Future<(List<T>, int?)> handlePagingCall<T, R>({
+  Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
     required List<T> Function(R data) getItems,
@@ -95,7 +96,6 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
     );
   }
 }
-
 
 abstract class SimplexCubit<State> extends Cubit<State>
     with SimplexBaseMixin<State> {
@@ -127,7 +127,7 @@ abstract class SimplexCubit<State> extends Cubit<State>
   /// - [call] is the API call returning Either<AppError, R>.
   /// - [getItems] extracts the list of items from the response.
   /// - [getHasNext] determines if there is a next page from the response.
-  Future<(List<T>, int?)> handlePagingCall<T, R>({
+  Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
     required List<T> Function(R data) getItems,
@@ -141,7 +141,6 @@ abstract class SimplexCubit<State> extends Cubit<State>
     );
   }
 }
-
 
 mixin SimplexBaseMixin<S> on BlocBase<S> {
   /// Internal method to handle API calls and state emission
@@ -180,7 +179,7 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
   }
 
   /// Internal method to handle paginated API calls.
-  Future<(List<T>, int?)> performPagingCall<T, R>({
+  Future<(List<T>, int?)> performPagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
     required List<T> Function(R data) getItems,
@@ -191,8 +190,7 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
     return response.fold(
       (error) => throw error.mapErrorMessage((String error) => error),
       (data) {
-        final bool hasNext = getHasNext(data);
-        return (getItems(data), hasNext ? page + 1 : null);
+        return (data.items, data.hasNext ? page + 1 : null);
       },
     );
   }

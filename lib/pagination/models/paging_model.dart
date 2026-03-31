@@ -4,6 +4,7 @@ part 'paging_model.freezed.dart';
 
 part 'paging_model.g.dart';
 
+
 @freezed
 abstract class PagingModel with _$PagingModel {
   const PagingModel._();
@@ -18,7 +19,8 @@ abstract class PagingModel with _$PagingModel {
     String? searchText,
   }) = _PagingModel;
 
-  factory PagingModel.fromJson(Map<String, dynamic> json) => _$PagingModelFromJson(json);
+  factory PagingModel.fromJson(Map<String, dynamic> json) =>
+      _$PagingModelFromJson(json);
 
   double get skipFromPage => ((page - 1) * limit);
 }
