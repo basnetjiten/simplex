@@ -83,8 +83,6 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
   ///
   /// - [page] is the current page number.
   /// - [call] is the API call returning Either<AppError, R>.
-  /// - [getItems] extracts the list of items from the response.
-  /// - [getHasNext] determines if there is a next page from the response.
   Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
@@ -121,13 +119,10 @@ abstract class SimplexCubit<State> extends Cubit<State>
   ///
   /// - [page] is the current page number.
   /// - [call] is the API call returning Either<AppError, R>.
-  /// - [getItems] extracts the list of items from the response.
-  /// - [getHasNext] determines if there is a next page from the response.
+
   Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
-    required List<T> Function(R data) getItems,
-    required bool Function(R data) getHasNext,
   }) async {
     return performPagingCall<T, R>(page: page, call: call);
   }
