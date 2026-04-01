@@ -5,3 +5,4 @@
  */
 
 export 'src/core/simplex_auth_event_bus.dart';
+export 'src/typedefs/typedefs.dart';
