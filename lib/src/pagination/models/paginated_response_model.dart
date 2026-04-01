@@ -4,7 +4,9 @@
  * @Date: 31/03/2026
  */
 
-abstract class PaginatedResponse<T> {
-  List<T> get items;
-  bool get hasNext;
+class PaginatedResponse<T> {
+  final List<T> items;
+  final bool hasNext;
+
+  PaginatedResponse({required this.items, required this.hasNext});
 }
