@@ -8,6 +8,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:fpdart/fpdart.dart';
+
 import '../errors/app_error.dart';
 import '../extensions/app_error_extension.dart';
 import '../pagination/models/paginated_response_model.dart';
@@ -90,12 +91,7 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
     required List<T> Function(R data) getItems,
     required bool Function(R data) getHasNext,
   }) async {
-    return performPagingCall<T, R>(
-      page: page,
-      call: call,
-      getItems: getItems,
-      getHasNext: getHasNext,
-    );
+    return performPagingCall<T, R>(page: page, call: call);
   }
 }
 
@@ -135,12 +131,7 @@ abstract class SimplexCubit<State> extends Cubit<State>
     required List<T> Function(R data) getItems,
     required bool Function(R data) getHasNext,
   }) async {
-    return performPagingCall<T, R>(
-      page: page,
-      call: call,
-      getItems: getItems,
-      getHasNext: getHasNext,
-    );
+    return performPagingCall<T, R>(page: page, call: call);
   }
 }
 
@@ -184,8 +175,6 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
   Future<(List<T>, int?)> performPagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
-    required List<T> Function(R data) getItems,
-    required bool Function(R data) getHasNext,
   }) async {
     final response = await call;
 
