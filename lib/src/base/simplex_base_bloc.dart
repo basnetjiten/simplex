@@ -88,8 +88,6 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
   Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
-    required List<T> Function(R data) getItems,
-    required bool Function(R data) getHasNext,
   }) async {
     return performPagingCall<T, R>(page: page, call: call);
   }
