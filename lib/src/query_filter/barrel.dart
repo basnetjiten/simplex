@@ -4,4 +4,6 @@
  * @Date: 01/04/2026
  */
 
-export 'src/extensions/barrel.dart';
+// simplex query filter classes
+
+export 'query_filter_bloc.dart';

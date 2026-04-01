@@ -4,4 +4,4 @@
  * @Date: 31/03/2026
  */
 
-export 'src/query_filter/query_filter_bloc.dart';
+export 'src/query_filter/barrel.dart';

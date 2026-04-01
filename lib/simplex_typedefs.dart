@@ -1,7 +1,7 @@
 /*
  * @Author: Jiten Basnet
  * @Company: EB Pearls
- * @Date: 13/12/2024
+ * @Date: 31/03/2026
  */
 
-export 'src/form/barrel.dart';
+export 'src/typedefs/barrel.dart';
