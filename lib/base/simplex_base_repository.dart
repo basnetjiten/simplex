@@ -104,7 +104,7 @@ class SimplexBaseRepository {
       unAuthorizedException: AppError.unAuthorized,
       forbiddenException: AppError.unAuthorized,
       sessionExpiredException: AppError.unAuthorized,
-      timeOut: AppError.timeOut,
+      timeOut: (message) => AppError.timeOut(message: message),
     );
   }
 }

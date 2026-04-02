@@ -168,7 +168,7 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function( String? message)?  unAuthorized,TResult Function( String? message)?  unAuthenticated,TResult Function( String? message)?  noInternet,TResult Function( String? message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function( String? message)?  unAuthorized,TResult Function( String? message)?  unAuthenticated,TResult Function( String? message)?  noInternet,TResult Function( String message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
@@ -195,7 +195,7 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function( String? message)  unAuthorized,required TResult Function( String? message)  unAuthenticated,required TResult Function( String? message)  noInternet,required TResult Function( String? message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function( String? message)  unAuthorized,required TResult Function( String? message)  unAuthenticated,required TResult Function( String? message)  noInternet,required TResult Function( String message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError():
 return serverError(_that.message);case _ValidationError():
@@ -221,7 +221,7 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function( String? message)?  unAuthorized,TResult? Function( String? message)?  unAuthenticated,TResult? Function( String? message)?  noInternet,TResult? Function( String? message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function( String? message)?  unAuthorized,TResult? Function( String? message)?  unAuthenticated,TResult? Function( String? message)?  noInternet,TResult? Function( String message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
@@ -572,10 +572,10 @@ as String?,
 
 
 class _TimeOut implements AppError {
-  const _TimeOut(this.message);
+  const _TimeOut({required this.message});
   
 
-@override final  String? message;
+@override final  String message;
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
@@ -607,7 +607,7 @@ abstract mixin class _$TimeOutCopyWith<$Res> implements $AppErrorCopyWith<$Res> 
   factory _$TimeOutCopyWith(_TimeOut value, $Res Function(_TimeOut) _then) = __$TimeOutCopyWithImpl;
 @override @useResult
 $Res call({
- String? message
+ String message
 });
 
 
@@ -624,10 +624,10 @@ class __$TimeOutCopyWithImpl<$Res>
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_TimeOut(
-freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

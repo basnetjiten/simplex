@@ -15,7 +15,7 @@ abstract class AppError with _$AppError {
 
   const factory AppError.noInternet(String? message) = _NoInternet;
 
-  const factory AppError.timeOut(String? message) = _TimeOut;
+  const factory AppError.timeOut({required String message}) = _TimeOut;
 
   const factory AppError.unSupportedPlatform({required String message}) =
       _UnSupportedPlatform;

@@ -9,6 +9,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:simplex/errors/app_error.dart';
 import 'package:simplex/extensions/app_error_extension.dart';
 
+import '../pagination/models/paginated_response_model.dart';
+
 /// A custom base BLoC class that simplifies API call handling and state management.
 ///
 /// This abstract class provides a standardized way to handle API calls and
@@ -63,8 +65,8 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
     required Emitter<State> emitter,
     required Future<Either<AppError, R>> call,
     required State Function(R data) onSuccess,
-    required State Function(String? error) onFailure,
-    State Function(String? error)? onInvalid,
+    required State Function(String error) onFailure,
+    State Function(String error)? onInvalid,
   }) async {
     await performAPICall<R>(
       call: call,
@@ -72,6 +74,26 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
       onFailure: onFailure,
       onInvalid: onInvalid,
       emitState: emitter.call,
+    );
+  }
+
+  /// Handles a paginated API call and returns the items and next page key.
+  ///
+  /// - [page] is the current page number.
+  /// - [call] is the API call returning Either<AppError, R>.
+  /// - [getItems] extracts the list of items from the response.
+  /// - [getHasNext] determines if there is a next page from the response.
+  Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
+    required int page,
+    required Future<Either<AppError, R>> call,
+    required List<T> Function(R data) getItems,
+    required bool Function(R data) getHasNext,
+  }) async {
+    return performPagingCall<T, R>(
+      page: page,
+      call: call,
+      getItems: getItems,
+      getHasNext: getHasNext,
     );
   }
 }
@@ -88,8 +110,8 @@ abstract class SimplexCubit<State> extends Cubit<State>
   Future<void> handleAPICall<R>({
     required Future<Either<AppError, R>> call,
     required State Function(R data) onSuccess,
-    required State Function(String? error) onFailure,
-    State Function(String? error)? onInvalid,
+    required State Function(String error) onFailure,
+    State Function(String error)? onInvalid,
   }) async {
     await performAPICall<R>(
       call: call,
@@ -99,6 +121,26 @@ abstract class SimplexCubit<State> extends Cubit<State>
       emitState: emit,
     );
   }
+
+  /// Handles a paginated API call and returns the items and next page key.
+  ///
+  /// - [page] is the current page number.
+  /// - [call] is the API call returning Either<AppError, R>.
+  /// - [getItems] extracts the list of items from the response.
+  /// - [getHasNext] determines if there is a next page from the response.
+  Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
+    required int page,
+    required Future<Either<AppError, R>> call,
+    required List<T> Function(R data) getItems,
+    required bool Function(R data) getHasNext,
+  }) async {
+    return performPagingCall<T, R>(
+      page: page,
+      call: call,
+      getItems: getItems,
+      getHasNext: getHasNext,
+    );
+  }
 }
 
 mixin SimplexBaseMixin<S> on BlocBase<S> {
@@ -106,9 +148,9 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
   Future<void> performAPICall<R>({
     required Future<Either<AppError, R>> call,
     required S Function(R data) onSuccess,
-    required S Function(String? error) onFailure,
+    required S Function(String error) onFailure,
     required void Function(S) emitState,
-    S Function(String? error)? onInvalid,
+    S Function(String error)? onInvalid,
   }) async {
     if (isClosed) return;
 
@@ -130,11 +172,28 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
 
   void _emitError(
     AppError error,
-    S Function(String?) onInvalidOrFailure,
+    S Function(String) onInvalidOrFailure,
     void Function(S) emitState,
   ) {
     final state = error.mapErrorMessage<S>(onInvalidOrFailure);
     emitState(state);
+  }
+
+  /// Internal method to handle paginated API calls.
+  Future<(List<T>, int?)> performPagingCall<T, R extends PaginatedResponse<T>>({
+    required int page,
+    required Future<Either<AppError, R>> call,
+    required List<T> Function(R data) getItems,
+    required bool Function(R data) getHasNext,
+  }) async {
+    final response = await call;
+
+    return response.fold(
+      (error) => throw error.mapErrorMessage((String error) => error),
+      (data) {
+        return (data.items, data.hasNext ? page + 1 : null);
+      },
+    );
   }
 }
 
@@ -153,8 +212,8 @@ abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
     Emitter<State>? emitter,
     required Future<Either<AppError, R>> call,
     required Function(R data) onSuccess,
-    required State Function(String? error) onFailure,
-    State Function(String? error)? onInvalid,
+    required State Function(String error) onFailure,
+    State Function(String error)? onInvalid,
   }) async {
     if (isClosed) return;
 
@@ -184,7 +243,7 @@ abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
   void _emitError(
     Emitter<State>? emitter,
     AppError error,
-    State Function(String? error) onInvalidOrFailure,
+    State Function(String error) onInvalidOrFailure,
   ) {
     final state = error.mapErrorMessage<State>(onInvalidOrFailure);
     _emitState(emitter, state);

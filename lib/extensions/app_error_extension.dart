@@ -11,7 +11,7 @@ import 'package:simplex/errors/app_error.dart';
 /// final errorMessage = error.mapErrorMessage((message) => 'Error: $message');
 /// ```
 extension AppErrorExtension on AppError {
-  T mapErrorMessage<T>(T Function(String? error) onFailure) {
+  T mapErrorMessage<T>(T Function(String error) onFailure) {
     return when(
       serverError: (message) => onFailure(message),
       validationError: (message) => onFailure(message),
