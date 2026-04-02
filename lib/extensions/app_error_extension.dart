@@ -18,7 +18,8 @@ extension AppErrorExtension on AppError {
       unAuthorized: (message) => onFailure(message ?? "Unauthorized access."),
       unAuthenticated: (message) =>
           onFailure(message ?? "Unauthenticated access."),
-      noInternet: (message) => onFailure(message ?? "No internet connection."),
+      noInternet: (message) =>
+          onFailure(message ?? "Network error. Please check your connection."),
       timeOut: (message) => onFailure(message),
       unSupportedPlatform: (message) => onFailure(message),
     );
