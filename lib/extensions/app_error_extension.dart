@@ -11,13 +11,14 @@ import 'package:simplex/errors/app_error.dart';
 /// final errorMessage = error.mapErrorMessage((message) => 'Error: $message');
 /// ```
 extension AppErrorExtension on AppError {
-  T mapErrorMessage<T>(T Function(String error) onFailure) {
+  T mapErrorMessage<T>(T Function(String? error) onFailure) {
     return when(
       serverError: (message) => onFailure(message),
       validationError: (message) => onFailure(message),
-      unAuthorized: () => onFailure("Unauthorized access."),
-      unAuthenticated: () => onFailure("Unauthenticated access."),
-      noInternet: () => onFailure("No internet connection."),
+      unAuthorized: (message) => onFailure(message ?? "Unauthorized access."),
+      unAuthenticated: (message) =>
+          onFailure(message ?? "Unauthenticated access."),
+      noInternet: (message) => onFailure(message ?? "No internet connection."),
       timeOut: (message) => onFailure(message),
       unSupportedPlatform: (message) => onFailure(message),
     );

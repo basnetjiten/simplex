@@ -63,8 +63,8 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
     required Emitter<State> emitter,
     required Future<Either<AppError, R>> call,
     required State Function(R data) onSuccess,
-    required State Function(String error) onFailure,
-    State Function(String error)? onInvalid,
+    required State Function(String? error) onFailure,
+    State Function(String? error)? onInvalid,
   }) async {
     await performAPICall<R>(
       call: call,
@@ -75,7 +75,6 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
     );
   }
 }
-
 
 abstract class SimplexCubit<State> extends Cubit<State>
     with SimplexBaseMixin<State> {
@@ -89,8 +88,8 @@ abstract class SimplexCubit<State> extends Cubit<State>
   Future<void> handleAPICall<R>({
     required Future<Either<AppError, R>> call,
     required State Function(R data) onSuccess,
-    required State Function(String error) onFailure,
-    State Function(String error)? onInvalid,
+    required State Function(String? error) onFailure,
+    State Function(String? error)? onInvalid,
   }) async {
     await performAPICall<R>(
       call: call,
@@ -102,15 +101,14 @@ abstract class SimplexCubit<State> extends Cubit<State>
   }
 }
 
-
 mixin SimplexBaseMixin<S> on BlocBase<S> {
   /// Internal method to handle API calls and state emission
   Future<void> performAPICall<R>({
     required Future<Either<AppError, R>> call,
     required S Function(R data) onSuccess,
-    required S Function(String error) onFailure,
+    required S Function(String? error) onFailure,
     required void Function(S) emitState,
-    S Function(String error)? onInvalid,
+    S Function(String? error)? onInvalid,
   }) async {
     if (isClosed) return;
 
@@ -132,7 +130,7 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
 
   void _emitError(
     AppError error,
-    S Function(String) onInvalidOrFailure,
+    S Function(String?) onInvalidOrFailure,
     void Function(S) emitState,
   ) {
     final state = error.mapErrorMessage<S>(onInvalidOrFailure);
@@ -155,8 +153,8 @@ abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
     Emitter<State>? emitter,
     required Future<Either<AppError, R>> call,
     required Function(R data) onSuccess,
-    required State Function(String error) onFailure,
-    State Function(String error)? onInvalid,
+    required State Function(String? error) onFailure,
+    State Function(String? error)? onInvalid,
   }) async {
     if (isClosed) return;
 
@@ -186,7 +184,7 @@ abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
   void _emitError(
     Emitter<State>? emitter,
     AppError error,
-    State Function(String) onInvalidOrFailure,
+    State Function(String? error) onInvalidOrFailure,
   ) {
     final state = error.mapErrorMessage<State>(onInvalidOrFailure);
     _emitState(emitter, state);
