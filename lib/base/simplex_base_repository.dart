@@ -100,10 +100,10 @@ class SimplexBaseRepository {
     return e.when(
       serverException: (String message) =>
           AppError.serverError(message: message),
-      network: () => const AppError.noInternet(),
-      unAuthorizedException: (String? message) => AppError.unAuthorized(),
-      forbiddenException: (String? message) => AppError.unAuthorized(),
-      sessionExpiredException: (String? message) => AppError.unAuthorized(),
+      network: AppError.noInternet,
+      unAuthorizedException: AppError.unAuthorized,
+      forbiddenException: AppError.unAuthorized,
+      sessionExpiredException: AppError.unAuthorized,
       timeOut: (message) => AppError.timeOut(message: message),
     );
   }

@@ -8,6 +8,7 @@ import 'package:bloc/bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:simplex/errors/app_error.dart';
 import 'package:simplex/extensions/app_error_extension.dart';
+
 import '../pagination/models/paginated_response_model.dart';
 
 /// A custom base BLoC class that simplifies API call handling and state management.
@@ -242,7 +243,7 @@ abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
   void _emitError(
     Emitter<State>? emitter,
     AppError error,
-    State Function(String) onInvalidOrFailure,
+    State Function(String error) onInvalidOrFailure,
   ) {
     final state = error.mapErrorMessage<State>(onInvalidOrFailure);
     _emitState(emitter, state);

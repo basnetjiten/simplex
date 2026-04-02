@@ -14,30 +14,61 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppError {
 
-
+ String? get message;
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AppErrorCopyWith<AppError> get copyWith => _$AppErrorCopyWithImpl<AppError>(this as AppError, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppError);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppError&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'AppError()';
+  return 'AppError(message: $message)';
 }
 
 
 }
 
 /// @nodoc
-class $AppErrorCopyWith<$Res>  {
-$AppErrorCopyWith(AppError _, $Res Function(AppError) __);
+abstract mixin class $AppErrorCopyWith<$Res>  {
+  factory $AppErrorCopyWith(AppError value, $Res Function(AppError) _then) = _$AppErrorCopyWithImpl;
+@useResult
+$Res call({
+ String message
+});
+
+
+
+
+}
+/// @nodoc
+class _$AppErrorCopyWithImpl<$Res>
+    implements $AppErrorCopyWith<$Res> {
+  _$AppErrorCopyWithImpl(this._self, this._then);
+
+  final AppError _self;
+  final $Res Function(AppError) _then;
+
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? message = null,}) {
+  return _then(_self.copyWith(
+message: null == message ? _self.message! : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
 }
 
 
@@ -137,14 +168,14 @@ return unSupportedPlatform(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function()?  unAuthorized,TResult Function()?  unAuthenticated,TResult Function()?  noInternet,TResult Function( String message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverError,TResult Function( String message)?  validationError,TResult Function( String? message)?  unAuthorized,TResult Function( String? message)?  unAuthenticated,TResult Function( String? message)?  noInternet,TResult Function( String message)?  timeOut,TResult Function( String message)?  unSupportedPlatform,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
 return validationError(_that.message);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized();case _UnAuthenticated() when unAuthenticated != null:
-return unAuthenticated();case _NoInternet() when noInternet != null:
-return noInternet();case _TimeOut() when timeOut != null:
+return unAuthorized(_that.message);case _UnAuthenticated() when unAuthenticated != null:
+return unAuthenticated(_that.message);case _NoInternet() when noInternet != null:
+return noInternet(_that.message);case _TimeOut() when timeOut != null:
 return timeOut(_that.message);case _UnSupportedPlatform() when unSupportedPlatform != null:
 return unSupportedPlatform(_that.message);case _:
   return orElse();
@@ -164,14 +195,14 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function()  unAuthorized,required TResult Function()  unAuthenticated,required TResult Function()  noInternet,required TResult Function( String message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverError,required TResult Function( String message)  validationError,required TResult Function( String? message)  unAuthorized,required TResult Function( String? message)  unAuthenticated,required TResult Function( String? message)  noInternet,required TResult Function( String message)  timeOut,required TResult Function( String message)  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError():
 return serverError(_that.message);case _ValidationError():
 return validationError(_that.message);case _UnAuthorized():
-return unAuthorized();case _UnAuthenticated():
-return unAuthenticated();case _NoInternet():
-return noInternet();case _TimeOut():
+return unAuthorized(_that.message);case _UnAuthenticated():
+return unAuthenticated(_that.message);case _NoInternet():
+return noInternet(_that.message);case _TimeOut():
 return timeOut(_that.message);case _UnSupportedPlatform():
 return unSupportedPlatform(_that.message);case _:
   throw StateError('Unexpected subclass');
@@ -190,14 +221,14 @@ return unSupportedPlatform(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function()?  unAuthorized,TResult? Function()?  unAuthenticated,TResult? Function()?  noInternet,TResult? Function( String message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverError,TResult? Function( String message)?  validationError,TResult? Function( String? message)?  unAuthorized,TResult? Function( String? message)?  unAuthenticated,TResult? Function( String? message)?  noInternet,TResult? Function( String message)?  timeOut,TResult? Function( String message)?  unSupportedPlatform,}) {final _that = this;
 switch (_that) {
 case _ServerError() when serverError != null:
 return serverError(_that.message);case _ValidationError() when validationError != null:
 return validationError(_that.message);case _UnAuthorized() when unAuthorized != null:
-return unAuthorized();case _UnAuthenticated() when unAuthenticated != null:
-return unAuthenticated();case _NoInternet() when noInternet != null:
-return noInternet();case _TimeOut() when timeOut != null:
+return unAuthorized(_that.message);case _UnAuthenticated() when unAuthenticated != null:
+return unAuthenticated(_that.message);case _NoInternet() when noInternet != null:
+return noInternet(_that.message);case _TimeOut() when timeOut != null:
 return timeOut(_that.message);case _UnSupportedPlatform() when unSupportedPlatform != null:
 return unSupportedPlatform(_that.message);case _:
   return null;
@@ -214,11 +245,11 @@ class _ServerError implements AppError {
   const _ServerError({required this.message});
   
 
- final  String message;
+@override final  String message;
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$ServerErrorCopyWith<_ServerError> get copyWith => __$ServerErrorCopyWithImpl<_ServerError>(this, _$identity);
 
@@ -244,7 +275,7 @@ String toString() {
 /// @nodoc
 abstract mixin class _$ServerErrorCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
   factory _$ServerErrorCopyWith(_ServerError value, $Res Function(_ServerError) _then) = __$ServerErrorCopyWithImpl;
-@useResult
+@override @useResult
 $Res call({
  String message
 });
@@ -263,7 +294,7 @@ class __$ServerErrorCopyWithImpl<$Res>
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_ServerError(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
@@ -280,11 +311,11 @@ class _ValidationError implements AppError {
   const _ValidationError({required this.message});
   
 
- final  String message;
+@override final  String message;
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$ValidationErrorCopyWith<_ValidationError> get copyWith => __$ValidationErrorCopyWithImpl<_ValidationError>(this, _$identity);
 
@@ -310,7 +341,7 @@ String toString() {
 /// @nodoc
 abstract mixin class _$ValidationErrorCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
   factory _$ValidationErrorCopyWith(_ValidationError value, $Res Function(_ValidationError) _then) = __$ValidationErrorCopyWithImpl;
-@useResult
+@override @useResult
 $Res call({
  String message
 });
@@ -329,7 +360,7 @@ class __$ValidationErrorCopyWithImpl<$Res>
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_ValidationError(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
@@ -343,97 +374,199 @@ as String,
 
 
 class _UnAuthorized implements AppError {
-  const _UnAuthorized();
+  const _UnAuthorized(this.message);
   
 
+@override final  String? message;
 
-
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UnAuthorizedCopyWith<_UnAuthorized> get copyWith => __$UnAuthorizedCopyWithImpl<_UnAuthorized>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthorized);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthorized&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'AppError.unAuthorized()';
+  return 'AppError.unAuthorized(message: $message)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$UnAuthorizedCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+  factory _$UnAuthorizedCopyWith(_UnAuthorized value, $Res Function(_UnAuthorized) _then) = __$UnAuthorizedCopyWithImpl;
+@override @useResult
+$Res call({
+ String? message
+});
 
 
+
+
+}
+/// @nodoc
+class __$UnAuthorizedCopyWithImpl<$Res>
+    implements _$UnAuthorizedCopyWith<$Res> {
+  __$UnAuthorizedCopyWithImpl(this._self, this._then);
+
+  final _UnAuthorized _self;
+  final $Res Function(_UnAuthorized) _then;
+
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(_UnAuthorized(
+freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
 
 class _UnAuthenticated implements AppError {
-  const _UnAuthenticated();
+  const _UnAuthenticated(this.message);
   
 
+@override final  String? message;
 
-
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UnAuthenticatedCopyWith<_UnAuthenticated> get copyWith => __$UnAuthenticatedCopyWithImpl<_UnAuthenticated>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthenticated);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnAuthenticated&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'AppError.unAuthenticated()';
+  return 'AppError.unAuthenticated(message: $message)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$UnAuthenticatedCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+  factory _$UnAuthenticatedCopyWith(_UnAuthenticated value, $Res Function(_UnAuthenticated) _then) = __$UnAuthenticatedCopyWithImpl;
+@override @useResult
+$Res call({
+ String? message
+});
 
 
+
+
+}
+/// @nodoc
+class __$UnAuthenticatedCopyWithImpl<$Res>
+    implements _$UnAuthenticatedCopyWith<$Res> {
+  __$UnAuthenticatedCopyWithImpl(this._self, this._then);
+
+  final _UnAuthenticated _self;
+  final $Res Function(_UnAuthenticated) _then;
+
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(_UnAuthenticated(
+freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
 
 class _NoInternet implements AppError {
-  const _NoInternet();
+  const _NoInternet(this.message);
   
 
+@override final  String? message;
 
-
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$NoInternetCopyWith<_NoInternet> get copyWith => __$NoInternetCopyWithImpl<_NoInternet>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NoInternet);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NoInternet&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
-  return 'AppError.noInternet()';
+  return 'AppError.noInternet(message: $message)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$NoInternetCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
+  factory _$NoInternetCopyWith(_NoInternet value, $Res Function(_NoInternet) _then) = __$NoInternetCopyWithImpl;
+@override @useResult
+$Res call({
+ String? message
+});
 
 
+
+
+}
+/// @nodoc
+class __$NoInternetCopyWithImpl<$Res>
+    implements _$NoInternetCopyWith<$Res> {
+  __$NoInternetCopyWithImpl(this._self, this._then);
+
+  final _NoInternet _self;
+  final $Res Function(_NoInternet) _then;
+
+/// Create a copy of AppError
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(_NoInternet(
+freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
 
 /// @nodoc
 
@@ -442,11 +575,11 @@ class _TimeOut implements AppError {
   const _TimeOut({required this.message});
   
 
- final  String message;
+@override final  String message;
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$TimeOutCopyWith<_TimeOut> get copyWith => __$TimeOutCopyWithImpl<_TimeOut>(this, _$identity);
 
@@ -472,7 +605,7 @@ String toString() {
 /// @nodoc
 abstract mixin class _$TimeOutCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
   factory _$TimeOutCopyWith(_TimeOut value, $Res Function(_TimeOut) _then) = __$TimeOutCopyWithImpl;
-@useResult
+@override @useResult
 $Res call({
  String message
 });
@@ -491,7 +624,7 @@ class __$TimeOutCopyWithImpl<$Res>
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_TimeOut(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
@@ -508,11 +641,11 @@ class _UnSupportedPlatform implements AppError {
   const _UnSupportedPlatform({required this.message});
   
 
- final  String message;
+@override final  String message;
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$UnSupportedPlatformCopyWith<_UnSupportedPlatform> get copyWith => __$UnSupportedPlatformCopyWithImpl<_UnSupportedPlatform>(this, _$identity);
 
@@ -538,7 +671,7 @@ String toString() {
 /// @nodoc
 abstract mixin class _$UnSupportedPlatformCopyWith<$Res> implements $AppErrorCopyWith<$Res> {
   factory _$UnSupportedPlatformCopyWith(_UnSupportedPlatform value, $Res Function(_UnSupportedPlatform) _then) = __$UnSupportedPlatformCopyWithImpl;
-@useResult
+@override @useResult
 $Res call({
  String message
 });
@@ -557,7 +690,7 @@ class __$UnSupportedPlatformCopyWithImpl<$Res>
 
 /// Create a copy of AppError
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_UnSupportedPlatform(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,

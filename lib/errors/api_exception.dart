@@ -3,13 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'api_exception.freezed.dart';
 
 @freezed
-class ApiException with _$ApiException implements Exception {
+abstract class ApiException with _$ApiException implements Exception {
   // for server related errors
   const factory ApiException.serverException({required String message}) =
       _ServerException;
 
   // for socket exception from server
-  const factory ApiException.network() = _Network;
+  const factory ApiException.network({String? message}) = _Network;
 
   const factory ApiException.unAuthorizedException({String? message}) =
       _UnAuthorizedException;
@@ -20,5 +20,6 @@ class ApiException with _$ApiException implements Exception {
   const factory ApiException.forbiddenException({String? message}) =
       _ForbiddenException;
 
-  const factory ApiException.timeOut({required message}) = _TimeOutException;
+  const factory ApiException.timeOut({required String message}) =
+      _TimeOutException;
 }
