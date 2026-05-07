@@ -44,12 +44,12 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
     this.useCache = false,
   }) : super(PagingState<K, T>(initialKey: initialKey)) {
     if (useCache) {
-      final List<T>? cachedItems = readFromCache<List<T>>();
-      if (cachedItems != null) {
+      final List<T>? cachedPages = readFromCache<List<T>>();
+      if (cachedPages != null) {
         // Show stale-while-revalidate: emit cached items immediately so the
         // UI renders without a loading spinner, then kick off a silent
         // background refresh to bring data up to date.
-        emit(state.copyWith(items: cachedItems));
+        emit(state.copyWith(pages: cachedPages));
         fetchNext();
       }
     }
@@ -68,7 +68,7 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
   // ── Derived state helpers ─────────────────────────────────────────────────
 
   /// True when no page has been successfully loaded yet.
-  bool get _isFirstLoad => state.items == null;
+  bool get _isFirstLoad => state.pages.isEmpty;
 
   /// True when the search field contains a non-empty query.
   bool get _isSearchActive => state.search != null && state.search!.isNotEmpty;
@@ -120,19 +120,19 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
   /// Inserts [item] at position 0 of the current list.
   /// Useful after a successful create-item API call.
   void prependItem(T item) =>
-      emit(state.copyWith(items: [item, ...?state.items]));
+      emit(state.copyWith(pages: [item, ...state.pages]));
 
   /// Appends [item] to the end of the current list.
   /// Useful for optimistic additions or non-paginated inserts.
   void appendItem(T item) =>
-      emit(state.copyWith(items: [...?state.items, item]));
+      emit(state.copyWith(pages: [...state.pages, item]));
 
   /// Removes the item whose [getId] result matches [id].
   /// No-op if the item is not found.
   void deleteItem({required String id, required String Function(T) getId}) {
     emit(
       state.copyWith(
-        items: state.items?.where((item) => getId(item) != id).toList(),
+        pages: state.pages.where((item) => getId(item) != id).toList(),
       ),
     );
   }
@@ -144,14 +144,14 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
     required T updatedItem,
     required String Function(T) getId,
   }) {
-    final List<T>? items = state.items;
-    if (items == null) return;
+    final List<T> pages = state.pages;
+    if (pages.isEmpty) return;
 
-    final int index = items.indexWhere((item) => getId(item) == id);
+    final int index = pages.indexWhere((item) => getId(item) == id);
     if (index == -1) return;
 
-    final List<T> updated = List<T>.from(items)..[index] = updatedItem;
-    emit(state.copyWith(items: updated));
+    final List<T> updated = List<T>.from(pages)..[index] = updatedItem;
+    emit(state.copyWith(pages: updated));
   }
 
   // ── Lifecycle ─────────────────────────────────────────────────────────────
@@ -194,13 +194,13 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
         storeToCache<List<T>>(result);
       }
 
-      final List<T> items = isRefresh ? result : [...?state.items, ...result];
+      final List<T> items = isRefresh ? result : [...state.pages, ...result];
 
       emit(
         state.copyWith(
           isLoading: false,
           error: null,
-          items: items,
+          pages: items,
           nextKey: nextKey,
           hasNextPage: nextKey != null,
           cancelToken: null,

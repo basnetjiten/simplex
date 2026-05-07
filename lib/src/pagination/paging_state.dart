@@ -26,7 +26,7 @@ part 'paging_state.freezed.dart';
 @freezed
 abstract class PagingState<K, T> with _$PagingState<K, T> {
   const factory PagingState({
-    List<T>? items,
+    @Default([]) List<T> pages,
     K? initialKey,
     K? nextKey,
     Object? error,
