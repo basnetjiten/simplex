@@ -4,146 +4,213 @@
  * @Date: 27/03/2026
  */
 
-import 'dart:async';
-
 import '../base/simplex_base_bloc.dart';
+import '../helpers/cubit_cache_mixin.dart';
 import '../typedefs/typedefs.dart';
-
+import 'paging_cancel_token.dart';
 import 'paging_state.dart';
 
-class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>> {
-  PagingCubit({required this.fetchFn, required K initialKey})
-      : super(PagingState<K, T>(keys: <K>[initialKey]));
-
-  final PagingFetchFn<K, T> fetchFn;
-
-  /// Fetches the next page of data.
-  Future<void> fetchNext() async {
-    if (state.isLoading || !state.hasNextPage) return;
-
-    final K? pageKey = state.lastKey;
-    if (pageKey == null) {
-      emit(state.copyWith(hasNextPage: false));
-      return;
-    }
-
-    state.cancelToken?.cancel();
-    final PagingCancelToken cancelToken = PagingCancelToken();
-    emit(state.copyWith(isLoading: true, error: null, cancelToken: cancelToken));
-
-    try {
-      final (List<T> result, K? nextKey) = await fetchFn(pageKey, state.search);
-      if (cancelToken.isCancelled) return;
-
-      emit(state.copyWith(
-        isLoading: false,
-        error: null,
-        hasNextPage: nextKey != null,
-        pages: [...?state.pages, result],
-        keys: [...?state.keys, ?nextKey],
-        cancelToken: null,
-      ));
-    } catch (e) {
-      if (!cancelToken.isCancelled) {
-        emit(state.copyWith(isLoading: false, error: e, cancelToken: null));
+/// A generic paginated data cubit.
+///
+/// [K] — the type of the pagination key/cursor (e.g. `int` for page numbers,
+///        `String` for cursor-based APIs).
+/// [T] — the type of each list item.
+///
+/// ### Basic usage
+/// ```dart
+/// final cubit = PagingCubit<int, User>(
+///   fetchFn: (page, search) async {
+///     final res = await api.getUsers(page: page, search: search);
+///     return (res.items, res.nextPage);
+///   },
+///   initialKey: 1,
+/// );
+///
+/// await cubit.fetchNext(); // loads first page
+/// await cubit.fetchNext(); // loads second page
+/// await cubit.refresh();   // resets and reloads from initialKey
+/// ```
+///
+/// ### Caching
+/// Pass `useCache: true` to hydrate the first page from cache on startup
+/// while a silent background refresh runs in parallel.
+/// Only the first page is cached — subsequent pages are always fetched live.
+/// The cache is skipped entirely when a search query is active.
+class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
+    with CubitCacheMixin {
+  PagingCubit({
+    required this.fetchFn,
+    required K initialKey,
+    this.useCache = false,
+  }) : super(PagingState<K, T>(initialKey: initialKey)) {
+    if (useCache) {
+      final List<T>? cachedItems = readFromCache<List<T>>();
+      if (cachedItems != null) {
+        // Show stale-while-revalidate: emit cached items immediately so the
+        // UI renders without a loading spinner, then kick off a silent
+        // background refresh to bring data up to date.
+        emit(state.copyWith(items: cachedItems));
+        fetchNext();
       }
     }
   }
 
-  /// Refreshes the data by clearing pages and fetching from initial key.
-  Future<void> refresh() async {
-    state.cancelToken?.cancel();
-    final K? initialKey = state.keys?.first;
-    if (initialKey == null) return;
+  /// The function used to fetch a page of data.
+  /// Receives the page [key] and an optional [search] string.
+  /// Must return a record of `(items, nextKey)` where [nextKey] is `null`
+  /// when there are no further pages.
+  final PagingFetchFn<K, T> fetchFn;
 
-    emit(state.copyWith(isLoading: true, error: null));
+  /// Whether to cache the first page for stale-while-revalidate behaviour.
+  /// Has no effect when a search query is active.
+  final bool useCache;
 
-    try {
-      final (List<T> result, K? nextKey) = await fetchFn(initialKey, state.search);
+  // ── Derived state helpers ─────────────────────────────────────────────────
 
-      emit(state.copyWith(
-        isLoading: false,
-        error: null,
-        hasNextPage: nextKey != null,
-        pages: [result],
-        keys: [initialKey, ?nextKey],
-      ));
-    } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e));
-    }
+  /// True when no page has been successfully loaded yet.
+  bool get _isFirstLoad => state.items == null;
+
+  /// True when the search field contains a non-empty query.
+  bool get _isSearchActive => state.search != null && state.search!.isNotEmpty;
+
+  // ── Public API ────────────────────────────────────────────────────────────
+
+  /// Loads the next page of data.
+  ///
+  /// - On the very first call (or after [refresh]/[changeSearch]) this loads
+  ///   from [initialKey].
+  /// - Subsequent calls advance using the [PagingState.nextKey] returned by
+  ///   the previous fetch.
+  /// - No-ops if a fetch is already in progress or there are no more pages.
+  Future<void> fetchNext() async {
+    if (state.isLoading || !state.hasNextPage) return;
+
+    final K? key = _isFirstLoad ? state.initialKey : state.nextKey;
+    if (key == null) return;
+
+    await _fetch(key: key, isRefresh: _isFirstLoad);
   }
 
-  /// Changes the search query and refetches data.
+  /// Resets pagination and reloads from [PagingState.initialKey].
+  ///
+  /// Cancels any in-flight request before fetching.
+  Future<void> refresh() async {
+    final K? initialKey = state.initialKey;
+    if (initialKey == null) return;
+    await _fetch(key: initialKey, isRefresh: true);
+  }
+
+  /// Updates the search query, resets pagination, and fetches the first page.
+  ///
+  /// Cancels any in-flight request before resetting state.
   Future<void> changeSearch(String? newSearch) async {
-    state.cancelToken?.cancel();
-    final K? initialKey = state.keys?.first;
-    emit(PagingState<K, T>(
-      search: newSearch,
-      keys: initialKey != null ? [initialKey] : null,
-    ));
+    _cancelCurrent();
+    emit(PagingState<K, T>(initialKey: state.initialKey, search: newSearch));
     await fetchNext();
   }
 
-  /// Adds an item to the beginning of the first page.
-  void prependItem(T item) {
-    final List<List<T>> pages = state.pages ?? [];
-    emit(state.copyWith(
-      pages: pages.isEmpty
-          ? [[item]]
-          : [[item, ...pages.first], ...pages.skip(1)],
-    ));
+  /// Cancels any in-flight request and clears the loading indicator.
+  void cancel() {
+    _cancelCurrent();
+    emit(state.copyWith(isLoading: false, cancelToken: null));
   }
 
-  /// Adds an item to the end of the last page.
-  void appendItem(T item) {
-    final List<List<T>> pages = state.pages ?? [];
-    emit(state.copyWith(
-      pages: pages.isEmpty
-          ? [[item]]
-          : [...pages.take(pages.length - 1), [...pages.last, item]],
-    ));
-  }
+  // ── List mutation helpers ─────────────────────────────────────────────────
 
-  /// Deletes an item by ID across all pages.
+  /// Inserts [item] at position 0 of the current list.
+  /// Useful after a successful create-item API call.
+  void prependItem(T item) =>
+      emit(state.copyWith(items: [item, ...?state.items]));
+
+  /// Appends [item] to the end of the current list.
+  /// Useful for optimistic additions or non-paginated inserts.
+  void appendItem(T item) =>
+      emit(state.copyWith(items: [...?state.items, item]));
+
+  /// Removes the item whose [getId] result matches [id].
+  /// No-op if the item is not found.
   void deleteItem({required String id, required String Function(T) getId}) {
-    final List<List<T>>? pages = state.pages;
-    if (pages == null || pages.isEmpty) return;
-
-    emit(state.copyWith(
-      pages: pages
-          .map((page) => page.where((item) => getId(item) != id).toList())
-          .toList(),
-    ));
+    emit(
+      state.copyWith(
+        items: state.items?.where((item) => getId(item) != id).toList(),
+      ),
+    );
   }
 
-  /// Updates an item in the paginated list by matching its ID.
+  /// Replaces the item whose [getId] result matches [id] with [updatedItem].
+  /// No-op if the item is not found.
   void updateItem({
     required String id,
     required T updatedItem,
     required String Function(T) getId,
   }) {
-    final List<List<T>>? pages = state.pages;
-    if (pages == null || pages.isEmpty) return;
+    final List<T>? items = state.items;
+    if (items == null) return;
 
-    emit(state.copyWith(
-      pages: pages.map((page) {
-        final int index = page.indexWhere((item) => getId(item) == id);
-        if (index == -1) return page;
-        return List<T>.of(page)..[index] = updatedItem;
-      }).toList(),
-    ));
+    final int index = items.indexWhere((item) => getId(item) == id);
+    if (index == -1) return;
+
+    final List<T> updated = List<T>.from(items)..[index] = updatedItem;
+    emit(state.copyWith(items: updated));
   }
 
-  /// Cancels the current loading operation.
-  void cancel() {
-    state.cancelToken?.cancel();
-    emit(state.copyWith(isLoading: false, cancelToken: null));
-  }
+  // ── Lifecycle ─────────────────────────────────────────────────────────────
 
-  /// Cleans up resources when the cubit is closed.
+  /// Cancels any in-flight request before releasing resources.
   @override
   Future<void> close() {
-    state.cancelToken?.cancel();
+    _cancelCurrent();
     return super.close();
+  }
+
+  // ── Internal ──────────────────────────────────────────────────────────────
+
+  /// Cancels the current in-flight request if one exists.
+  void _cancelCurrent() => state.cancelToken?.cancel();
+
+  /// Core fetch implementation shared by [fetchNext] and [refresh].
+  ///
+  /// - Cancels any previous request and issues a new [PagingCancelToken].
+  /// - On success, replaces the list ([isRefresh]) or appends to it.
+  /// - Caches the result only on a first-page refresh without an active search.
+  /// - On error, emits the exception without clearing existing [items].
+  Future<void> _fetch({required K key, bool isRefresh = false}) async {
+    _cancelCurrent();
+    final PagingCancelToken cancelToken = PagingCancelToken();
+
+    emit(
+      state.copyWith(isLoading: true, error: null, cancelToken: cancelToken),
+    );
+
+    try {
+      final (List<T> result, K? nextKey) = await fetchFn(key, state.search);
+
+      // Discard the result if a newer request has already cancelled this one.
+      if (cancelToken.isCancelled) return;
+
+      // Cache only the first page and only when not searching, so the cache
+      // always reflects a clean, unfiltered view of the list.
+      if (isRefresh && useCache && !_isSearchActive) {
+        storeToCache<List<T>>(result);
+      }
+
+      final List<T> items = isRefresh ? result : [...?state.items, ...result];
+
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: null,
+          items: items,
+          nextKey: nextKey,
+          hasNextPage: nextKey != null,
+          cancelToken: null,
+        ),
+      );
+    } catch (e) {
+      // Only surface the error if this request wasn't intentionally cancelled.
+      if (!cancelToken.isCancelled) {
+        emit(state.copyWith(isLoading: false, error: e, cancelToken: null));
+      }
+    }
   }
 }

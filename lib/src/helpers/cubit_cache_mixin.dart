@@ -6,22 +6,33 @@
 
 import 'cubit_cache_store.dart';
 
+/// Adds simple key-value caching to any Cubit.
+///
+/// The cache key is derived automatically from the concrete cubit's
+/// [runtimeType], so each subclass gets its own isolated cache slot
+/// without any manual configuration.
+///
+/// Usage:
+/// ```dart
+/// class MyCubit extends Cubit<MyState> with CubitCacheMixin {
+///   void load() {
+///     final cached = readFromCache<List<Item>>();
+///     if (cached != null) { /* show immediately */ }
+///     // ... fetch fresh data, then:
+///     storeToCache<List<Item>>(freshData);
+///   }
+/// }
+/// ```
 mixin CubitCacheMixin {
-  /// Builds key from runtime cubit name
-  String get _cacheKey => '${runtimeType}Data';
+  /// Unique cache key derived from the concrete cubit's runtime type.
+  String get cacheKey => '${runtimeType}Data';
 
-  /// Read cached value
-  T? readFromCache<T>() {
-    return CubitCacheStoreHelper.get<T>(_cacheKey);
-  }
+  /// Returns the cached value cast to [T], or `null` if no entry exists.
+  T? readFromCache<T>() => CubitCacheStoreHelper.get<T>(cacheKey);
 
-  /// Write cached value
-  void storeToCache(dynamic value) {
-    CubitCacheStoreHelper.set(_cacheKey, value);
-  }
+  /// Persists [value] under this cubit's [cacheKey].
+  void storeToCache<T>(T value) => CubitCacheStoreHelper.set(cacheKey, value);
 
-  /// Clear cache for this cubit only
-  void clearCache() {
-    CubitCacheStoreHelper.remove(_cacheKey);
-  }
+  /// Removes this cubit's entry from the cache store.
+  void clearCache() => CubitCacheStoreHelper.remove(cacheKey);
 }
