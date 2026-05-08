@@ -93,11 +93,12 @@ class OutlinedInputBorder extends InputBorder {
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
-    return Path()
-      ..addRRect(borderRadius
+    return Path()..addRRect(
+      borderRadius
           .resolve(textDirection)
           .toRRect(rect)
-          .deflate(borderSide.width));
+          .deflate(borderSide.width),
+    );
   }
 
   @override
@@ -106,8 +107,12 @@ class OutlinedInputBorder extends InputBorder {
   }
 
   @override
-  void paintInterior(Canvas canvas, Rect rect, Paint paint,
-      {TextDirection? textDirection}) {
+  void paintInterior(
+    Canvas canvas,
+    Rect rect,
+    Paint paint, {
+    TextDirection? textDirection,
+  }) {
     canvas.drawRRect(borderRadius.resolve(textDirection).toRRect(rect), paint);
   }
 
@@ -119,13 +124,13 @@ class OutlinedInputBorder extends InputBorder {
   /// The [borderSide] defines the line's color and weight.
   @override
   void paint(
-      Canvas canvas,
-      Rect rect, {
-        double? gapStart,
-        double gapExtent = 0.0,
-        double gapPercentage = 0.0,
-        TextDirection? textDirection,
-      }) {
+    Canvas canvas,
+    Rect rect, {
+    double? gapStart,
+    double gapExtent = 0.0,
+    double gapPercentage = 0.0,
+    TextDirection? textDirection,
+  }) {
     final Paint paint = borderSide.toPaint();
     final RRect outer = borderRadius.toRRect(rect);
     final RRect center = outer.deflate(borderSide.width / 2.0);
@@ -164,8 +169,8 @@ abstract class MaterialStateOutlinedInputBorder extends OutlinedInputBorder
   /// The given callback parameter must return a non-null text style in the default
   /// state.
   static MaterialStateOutlinedInputBorder resolveWith(
-      WidgetPropertyResolver<InputBorder> callback) =>
-      _MaterialStateOutlinedInputBorder(callback);
+    WidgetPropertyResolver<InputBorder> callback,
+  ) => _MaterialStateOutlinedInputBorder(callback);
 
   /// Returns a [InputBorder] that's to be used when a Material component is in the
   /// specified state.

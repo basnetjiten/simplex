@@ -42,7 +42,14 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
     required this.fetchFn,
     required K initialKey,
     this.useCache = false,
-  }) : super(PagingState<K, T>(initialKey: initialKey)) {
+    String? cacheKey,
+  })  : _customCacheKey = cacheKey,
+        assert(
+          !useCache || cacheKey != null,
+          'cacheKey must be provided when useCache is true to avoid cache collisions '
+          'between multiple PagingCubit instances of the same model type.',
+        ),
+        super(PagingState<K, T>(initialKey: initialKey)) {
     if (useCache) {
       final cached = readFromCache<_PagingCachePayload<K, T>>();
       if (cached != null) {
@@ -70,6 +77,17 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
   /// Whether to cache the first page for stale-while-revalidate behaviour.
   /// Has no effect when a search query is active.
   final bool useCache;
+
+  /// An optional unique identifier for this cubit's cache.
+  /// Use this when instantiating [PagingCubit] directly for multiple lists
+  /// of the same model type to avoid cache collisions.
+  final String? _customCacheKey;
+
+  @override
+  String get cacheKey {
+    if (useCache) return _customCacheKey!;
+    return _customCacheKey ?? super.cacheKey;
+  }
 
   // ── Derived state helpers ─────────────────────────────────────────────────
 
@@ -192,11 +210,7 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
     final PagingCancelToken cancelToken = PagingCancelToken();
 
     emit(
-      state.copyWith(
-        isLoading: !silent,
-        error: null,
-        cancelToken: cancelToken,
-      ),
+      state.copyWith(isLoading: !silent, error: null, cancelToken: cancelToken),
     );
 
     try {

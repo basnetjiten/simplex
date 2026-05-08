@@ -10,7 +10,6 @@ part 'paging_model.freezed.dart';
 
 part 'paging_model.g.dart';
 
-
 @freezed
 abstract class PagingModel with _$PagingModel {
   const PagingModel._();

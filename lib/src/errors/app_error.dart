@@ -26,5 +26,3 @@ class AppError with _$AppError {
   const factory AppError.unSupportedPlatform({required String message}) =
       _UnSupportedPlatform;
 }
-
-

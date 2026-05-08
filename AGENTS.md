@@ -137,9 +137,11 @@ The application uses a generic `PagingCubit<K, T>` to handle offset or cursor-ba
 
 ### Example: Setting up a Paginated List
 ```dart
-// 1. Initialize Cubit
+// 1. Initialize Cubit directly (Recommended for simple lists)
 final pagingCubit = PagingCubit<int, MyItemModel>(
-  initialKey: 1, // E.g., Starting offset/page
+  initialKey: 1,
+  cacheKey: 'MyUniqueList', // Required for unique caching
+  useCache: true,
   fetchFn: (int pageKey, String? searchKeyword) async {
     // 2. Fetch from repository
     final response = await repository.fetchItems(page: pageKey, search: searchKeyword);
@@ -162,3 +164,6 @@ The cubit also allows for local state mutation directly without needing network 
 - `pagingCubit.appendItem(item)`
 - `pagingCubit.updateItem(id: '123', updatedItem: item, getId: (i) => i.id)`
 - `pagingCubit.deleteItem(id: '123', getId: (i) => i.id)`
+
+> [!TIP]
+> Use **Subclassing** only when you need to add custom methods (e.g. `upvote()`). For simple lists, **Direct Instantiation** with a `cacheIdentifier` is preferred to reduce boilerplate.
