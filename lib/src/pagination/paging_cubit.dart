@@ -50,7 +50,7 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
         // UI renders without a loading spinner, then kick off a silent
         // background refresh to bring data up to date.
         emit(state.copyWith(pages: cachedPages));
-        fetchNext();
+        refresh(silent: true);
       }
     }
   }
@@ -68,7 +68,7 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
   // ── Derived state helpers ─────────────────────────────────────────────────
 
   /// True when no page has been successfully loaded yet.
-  bool get _isFirstLoad => state.pages.isEmpty;
+  bool get _isFirstLoad => state.pages.isEmpty || state.nextKey == null;
 
   /// True when the search field contains a non-empty query.
   bool get _isSearchActive => state.search != null && state.search!.isNotEmpty;
@@ -82,22 +82,24 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
   /// - Subsequent calls advance using the [PagingState.nextKey] returned by
   ///   the previous fetch.
   /// - No-ops if a fetch is already in progress or there are no more pages.
-  Future<void> fetchNext() async {
+  /// Use [silent] to load in the background without showing a loading indicator.
+  Future<void> fetchNext({bool silent = false}) async {
     if (state.isLoading || !state.hasNextPage) return;
 
     final K? key = _isFirstLoad ? state.initialKey : state.nextKey;
     if (key == null) return;
 
-    await _fetch(key: key, isRefresh: _isFirstLoad);
+    await _fetch(key: key, isRefresh: _isFirstLoad, silent: silent);
   }
 
   /// Resets pagination and reloads from [PagingState.initialKey].
   ///
   /// Cancels any in-flight request before fetching.
-  Future<void> refresh() async {
+  /// Use [silent] to reload in the background without showing a loading indicator.
+  Future<void> refresh({bool silent = false}) async {
     final K? initialKey = state.initialKey;
     if (initialKey == null) return;
-    await _fetch(key: initialKey, isRefresh: true);
+    await _fetch(key: initialKey, isRefresh: true, silent: silent);
   }
 
   /// Updates the search query, resets pagination, and fetches the first page.
@@ -174,12 +176,21 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
   /// - On success, replaces the list ([isRefresh]) or appends to it.
   /// - Caches the result only on a first-page refresh without an active search.
   /// - On error, emits the exception without clearing existing [items].
-  Future<void> _fetch({required K key, bool isRefresh = false}) async {
+  /// - If [silent] is true, avoids setting [isLoading] to true.
+  Future<void> _fetch({
+    required K key,
+    bool isRefresh = false,
+    bool silent = false,
+  }) async {
     _cancelCurrent();
     final PagingCancelToken cancelToken = PagingCancelToken();
 
     emit(
-      state.copyWith(isLoading: true, error: null, cancelToken: cancelToken),
+      state.copyWith(
+        isLoading: !silent,
+        error: null,
+        cancelToken: cancelToken,
+      ),
     );
 
     try {

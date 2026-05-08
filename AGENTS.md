@@ -151,7 +151,7 @@ final pagingCubit = PagingCubit<int, MyItemModel>(
 
 // 4. Trigger fetching/actions
 await pagingCubit.fetchNext();
-// Clear and reset to initialKey
+// Clear and reset to initialKey (can be silent: true for background refresh)
 await pagingCubit.refresh(); 
 // Re-fetch using a new query criteria
 await pagingCubit.changeSearch('new query');
