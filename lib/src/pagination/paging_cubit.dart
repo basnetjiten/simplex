@@ -44,12 +44,18 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
     this.useCache = false,
   }) : super(PagingState<K, T>(initialKey: initialKey)) {
     if (useCache) {
-      final List<T>? cachedPages = readFromCache<List<T>>();
-      if (cachedPages != null) {
-        // Show stale-while-revalidate: emit cached items immediately so the
-        // UI renders without a loading spinner, then kick off a silent
-        // background refresh to bring data up to date.
-        emit(state.copyWith(pages: cachedPages));
+      final cached = readFromCache<_PagingCachePayload<K, T>>();
+      if (cached != null) {
+        // Show stale-while-revalidate: emit cached items and metadata immediately
+        // so the UI renders correctly without a bottom loading spinner,
+        // then kick off a silent background refresh.
+        emit(
+          state.copyWith(
+            pages: cached.items,
+            nextKey: cached.nextKey,
+            hasNextPage: cached.hasNextPage,
+          ),
+        );
         refresh(silent: true);
       }
     }
@@ -202,7 +208,13 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
       // Cache only the first page and only when not searching, so the cache
       // always reflects a clean, unfiltered view of the list.
       if (isRefresh && useCache && !_isSearchActive) {
-        storeToCache<List<T>>(result);
+        storeToCache<_PagingCachePayload<K, T>>(
+          _PagingCachePayload(
+            items: result,
+            nextKey: nextKey,
+            hasNextPage: nextKey != null,
+          ),
+        );
       }
 
       final List<T> items = isRefresh ? result : [...state.pages, ...result];
@@ -224,4 +236,17 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
       }
     }
   }
+}
+
+/// Internal wrapper to cache both items and pagination metadata.
+class _PagingCachePayload<K, T> {
+  final List<T> items;
+  final K? nextKey;
+  final bool hasNextPage;
+
+  _PagingCachePayload({
+    required this.items,
+    this.nextKey,
+    required this.hasNextPage,
+  });
 }
