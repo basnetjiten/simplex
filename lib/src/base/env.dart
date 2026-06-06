@@ -14,6 +14,10 @@ abstract class EnvVars {
   String get iosClientId;
 
   String get serverClientId;
+
+  String? get supabaseUrl => null;
+
+  String? get supabaseAnonKey => null;
 }
 
 class Env implements EnvVars {
@@ -45,4 +49,10 @@ class Env implements EnvVars {
 
   @override
   String get serverClientId => _env.serverClientId;
+
+  @override
+  String? get supabaseUrl => _env.supabaseUrl;
+
+  @override
+  String? get supabaseAnonKey => _env.supabaseAnonKey;
 }

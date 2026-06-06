@@ -43,6 +43,8 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   dio: ^5.9.2
   gql_dio_link: ^2.0.0
+  supabase_flutter: ^2.12.4
+  http: ^1.2.2
 
   # Session and Storage
   hive_local_storage: ^2.0.12
