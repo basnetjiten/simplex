@@ -64,6 +64,7 @@ class SimplexFormField extends StatelessWidget {
     this.alignVertical,
     this.prefixIconConstraints,
     this.onTapOutside,
+    this.alignLabelWithHint = false,
   });
 
   final Widget? prefixIcon;
@@ -77,6 +78,7 @@ class SimplexFormField extends StatelessWidget {
   final TextInputAction? inputAction;
   final void Function(String)? onChanged;
   final bool readonly;
+  final bool alignLabelWithHint;
   final InputBorder? border;
   final InputBorder? focusedBorder;
   final InputBorder? disabledBorder;
@@ -130,8 +132,10 @@ class SimplexFormField extends StatelessWidget {
       wordCapitalization: wordCapitalization,
       characterCapitalization: characterCapitalization,
     ),
-    onTapOutside: onTapOutside ?? (PointerDownEvent data) =>
-        FocusScope.of(context).requestFocus(FocusNode()),
+    onTapOutside:
+        onTapOutside ??
+        (PointerDownEvent data) =>
+            FocusScope.of(context).requestFocus(FocusNode()),
     cursorColor: cursorColor,
     enableSuggestions: false,
     cursorHeight: cursorHeight ?? 16.0,
@@ -166,7 +170,7 @@ class SimplexFormField extends StatelessWidget {
           labelStyle: labelStyle,
           label: label,
           labelText: labelText,
-          alignLabelWithHint: false,
+          alignLabelWithHint: alignLabelWithHint,
           prefixIcon: prefixIcon,
           prefixIconConstraints: prefixIconConstraints,
           border: border,
