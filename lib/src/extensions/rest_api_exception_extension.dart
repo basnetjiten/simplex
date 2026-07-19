@@ -17,6 +17,7 @@ extension RestApiExceptionDioX on DioException {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.connectionError:
       case DioExceptionType.receiveTimeout:
+      case DioExceptionType.transformTimeout:
         return ApiException.timeOut(message: 'Time out Error');
 
       case DioExceptionType.badResponse:
