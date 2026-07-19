@@ -163,6 +163,7 @@ class SimplexFormField extends StatelessWidget {
     decoration:
         inputDecoration ??
         InputDecoration(
+
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           counterText: showCounterText ? null : '',
           contentPadding: contentPadding,
