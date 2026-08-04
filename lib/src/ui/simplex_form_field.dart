@@ -65,6 +65,7 @@ class SimplexFormField extends StatelessWidget {
     this.prefixIconConstraints,
     this.onTapOutside,
     this.alignLabelWithHint = false,
+    this.enableSuggestions = false,
   });
 
   final Widget? prefixIcon;
@@ -72,6 +73,7 @@ class SimplexFormField extends StatelessWidget {
   final String? hintText;
   final String? errorText;
   final bool showCounterText;
+  final bool enableSuggestions;
   final int? maxLines;
   final int? minLines;
   final TextInputType? keyboardType;
@@ -137,7 +139,7 @@ class SimplexFormField extends StatelessWidget {
         (PointerDownEvent data) =>
             FocusScope.of(context).requestFocus(FocusNode()),
     cursorColor: cursorColor,
-    enableSuggestions: false,
+    enableSuggestions: enableSuggestions,
     cursorHeight: cursorHeight ?? 16.0,
     initialValue: initialValue,
     inputFormatters: inputFormatters,
@@ -163,7 +165,6 @@ class SimplexFormField extends StatelessWidget {
     decoration:
         inputDecoration ??
         InputDecoration(
-
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           counterText: showCounterText ? null : '',
           contentPadding: contentPadding,
