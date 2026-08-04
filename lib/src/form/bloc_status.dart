@@ -27,7 +27,7 @@ class BlocStatus with _$BlocStatus {
   /// Error with optional message
   const factory BlocStatus.error({String? error}) = _Error;
 
-  /// Success with attached generic data — wrapped in ApiData<T>
+  /// Success with attached generic data — wrapped in `ApiData<T>`
   const factory BlocStatus.successWithData({
     required ApiData<dynamic> apiData,
     String? message,

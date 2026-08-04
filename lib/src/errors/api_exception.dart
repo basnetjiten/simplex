@@ -26,5 +26,5 @@ class ApiException with _$ApiException implements Exception {
   const factory ApiException.forbiddenException({String? message}) =
       _ForbiddenException;
 
-  const factory ApiException.timeOut({required message}) = _TimeOutException;
+  const factory ApiException.timeOut({required String message}) = _TimeOutException;
 }

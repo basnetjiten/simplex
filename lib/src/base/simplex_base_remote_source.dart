@@ -21,7 +21,7 @@ import '../logging/logger.dart';
 /// built-in error handling, logging, and authentication error interception.
 ///
 /// ## Key Features
-/// - Standardized API request execution with [executeApiCall]
+/// - Standardized API request execution with [executeGraphqlApiCall]
 /// - Automatic error handling and conversion to [ApiException]
 /// - Authentication error interception and handling
 /// - Request and error logging
@@ -150,7 +150,7 @@ class SimplexBaseRemoteSource {
         );
       }
     } on DioException catch (e) {
-      throw e.toRestApiException;
+      throw e.toRestApiException();
     } catch (e) {
       throw const ApiException.serverException(
         message: 'UnExpected Error Occurred!',

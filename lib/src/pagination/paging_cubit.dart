@@ -10,7 +10,7 @@ import '../typedefs/typedefs.dart';
 import 'paging_cancel_token.dart';
 import 'paging_state.dart';
 
-/// A generic paginated data cubit.
+/// A generic paginated data cubit that handles data loading, searching, and caching.
 ///
 /// [K] — the type of the pagination key/cursor (e.g. `int` for page numbers,
 ///        `String` for cursor-based APIs).
@@ -32,68 +32,56 @@ import 'paging_state.dart';
 /// ```
 ///
 /// ### Caching
-/// Pass `useCache: true` to hydrate the first page from cache on startup
-/// while a silent background refresh runs in parallel.
+/// Pass `useCache: true` to hydrate the first page from cache on startup.
 /// Only the first page is cached — subsequent pages are always fetched live.
 /// The cache is skipped entirely when a search query is active.
 class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
     with CubitCacheMixin {
+  /// Creates a [PagingCubit].
   PagingCubit({
     required this.fetchFn,
     required K initialKey,
     this.useCache = false,
   }) : super(PagingState<K, T>(initialKey: initialKey)) {
     if (useCache) {
-      final List<T>? cachedPages = readFromCache<List<T>>();
-      if (cachedPages != null) {
-        // Show stale-while-revalidate: emit cached items immediately so the
-        // UI renders without a loading spinner, then kick off a silent
-        // background refresh to bring data up to date.
-        emit(state.copyWith(pages: cachedPages));
-        fetchNext();
+      final List<T>? cachedItems = readFromCache<List<T>>();
+      if (cachedItems != null) {
+        emit(state.copyWith(items: cachedItems));
       }
     }
   }
 
   /// The function used to fetch a page of data.
-  /// Receives the page [key] and an optional [search] string.
-  /// Must return a record of `(items, nextKey)` where [nextKey] is `null`
-  /// when there are no further pages.
   final PagingFetchFn<K, T> fetchFn;
 
-  /// Whether to cache the first page for stale-while-revalidate behaviour.
-  /// Has no effect when a search query is active.
+  /// Whether to cache the first page for faster initial rendering.
   final bool useCache;
 
   // ── Derived state helpers ─────────────────────────────────────────────────
 
   /// True when no page has been successfully loaded yet.
-  bool get _isFirstLoad => state.pages.isEmpty;
+  bool get isFirstLoad => state.items.isEmpty;
 
   /// True when the search field contains a non-empty query.
-  bool get _isSearchActive => state.search != null && state.search!.isNotEmpty;
+  bool get isSearchActive => state.search != null && state.search!.isNotEmpty;
 
   // ── Public API ────────────────────────────────────────────────────────────
 
   /// Loads the next page of data.
   ///
-  /// - On the very first call (or after [refresh]/[changeSearch]) this loads
-  ///   from [initialKey].
-  /// - Subsequent calls advance using the [PagingState.nextKey] returned by
-  ///   the previous fetch.
+  /// - On the very first call, this loads from [initialKey].
+  /// - Subsequent calls use the [nextKey] from the previous fetch.
   /// - No-ops if a fetch is already in progress or there are no more pages.
   Future<void> fetchNext() async {
     if (state.isLoading || !state.hasNextPage) return;
 
-    final K? key = _isFirstLoad ? state.initialKey : state.nextKey;
+    final K? key = isFirstLoad ? state.initialKey : state.nextKey;
     if (key == null) return;
 
-    await _fetch(key: key, isRefresh: _isFirstLoad);
+    await _fetch(key: key, isRefresh: isFirstLoad);
   }
 
-  /// Resets pagination and reloads from [PagingState.initialKey].
-  ///
-  /// Cancels any in-flight request before fetching.
+  /// Resets pagination and reloads from the [initialKey].
   Future<void> refresh() async {
     final K? initialKey = state.initialKey;
     if (initialKey == null) return;
@@ -101,8 +89,6 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
   }
 
   /// Updates the search query, resets pagination, and fetches the first page.
-  ///
-  /// Cancels any in-flight request before resetting state.
   Future<void> changeSearch(String? newSearch) async {
     _cancelCurrent();
     emit(PagingState<K, T>(initialKey: state.initialKey, search: newSearch));
@@ -117,46 +103,41 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
 
   // ── List mutation helpers ─────────────────────────────────────────────────
 
-  /// Inserts [item] at position 0 of the current list.
-  /// Useful after a successful create-item API call.
+  /// Inserts [item] at the beginning of the list.
   void prependItem(T item) =>
-      emit(state.copyWith(pages: [item, ...state.pages]));
+      emit(state.copyWith(items: [item, ...state.items]));
 
-  /// Appends [item] to the end of the current list.
-  /// Useful for optimistic additions or non-paginated inserts.
+  /// Appends [item] to the end of the list.
   void appendItem(T item) =>
-      emit(state.copyWith(pages: [...state.pages, item]));
+      emit(state.copyWith(items: [...state.items, item]));
 
-  /// Removes the item whose [getId] result matches [id].
-  /// No-op if the item is not found.
+  /// Removes the item whose ID matches [id].
   void deleteItem({required String id, required String Function(T) getId}) {
     emit(
       state.copyWith(
-        pages: state.pages.where((item) => getId(item) != id).toList(),
+        items: state.items.where((item) => getId(item) != id).toList(),
       ),
     );
   }
 
-  /// Replaces the item whose [getId] result matches [id] with [updatedItem].
-  /// No-op if the item is not found.
+  /// Replaces the item whose ID matches [id] with [updatedItem].
   void updateItem({
     required String id,
     required T updatedItem,
     required String Function(T) getId,
   }) {
-    final List<T> pages = state.pages;
-    if (pages.isEmpty) return;
+    final List<T> items = state.items;
+    if (items.isEmpty) return;
 
-    final int index = pages.indexWhere((item) => getId(item) == id);
+    final int index = items.indexWhere((item) => getId(item) == id);
     if (index == -1) return;
 
-    final List<T> updated = List<T>.from(pages)..[index] = updatedItem;
-    emit(state.copyWith(pages: updated));
+    final List<T> updated = List<T>.from(items)..[index] = updatedItem;
+    emit(state.copyWith(items: updated));
   }
 
   // ── Lifecycle ─────────────────────────────────────────────────────────────
 
-  /// Cancels any in-flight request before releasing resources.
   @override
   Future<void> close() {
     _cancelCurrent();
@@ -165,15 +146,8 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
 
   // ── Internal ──────────────────────────────────────────────────────────────
 
-  /// Cancels the current in-flight request if one exists.
   void _cancelCurrent() => state.cancelToken?.cancel();
 
-  /// Core fetch implementation shared by [fetchNext] and [refresh].
-  ///
-  /// - Cancels any previous request and issues a new [PagingCancelToken].
-  /// - On success, replaces the list ([isRefresh]) or appends to it.
-  /// - Caches the result only on a first-page refresh without an active search.
-  /// - On error, emits the exception without clearing existing [items].
   Future<void> _fetch({required K key, bool isRefresh = false}) async {
     _cancelCurrent();
     final PagingCancelToken cancelToken = PagingCancelToken();
@@ -185,29 +159,25 @@ class PagingCubit<K, T> extends SimplexCubit<PagingState<K, T>>
     try {
       final (List<T> result, K? nextKey) = await fetchFn(key, state.search);
 
-      // Discard the result if a newer request has already cancelled this one.
       if (cancelToken.isCancelled) return;
 
-      // Cache only the first page and only when not searching, so the cache
-      // always reflects a clean, unfiltered view of the list.
-      if (isRefresh && useCache && !_isSearchActive) {
+      if (isRefresh && useCache && !isSearchActive) {
         storeToCache<List<T>>(result);
       }
 
-      final List<T> items = isRefresh ? result : [...state.pages, ...result];
+      final List<T> items = isRefresh ? result : [...state.items, ...result];
 
       emit(
         state.copyWith(
           isLoading: false,
           error: null,
-          pages: items,
+          items: items,
           nextKey: nextKey,
           hasNextPage: nextKey != null,
           cancelToken: null,
         ),
       );
     } catch (e) {
-      // Only surface the error if this request wasn't intentionally cancelled.
       if (!cancelToken.isCancelled) {
         emit(state.copyWith(isLoading: false, error: e, cancelToken: null));
       }

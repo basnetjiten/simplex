@@ -52,23 +52,23 @@ import '../pagination/models/paginated_response_model.dart';
 /// }
 /// ```
 ///
-abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
-    with SimplexBaseMixin<State> {
+abstract class SimplexBloc<E, S> extends Bloc<E, S>
+    with SimplexBaseMixin<S> {
   SimplexBloc(super.state);
 
-  /// Handles an API call that returns Either<AppError, R>
+  /// Handles an API call that returns `Either<AppError, R>`
   ///
   /// - [emitter] is optional for use in BlocBuilders or event handlers
-  /// - [call] is the API function returning Either<AppError, R>
+  /// - [call] is the API function returning `Either<AppError, R>`
   /// - [onSuccess] maps the success result to a new state
   /// - [onFailure] maps error messages to a state
   /// - [onInvalid] optional, for handling invalid state separately
   Future<void> handleAPICall<R>({
-    required Emitter<State> emitter,
+    required Emitter<S> emitter,
     required Future<Either<AppError, R>> call,
-    required State Function(R data) onSuccess,
-    required State Function(String error) onFailure,
-    State Function(String error)? onInvalid,
+    required S Function(R data) onSuccess,
+    required S Function(String error) onFailure,
+    S Function(String error)? onInvalid,
   }) async {
     await performAPICall<R>(
       call: call,
@@ -82,7 +82,7 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
   /// Handles a paginated API call and returns the items and next page key.
   ///
   /// - [page] is the current page number.
-  /// - [call] is the API call returning Either<AppError, R>.
+  /// - [call] is the API call returning `Either<AppError, R>`.
   Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
     required Future<Either<AppError, R>> call,
@@ -91,20 +91,20 @@ abstract class SimplexBloc<Event, State> extends Bloc<Event, State>
   }
 }
 
-abstract class SimplexCubit<State> extends Cubit<State>
-    with SimplexBaseMixin<State> {
+abstract class SimplexCubit<S> extends Cubit<S>
+    with SimplexBaseMixin<S> {
   SimplexCubit(super.initialState);
 
-  /// Handles an API call that returns Either<AppError, R>
-  /// - [call] is the API function returning Either<AppError, R>
+  /// Handles an API call that returns `Either<AppError, R>`
+  /// - [call] is the API function returning `Either<AppError, R>`
   /// - [onSuccess] maps the success result to a new state
   /// - [onFailure] maps error messages to a state
   /// - [onInvalid] optional, for handling invalid state separately
   Future<void> handleAPICall<R>({
     required Future<Either<AppError, R>> call,
-    required State Function(R data) onSuccess,
-    required State Function(String error) onFailure,
-    State Function(String error)? onInvalid,
+    required S Function(R data) onSuccess,
+    required S Function(String error) onFailure,
+    S Function(String error)? onInvalid,
   }) async {
     await performAPICall<R>(
       call: call,
@@ -118,7 +118,7 @@ abstract class SimplexCubit<State> extends Cubit<State>
   /// Handles a paginated API call and returns the items and next page key.
   ///
   /// - [page] is the current page number.
-  /// - [call] is the API call returning Either<AppError, R>.
+  /// - [call] is the API call returning `Either<AppError, R>`.
 
   Future<(List<T>, int?)> handlePagingCall<T, R extends PaginatedResponse<T>>({
     required int page,
@@ -172,7 +172,7 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
     final response = await call;
 
     return response.fold(
-      (error) => throw error.mapErrorMessage((String error) => error),
+      (error) => throw Exception(error.mapErrorMessage((String error) => error)),
       (data) {
         return (data.items, data.hasNext ? page + 1 : null);
       },
@@ -181,22 +181,22 @@ mixin SimplexBaseMixin<S> on BlocBase<S> {
 }
 
 @Deprecated('Use SimplexBloc or SimplexCubit instead')
-abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
+abstract class SimplexBlocBase<E, S> extends BlocBase<S> {
   SimplexBlocBase(super.state);
 
-  /// Handles an API call that returns Either<AppError, R>
+  /// Handles an API call that returns `Either<AppError, R>`
   ///
   /// - [emitter] is optional for use in BlocBuilders or event handlers
-  /// - [call] is the API function returning Either<AppError, R>
+  /// - [call] is the API function returning `Either<AppError, R>`
   /// - [onSuccess] maps the success result to a new state
   /// - [onFailure] maps error messages to a state
   /// - [onInvalid] optional, for handling invalid state separately
   Future<void> handleAPICall<R>({
-    Emitter<State>? emitter,
+    Emitter<S>? emitter,
     required Future<Either<AppError, R>> call,
     required Function(R data) onSuccess,
-    required State Function(String error) onFailure,
-    State Function(String error)? onInvalid,
+    required S Function(String error) onFailure,
+    S Function(String error)? onInvalid,
   }) async {
     if (isClosed) return;
 
@@ -218,17 +218,17 @@ abstract class SimplexBlocBase<Event, State> extends BlocBase<State> {
   }
 
   /// Emits the state based on success
-  void _emitState(Emitter<State>? emitter, State state) {
+  void _emitState(Emitter<S>? emitter, S state) {
     emitter != null ? emitter(state) : emit(state);
   }
 
   /// Emits the state based on error
   void _emitError(
-    Emitter<State>? emitter,
+    Emitter<S>? emitter,
     AppError error,
-    State Function(String) onInvalidOrFailure,
+    S Function(String) onInvalidOrFailure,
   ) {
-    final state = error.mapErrorMessage<State>(onInvalidOrFailure);
+    final state = error.mapErrorMessage<S>(onInvalidOrFailure);
     _emitState(emitter, state);
   }
 }

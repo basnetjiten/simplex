@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PagingState<K,T> {
 
- List<T> get pages; K? get initialKey; K? get nextKey; Object? get error; bool get hasNextPage; bool get isLoading; String? get search; PagingCancelToken? get cancelToken;
+ List<T> get items; K? get initialKey; K? get nextKey; Object? get error; bool get hasNextPage; bool get isLoading; String? get search; PagingCancelToken? get cancelToken;
 /// Create a copy of PagingState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PagingStateCopyWith<K, T, PagingState<K, T>> get copyWith => _$PagingStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PagingState<K, T>&&const DeepCollectionEquality().equals(other.pages, pages)&&const DeepCollectionEquality().equals(other.initialKey, initialKey)&&const DeepCollectionEquality().equals(other.nextKey, nextKey)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.hasNextPage, hasNextPage) || other.hasNextPage == hasNextPage)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.search, search) || other.search == search)&&(identical(other.cancelToken, cancelToken) || other.cancelToken == cancelToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PagingState<K, T>&&const DeepCollectionEquality().equals(other.items, items)&&const DeepCollectionEquality().equals(other.initialKey, initialKey)&&const DeepCollectionEquality().equals(other.nextKey, nextKey)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.hasNextPage, hasNextPage) || other.hasNextPage == hasNextPage)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.search, search) || other.search == search)&&(identical(other.cancelToken, cancelToken) || other.cancelToken == cancelToken));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(pages),const DeepCollectionEquality().hash(initialKey),const DeepCollectionEquality().hash(nextKey),const DeepCollectionEquality().hash(error),hasNextPage,isLoading,search,cancelToken);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(items),const DeepCollectionEquality().hash(initialKey),const DeepCollectionEquality().hash(nextKey),const DeepCollectionEquality().hash(error),hasNextPage,isLoading,search,cancelToken);
 
 @override
 String toString() {
-  return 'PagingState<$K, $T>(pages: $pages, initialKey: $initialKey, nextKey: $nextKey, error: $error, hasNextPage: $hasNextPage, isLoading: $isLoading, search: $search, cancelToken: $cancelToken)';
+  return 'PagingState<$K, $T>(items: $items, initialKey: $initialKey, nextKey: $nextKey, error: $error, hasNextPage: $hasNextPage, isLoading: $isLoading, search: $search, cancelToken: $cancelToken)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PagingStateCopyWith<K,T,$Res>  {
   factory $PagingStateCopyWith(PagingState<K, T> value, $Res Function(PagingState<K, T>) _then) = _$PagingStateCopyWithImpl;
 @useResult
 $Res call({
- List<T> pages, K? initialKey, K? nextKey, Object? error, bool hasNextPage, bool isLoading, String? search, PagingCancelToken? cancelToken
+ List<T> items, K? initialKey, K? nextKey, Object? error, bool hasNextPage, bool isLoading, String? search, PagingCancelToken? cancelToken
 });
 
 
@@ -62,9 +62,9 @@ class _$PagingStateCopyWithImpl<K,T,$Res>
 
 /// Create a copy of PagingState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? pages = null,Object? initialKey = freezed,Object? nextKey = freezed,Object? error = freezed,Object? hasNextPage = null,Object? isLoading = null,Object? search = freezed,Object? cancelToken = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? items = null,Object? initialKey = freezed,Object? nextKey = freezed,Object? error = freezed,Object? hasNextPage = null,Object? isLoading = null,Object? search = freezed,Object? cancelToken = freezed,}) {
   return _then(_self.copyWith(
-pages: null == pages ? _self.pages : pages // ignore: cast_nullable_to_non_nullable
+items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
 as List<T>,initialKey: freezed == initialKey ? _self.initialKey : initialKey // ignore: cast_nullable_to_non_nullable
 as K?,nextKey: freezed == nextKey ? _self.nextKey : nextKey // ignore: cast_nullable_to_non_nullable
 as K?,error: freezed == error ? _self.error : error ,hasNextPage: null == hasNextPage ? _self.hasNextPage : hasNextPage // ignore: cast_nullable_to_non_nullable
@@ -156,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<T> pages,  K? initialKey,  K? nextKey,  Object? error,  bool hasNextPage,  bool isLoading,  String? search,  PagingCancelToken? cancelToken)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<T> items,  K? initialKey,  K? nextKey,  Object? error,  bool hasNextPage,  bool isLoading,  String? search,  PagingCancelToken? cancelToken)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PagingState() when $default != null:
-return $default(_that.pages,_that.initialKey,_that.nextKey,_that.error,_that.hasNextPage,_that.isLoading,_that.search,_that.cancelToken);case _:
+return $default(_that.items,_that.initialKey,_that.nextKey,_that.error,_that.hasNextPage,_that.isLoading,_that.search,_that.cancelToken);case _:
   return orElse();
 
 }
@@ -177,10 +177,10 @@ return $default(_that.pages,_that.initialKey,_that.nextKey,_that.error,_that.has
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<T> pages,  K? initialKey,  K? nextKey,  Object? error,  bool hasNextPage,  bool isLoading,  String? search,  PagingCancelToken? cancelToken)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<T> items,  K? initialKey,  K? nextKey,  Object? error,  bool hasNextPage,  bool isLoading,  String? search,  PagingCancelToken? cancelToken)  $default,) {final _that = this;
 switch (_that) {
 case _PagingState():
-return $default(_that.pages,_that.initialKey,_that.nextKey,_that.error,_that.hasNextPage,_that.isLoading,_that.search,_that.cancelToken);case _:
+return $default(_that.items,_that.initialKey,_that.nextKey,_that.error,_that.hasNextPage,_that.isLoading,_that.search,_that.cancelToken);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +197,10 @@ return $default(_that.pages,_that.initialKey,_that.nextKey,_that.error,_that.has
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<T> pages,  K? initialKey,  K? nextKey,  Object? error,  bool hasNextPage,  bool isLoading,  String? search,  PagingCancelToken? cancelToken)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<T> items,  K? initialKey,  K? nextKey,  Object? error,  bool hasNextPage,  bool isLoading,  String? search,  PagingCancelToken? cancelToken)?  $default,) {final _that = this;
 switch (_that) {
 case _PagingState() when $default != null:
-return $default(_that.pages,_that.initialKey,_that.nextKey,_that.error,_that.hasNextPage,_that.isLoading,_that.search,_that.cancelToken);case _:
+return $default(_that.items,_that.initialKey,_that.nextKey,_that.error,_that.hasNextPage,_that.isLoading,_that.search,_that.cancelToken);case _:
   return null;
 
 }
@@ -212,14 +212,14 @@ return $default(_that.pages,_that.initialKey,_that.nextKey,_that.error,_that.has
 
 
 class _PagingState<K,T> extends PagingState<K, T> {
-  const _PagingState({final  List<T> pages = const [], this.initialKey, this.nextKey, this.error, this.hasNextPage = true, this.isLoading = false, this.search, this.cancelToken}): _pages = pages,super._();
+  const _PagingState({final  List<T> items = const [], this.initialKey, this.nextKey, this.error, this.hasNextPage = true, this.isLoading = false, this.search, this.cancelToken}): _items = items,super._();
   
 
- final  List<T> _pages;
-@override@JsonKey() List<T> get pages {
-  if (_pages is EqualUnmodifiableListView) return _pages;
+ final  List<T> _items;
+@override@JsonKey() List<T> get items {
+  if (_items is EqualUnmodifiableListView) return _items;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_pages);
+  return EqualUnmodifiableListView(_items);
 }
 
 @override final  K? initialKey;
@@ -240,16 +240,16 @@ _$PagingStateCopyWith<K, T, _PagingState<K, T>> get copyWith => __$PagingStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PagingState<K, T>&&const DeepCollectionEquality().equals(other._pages, _pages)&&const DeepCollectionEquality().equals(other.initialKey, initialKey)&&const DeepCollectionEquality().equals(other.nextKey, nextKey)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.hasNextPage, hasNextPage) || other.hasNextPage == hasNextPage)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.search, search) || other.search == search)&&(identical(other.cancelToken, cancelToken) || other.cancelToken == cancelToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PagingState<K, T>&&const DeepCollectionEquality().equals(other._items, _items)&&const DeepCollectionEquality().equals(other.initialKey, initialKey)&&const DeepCollectionEquality().equals(other.nextKey, nextKey)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.hasNextPage, hasNextPage) || other.hasNextPage == hasNextPage)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.search, search) || other.search == search)&&(identical(other.cancelToken, cancelToken) || other.cancelToken == cancelToken));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_pages),const DeepCollectionEquality().hash(initialKey),const DeepCollectionEquality().hash(nextKey),const DeepCollectionEquality().hash(error),hasNextPage,isLoading,search,cancelToken);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_items),const DeepCollectionEquality().hash(initialKey),const DeepCollectionEquality().hash(nextKey),const DeepCollectionEquality().hash(error),hasNextPage,isLoading,search,cancelToken);
 
 @override
 String toString() {
-  return 'PagingState<$K, $T>(pages: $pages, initialKey: $initialKey, nextKey: $nextKey, error: $error, hasNextPage: $hasNextPage, isLoading: $isLoading, search: $search, cancelToken: $cancelToken)';
+  return 'PagingState<$K, $T>(items: $items, initialKey: $initialKey, nextKey: $nextKey, error: $error, hasNextPage: $hasNextPage, isLoading: $isLoading, search: $search, cancelToken: $cancelToken)';
 }
 
 
@@ -260,7 +260,7 @@ abstract mixin class _$PagingStateCopyWith<K,T,$Res> implements $PagingStateCopy
   factory _$PagingStateCopyWith(_PagingState<K, T> value, $Res Function(_PagingState<K, T>) _then) = __$PagingStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<T> pages, K? initialKey, K? nextKey, Object? error, bool hasNextPage, bool isLoading, String? search, PagingCancelToken? cancelToken
+ List<T> items, K? initialKey, K? nextKey, Object? error, bool hasNextPage, bool isLoading, String? search, PagingCancelToken? cancelToken
 });
 
 
@@ -277,9 +277,9 @@ class __$PagingStateCopyWithImpl<K,T,$Res>
 
 /// Create a copy of PagingState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? pages = null,Object? initialKey = freezed,Object? nextKey = freezed,Object? error = freezed,Object? hasNextPage = null,Object? isLoading = null,Object? search = freezed,Object? cancelToken = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? items = null,Object? initialKey = freezed,Object? nextKey = freezed,Object? error = freezed,Object? hasNextPage = null,Object? isLoading = null,Object? search = freezed,Object? cancelToken = freezed,}) {
   return _then(_PagingState<K, T>(
-pages: null == pages ? _self._pages : pages // ignore: cast_nullable_to_non_nullable
+items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<T>,initialKey: freezed == initialKey ? _self.initialKey : initialKey // ignore: cast_nullable_to_non_nullable
 as K?,nextKey: freezed == nextKey ? _self.nextKey : nextKey // ignore: cast_nullable_to_non_nullable
 as K?,error: freezed == error ? _self.error : error ,hasNextPage: null == hasNextPage ? _self.hasNextPage : hasNextPage // ignore: cast_nullable_to_non_nullable

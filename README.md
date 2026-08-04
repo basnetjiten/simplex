@@ -4,13 +4,23 @@
 
 ---
 
+## 🌟 Why Simplex?
+
+Developing Flutter applications often involves repetitive boilerplate for state management, API integration, and form handling. **Simplex** aims to solve this by:
+- **Reducing Boilerplate**: Base classes handle common tasks like loading states and error mapping.
+- **Enforcing Consistency**: Provides a structured way to handle API responses and domain errors.
+- **Improving DX**: Built-in caching, debounced searching, and simplified UI components.
+- **Type Safety**: Leverages `freezed` and generics to ensure robust state transitions.
+
+---
+
 ## 🚀 Core Features
 
 -   **Standardized BLoC Architecture**: Inherit from `SimplexBloc` or `SimplexCubit` to handle API calls with built-in error mapping.
--   **Data Layer Abstraction**: Base classes for `RemoteSource` (GraphQL/REST) and `Repository` with automatic error conversion.
--   **Advanced Form Handling**: Powerful `TextFormField` wrappers and BLoC-integrated form status management.
--   **Query & Filter Utility**: Ready-to-use module for handling debounced search and complex filtering logic.
--   **Authentication Event Bus**: Centralized stream for handling auth states like session expiry or unauthorized access.
+-   **Enhanced Pagination**: `PagingCubit` with support for infinite scrolling, debounced search, and **first-page caching**.
+-   **Advanced Form Handling**: `Field<T>` with multiple validator support and `SimplexFormField` for consistent UI.
+-   **Data Layer Abstraction**: Base classes for `RemoteSource` and `Repository` with automatic error conversion.
+-   **Authentication Event Bus**: Centralized stream for handling global auth states (session expiry, etc.).
 -   **Caching & Logging**: Simple mixins for Cubit state caching and a standardized logging system.
 
 ---
@@ -21,97 +31,46 @@
 Simplex provides a clean separation between raw API calls and domain logic.
 
 #### **Remote Source**
-Use `SimplexBaseRemoteSource` to execute GraphQL (via Ferry) or REST (via Dio) calls. It handles logging and automatically intercepts authentication errors.
-
-```dart
-class UserRemoteSource extends SimplexBaseRemoteSource {
-  UserRemoteSource(super.graphqlClient, super.dioClient);
-
-  Future<UserData> getUser(String id) {
-    return executeGraphqlApiCall(GetUserQuery(variables: vars).request);
-  }
-}
-```
+Use `SimplexBaseRemoteSource` to execute GraphQL (via Ferry) or REST (via Dio) calls.
 
 #### **Repository**
 Use `SimplexBaseRepository` to wrap remote calls into an `EitherResponse`. It converts `ApiException` (data layer) into `AppError` (domain layer) automatically.
 
-```dart
-class UserRepository extends SimplexBaseRepository {
-  Future<EitherResponse<User>> getUser(String id) {
-    return processApiCall<ApiUser, User>(
-      call: remoteSource.getUser(id),
-      onSuccess: (data) => User.fromApi(data),
-    );
-  }
-}
-```
-
 ### 2. State Management (`SimplexBloc` & `SimplexCubit`)
 The base BLoC classes provide `handleAPICall`, which bridges the Repository's `Either` response directly to your UI state updates.
 
-```dart
-class MyBloc extends SimplexBloc<MyEvent, MyState> {
-  Future<void> _onLoad(event, emit) async {
-    await handleAPICall<Data>(
-      emitter: emit,
-      call: repository.getData(),
-      onSuccess: (data) => state.copyWith(data: data),
-      onFailure: (error) => state.copyWith(error: error),
-    );
-  }
-}
-```
-
-### 3. Core Utilities
-
-#### **Authentication Event Bus**
-`SimplexAuthEventBus` is a singleton that broadcasts authentication errors (`unAuthenticated`, `sessionExpired`, `forbidden`) application-wide. This is automatically triggered by the `RemoteSource`.
+### 3. Pagination with `PagingCubit`
+The refactored `PagingCubit` handles infinite scrolling with ease.
 
 ```dart
-SimplexAuthEventBus.instance.events.listen((event) {
-  if (event.type == AuthErrorType.sessionExpired) {
-    // Navigate to Login
-  }
-});
+final cubit = PagingCubit<int, User>(
+  initialKey: 1,
+  useCache: true, // Enables first-page caching
+  fetchFn: (page, search) async {
+    final (items, nextKey) = await repository.getUsers(page: page, search: search);
+    return (items, nextKey);
+  },
+);
 ```
 
-#### **Cubit Cache Mixin**
-Easily persist Cubit data in memory using the `CubitCacheMixin`. Perfect for maintaining state during navigation without complex persistence.
+### 4. Advanced Forms
+`Field<T>` now supports multiple validators and a simplified state management.
 
 ```dart
-class MyCubit extends SimplexCubit<MyState> with CubitCacheMixin {
-  void saveData(data) {
-    storeToCache(data);
-    emit(state.copyWith(data: data));
-  }
-}
+final emailField = Field<String>(value: '').validate([
+  (value) => value.isEmpty ? 'Required' : null,
+  (value) => !value.contains('@') ? 'Invalid' : null,
+]);
 ```
-
-#### **Logging**
-Use `SimplexAppLogger` for standardized console output, including info, warnings, and formatted app errors with stack traces.
 
 ---
 
-## 📖 Feature Modules
+## 🔄 Migration Guide (0.0.7 to 0.0.8)
 
-### Query & Filter (Search)
-Handle debounced search and filtering effortlessly.
-
-```dart
-// Use directly in your page
-BlocProvider(
-  create: (context) => QueryFilterBloc(
-    debounceDuration: const Duration(milliseconds: 300),
-  ),
-  child: MySearchPage(),
-)
-
-// In your UI
-onChanged: (value) {
-  context.read<QueryFilterBloc>().onSearchOrFilterChange(value, isSearchOnly: true);
-}
-```
+### Paging Refactor
+- **State Change**: `PagingState.pages` (List of Lists) is now `PagingState.items` (Flat List).
+- **Key Change**: `PagingState.keys` is replaced by `initialKey` and `nextKey`.
+- **Method Change**: `prependItem`, `appendItem`, `deleteItem`, and `updateItem` now operate on the flat `items` list.
 
 ---
 

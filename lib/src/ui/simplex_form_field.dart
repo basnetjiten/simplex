@@ -7,7 +7,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// A customized [TextFormField] wrapper that provides a standardized look and feel
+/// across the application with simplified configuration.
+///
+/// It includes built-in support for:
+/// - Password visibility toggling when [keyboardType] is [TextInputType.visiblePassword].
+/// - Standardized borders and padding.
+/// - Automatic focus management on tap outside and editing completion.
+/// - Easy configuration of text capitalization styles.
 class SimplexFormField extends StatelessWidget {
+  /// Creates a [SimplexFormField].
   const SimplexFormField({
     super.key,
     this.prefixIcon,
@@ -65,58 +74,163 @@ class SimplexFormField extends StatelessWidget {
     this.prefixIconConstraints,
   });
 
+  /// An icon to display before the text.
   final Widget? prefixIcon;
+
+  /// An icon to display after the text.
   final Widget? suffixIcon;
+
+  /// Text that suggests what sort of input the field accepts.
   final String? hintText;
+
+  /// Text that appears below the field when there is an error.
   final String? errorText;
+
+  /// Whether to show the character counter text when [maxLength] is set.
   final bool showCounterText;
+
+  /// The maximum number of lines for the text.
   final int? maxLines;
+
+  /// The minimum number of lines for the text.
   final int? minLines;
+
+  /// The type of information for which to optimize the text input control.
   final TextInputType? keyboardType;
+
+  /// The type of action button to use for the keyboard.
   final TextInputAction? inputAction;
+
+  /// Called when the text being edited changes.
   final void Function(String)? onChanged;
+
+  /// Whether the field is read-only.
   final bool readonly;
+
+  /// The border to display around the field.
   final InputBorder? border;
+
+  /// The border to display when the field has focus.
   final InputBorder? focusedBorder;
+
+  /// The border to display when the field is disabled.
   final InputBorder? disabledBorder;
+
+  /// Called when the user taps on the field.
   final Function()? onTap;
+
+  /// Called when the user indicates they are done editing the text.
   final Function(String)? onFieldSubmitted;
+
+  /// Defines the keyboard focus for this widget.
   final FocusNode? focusNode;
+
+  /// Controls the text being edited.
   final TextEditingController? controller;
+
+  /// An optional method that validates an input.
   final String? Function(String?)? validator;
+
+  /// Whether to hide the text being edited (e.g., for passwords).
   final bool obscureText;
+
+  /// Called when the user finishes editing.
   final Function()? onEditingComplete;
+
+  /// The style to use for the text being edited.
   final TextStyle? style;
+
+  /// The style to use for the [hintText].
   final TextStyle? hintStyle;
+
+  /// How the text should be aligned horizontally.
   final TextAlign? textAlign;
+
+  /// The padding around the text.
   final EdgeInsetsGeometry? contentPadding;
+
+  /// Called when the [suffixIcon] (password toggle) is pressed.
   final Function()? onSuffixPressed;
+
+  /// The color to fill the field background with.
   final Color? fillColor;
+
+  /// The maximum number of characters allowed in the field.
   final int? maxLength;
+
+  /// Used to enable/disable automatic validation.
   final AutovalidateMode? autoValidateMode;
+
+  /// Optional input formatters for the field.
   final List<TextInputFormatter>? inputFormatters;
+
+  /// Whether to disable the border entirely.
   final bool disableBorder;
+
+  /// The color of the cursor.
   final Color? cursorColor;
+
+  /// The height of the cursor.
   final double? cursorHeight;
+
+  /// The maximum number of lines for the [errorText].
   final int? errorMaxLines;
+
+  /// The font size for the [errorText].
   final double? errorFontSize;
+
+  /// The size of the password toggle icon.
   final double? passwordIconSize;
+
+  /// The border radius for the field.
   final double? borderRadius;
+
+  /// Whether the field should be focused automatically.
   final bool autoFocus;
+
+  /// Whether to capitalize the first letter of each sentence.
   final bool sentenceCapitalization;
+
+  /// Whether to capitalize the first letter of each word.
   final bool wordCapitalization;
+
+  /// Whether to capitalize every character.
   final bool characterCapitalization;
+
+  /// The initial value of the field.
   final String? initialValue;
+
+  /// The color of the password toggle icon when text is obscured.
   final Color? obscureColor;
+
+  /// The color of the password toggle icon when text is NOT obscured.
   final Color? nonObscureColor;
+
+  /// Custom [InputDecoration] to override the default.
   final InputDecoration? inputDecoration;
+
+  /// Custom icon for the password toggle (visible state).
   final IconData? passwordIcon;
+
+  /// Custom icon for the password toggle (obscured state).
   final IconData? passwordObscureIcon;
+
+  /// The style to use for the label.
   final TextStyle? labelStyle;
+
+  /// A widget to display as the label.
   final Widget? label;
+
+  /// Text to display as the label.
   final String? labelText;
+
+  /// How the text should be aligned vertically.
   final TextAlignVertical? alignVertical;
+
+  /// Constraints for the [prefixIcon].
   final BoxConstraints? prefixIconConstraints;
+
+  /// Whether to enable auto-correction.
   final bool autoCorrect;
 
   @override

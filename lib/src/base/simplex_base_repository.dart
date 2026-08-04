@@ -57,14 +57,14 @@ import '../typedefs/typedefs.dart';
 /// Any other exceptions are caught and converted to a generic server error.
 ///
 /// ## Type Parameters
-/// - [R]: The response type from the server/API
-/// - [T]: The domain model type to return in the [EitherResponse]
+/// - `R`: The response type from the server/API
+/// - `T`: The domain model type to return in the [EitherResponse]
 ///
 /// ## Best Practices
 /// - Extend this class for all repository implementations that make API calls
 /// - Use the [processApiCall] method to wrap all API calls
 /// - Keep business logic in the repository layer
-/// - Convert API models to domain models in the [onSuccess] callback
+/// - Convert API models to domain models in the `onSuccess` callback
 ///
 /// See also:
 /// - [ApiException] for API error types
@@ -78,11 +78,11 @@ class SimplexBaseRepository {
   /// exception other that NetworkError don't use [SimplexBaseRepository].
   SimplexBaseRepository();
 
-  /// [T] is Return type for [EitherResponse]
+  /// `T` is Return type for [EitherResponse]
   ///
-  /// [R] is response type from server that is params for [onSuccess] callback
+  /// `R` is response type from server that is params for `onSuccess` callback
   ///
-  /// [onSuccess] callback returns the [T] and accept [R]
+  /// `onSuccess` callback returns the `T` and accept `R`
   ///
   /// This should not be used other that making request to server. Otherwise
   /// you would not be able to handle exceptions properly.
@@ -94,7 +94,7 @@ class SimplexBaseRepository {
       final R data = await call;
       return right(await onSuccess(data));
     } on ApiException catch (e) {
-      AppError appError = _handleAPIException(e);
+      final appError = _handleAPIException(e);
 
       return left(appError);
     } on Exception {
