@@ -134,7 +134,7 @@ return timeOut(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverException,TResult Function()?  network,TResult Function( String? message)?  unAuthorizedException,TResult Function( String? message)?  sessionExpiredException,TResult Function( String? message)?  forbiddenException,TResult Function( dynamic message)?  timeOut,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  serverException,TResult Function()?  network,TResult Function( String? message)?  unAuthorizedException,TResult Function( String? message)?  sessionExpiredException,TResult Function( String? message)?  forbiddenException,TResult Function( String message)?  timeOut,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerException() when serverException != null:
 return serverException(_that.message);case _Network() when network != null:
@@ -160,7 +160,7 @@ return timeOut(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverException,required TResult Function()  network,required TResult Function( String? message)  unAuthorizedException,required TResult Function( String? message)  sessionExpiredException,required TResult Function( String? message)  forbiddenException,required TResult Function( dynamic message)  timeOut,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  serverException,required TResult Function()  network,required TResult Function( String? message)  unAuthorizedException,required TResult Function( String? message)  sessionExpiredException,required TResult Function( String? message)  forbiddenException,required TResult Function( String message)  timeOut,}) {final _that = this;
 switch (_that) {
 case _ServerException():
 return serverException(_that.message);case _Network():
@@ -185,7 +185,7 @@ return timeOut(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverException,TResult? Function()?  network,TResult? Function( String? message)?  unAuthorizedException,TResult? Function( String? message)?  sessionExpiredException,TResult? Function( String? message)?  forbiddenException,TResult? Function( dynamic message)?  timeOut,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  serverException,TResult? Function()?  network,TResult? Function( String? message)?  unAuthorizedException,TResult? Function( String? message)?  sessionExpiredException,TResult? Function( String? message)?  forbiddenException,TResult? Function( String message)?  timeOut,}) {final _that = this;
 switch (_that) {
 case _ServerException() when serverException != null:
 return serverException(_that.message);case _Network() when network != null:
@@ -504,7 +504,7 @@ class _TimeOutException implements ApiException {
   const _TimeOutException({required this.message});
   
 
- final  dynamic message;
+ final  String message;
 
 /// Create a copy of ApiException
 /// with the given fields replaced by the non-null parameter values.
@@ -516,12 +516,12 @@ _$TimeOutExceptionCopyWith<_TimeOutException> get copyWith => __$TimeOutExceptio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimeOutException&&const DeepCollectionEquality().equals(other.message, message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimeOutException&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(message));
+int get hashCode => Object.hash(runtimeType,message);
 
 @override
 String toString() {
@@ -536,7 +536,7 @@ abstract mixin class _$TimeOutExceptionCopyWith<$Res> implements $ApiExceptionCo
   factory _$TimeOutExceptionCopyWith(_TimeOutException value, $Res Function(_TimeOutException) _then) = __$TimeOutExceptionCopyWithImpl;
 @useResult
 $Res call({
- dynamic message
+ String message
 });
 
 
@@ -553,10 +553,10 @@ class __$TimeOutExceptionCopyWithImpl<$Res>
 
 /// Create a copy of ApiException
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
   return _then(_TimeOutException(
-message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as dynamic,
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
